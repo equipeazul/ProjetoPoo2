@@ -24,7 +24,7 @@ public class Conexao implements IConexao {
     
     private Conexao() { 
         url = "jdbc:sqlserver://localhost:1433;databaseName=PROJETO";
-        senha = "Daniel";
+        senha = "Danil";
         usuario = "";
         
     }
