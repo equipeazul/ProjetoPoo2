@@ -8,10 +8,10 @@ package vendas;
 import java.sql.Connection;
 import vendas.Conexao.Conexao;
 import vendas.Conexao.IConexao;
-import vendas.Excecoes.DAOException;
+import vendas.Excecoes.ExcecaoRepositorio;
 import vendas.Excecoes.ExcecaoConexao;
 import vendas.Repositorio.IVendedorRepositorio;
-import vendas.Repositorio.VendedorRepositorioImpl;
+import vendas.Repositorio.VendedorRepositorio;
 import vendas.entidades.Vendedor;
 
 /**
@@ -33,14 +33,14 @@ public class Vendas {
             vendedor.setNome("Edson");
             vendedor.setComissao(5);
             
-            IVendedorRepositorio vendedorRepositorio = new VendedorRepositorioImpl();
+            IVendedorRepositorio vendedorRepositorio = new VendedorRepositorio();
             
             vendedorRepositorio.incluir(vendedor);
             
         } catch (ExcecaoConexao ex) {
             System.out.println(ExcecaoConexao.erroAoConectar);
-        } catch (DAOException ex) {
-            System.out.println(DAOException.erroAoIncluirVendedor);
+        } catch (ExcecaoRepositorio ex) {
+            System.out.println(ExcecaoRepositorio.erroAoIncluirVendedor);
         }
         
     }
