@@ -55,7 +55,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
     public void alterar(Vendedor vendedor)  throws ExcecaoRepositorio,ExcecaoConexao {
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="UPDATE Vendedores SET nome = ? , comissao = ?   VALUES (?, ?) WHERE IdVendedor = ? ";
+        String sql ="UPDATE Vendedores SET nome = ? , comissao = ? VALUES (?, ?) WHERE IdVendedor = ? ";
         try{
             PreparedStatement pstm= conn.prepareStatement(sql);
             pstm.setString(1, vendedor.getNome());
