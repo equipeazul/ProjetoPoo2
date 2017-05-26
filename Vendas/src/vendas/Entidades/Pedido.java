@@ -69,5 +69,20 @@ public class Pedido {
         this.situacao = situacao;
     }
     
+    public ArrayList getListaPedidoProduto() {
+        return this.listaPedidoProduto;
+    }
+
+    public void setListaPedidoProduto(ArrayList listaPedidoProduto) {
+        this.listaPedidoProduto = listaPedidoProduto;
+    }
+    
+    public ArrayList getListaPagamento() {
+        return this.listaPagamento;
+    }
+
+    public void setListaPagamento(ArrayList listaPagamento) {
+        this.listaPagamento = listaPagamento;
+    }
     
 }
