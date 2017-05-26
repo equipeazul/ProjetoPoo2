@@ -97,7 +97,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
                 lista.add(vendedor);
             }
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoExcluirVendedor);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarVendedor);
         }finally{
             sqlConn.desconectar(conn);
         }
@@ -125,7 +125,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
                 vendedor.setComissao(rset.getDouble("comissao"));
             }
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoExcluirVendedor);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarVendedor);
         }finally{
             sqlConn.desconectar(conn);
         }
