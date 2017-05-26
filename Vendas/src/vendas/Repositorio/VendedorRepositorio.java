@@ -29,7 +29,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
             pstm.setDouble(2, vendedor.getComissao()); 
             pstm.executeUpdate();
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(e);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoIncluirVendedor);
         }finally{
             sqlConn.desconectar(conn);
         }
@@ -45,7 +45,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
             pstm.setInt(1, id);
             pstm.executeUpdate();
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(e);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoExcluirVendedor);
         }finally{
             sqlConn.desconectar(conn);
         }
@@ -63,7 +63,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
             pstm.setInt(3, vendedor.getIdvendedor()); 
             pstm.executeUpdate();
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(e);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoAlterarVendedor);
         }finally{
             sqlConn.desconectar(conn);
         }
