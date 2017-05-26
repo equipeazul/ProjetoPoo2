@@ -8,7 +8,11 @@ package vendas;
 import java.sql.Connection;
 import vendas.Conexao.Conexao;
 import vendas.Conexao.IConexao;
+import vendas.Excecoes.DAOException;
 import vendas.Excecoes.ExcecaoConexao;
+import vendas.Repositorio.IVendedorRepositorio;
+import vendas.Repositorio.VendedorRepositorioImpl;
+import vendas.entidades.Vendedor;
 
 /**
  *
@@ -23,13 +27,20 @@ public class Vendas {
     public static void main(String[] args) {
         
         try {
-            IConexao conn;
-            conn = Conexao.getInstancia();
-            conn.conectar();
-            System.out.println("Conectado");
+            
+            Vendedor vendedor = new Vendedor();
+            
+            vendedor.setNome("Edson");
+            vendedor.setComissao(5);
+            
+            IVendedorRepositorio vendedorRepositorio = new VendedorRepositorioImpl();
+            
+            vendedorRepositorio.incluir(vendedor);
             
         } catch (ExcecaoConexao ex) {
-            System.out.println(ex.getMessage());
+            System.out.println(ExcecaoConexao.erroAoConectar);
+        } catch (DAOException ex) {
+            System.out.println(DAOException.erroAoIncluirVendedor);
         }
         
     }

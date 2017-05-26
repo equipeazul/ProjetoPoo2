@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package vendas.Conexao;
-////aquijhkjhkj
-
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,8 +24,8 @@ public class Conexao implements IConexao {
     
     private Conexao() { 
         url = "jdbc:sqlserver://localhost:1433;databaseName=PROJETO";
-        senha = "Daniel";
-        usuario = "";
+        senha = "aluno";
+        usuario = "aluno";
         
     }
    
