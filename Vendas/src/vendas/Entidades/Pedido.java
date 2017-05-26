@@ -33,7 +33,7 @@ public class Pedido {
         return this.idPedido;
     }
 
-    public void setIdpedido(Integer idPedido) {
+    public void setIdPedido(Integer idPedido) {
         this.idPedido = idPedido;
     }
 

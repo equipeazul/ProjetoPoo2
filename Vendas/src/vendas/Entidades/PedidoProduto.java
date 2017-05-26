@@ -13,7 +13,7 @@ public class PedidoProduto {
     
     private Produto produto;
     private Double valor;
-    private Integer quantidade; // <--- No banco de dados o atributo está em decimal, troque para integer!
+    private Integer quantidade; 
 
     public PedidoProduto() {
         this.produto = new Produto();

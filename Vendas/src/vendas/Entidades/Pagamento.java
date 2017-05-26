@@ -29,11 +29,11 @@ public class Pagamento {
         this.idPagamento = idPagamento;
     }
 
-    public String getFormapagamento() {
+    public String getFormaPagamento() {
         return this.formaPagamento;
     }
 
-    public void setFormapagamento(String formaPagamento) {
+    public void setFormaPagamento(String formaPagamento) {
         this.formaPagamento = formaPagamento;
     }
 
