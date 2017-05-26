@@ -20,12 +20,13 @@ import vendas.Excecoes.ExcecaoConexao;
 public class VendedorRepositorio implements IVendedorRepositorio{
 
     @Override
-    public void incluir(Vendedor vendedor) throws ExcecaoRepositorio,ExcecaoConexao {
+    public Integer incluir(Vendedor vendedor) throws ExcecaoRepositorio,ExcecaoConexao {
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
         String sql ="INSERT INTO (nome, comissao) vendedores VALUES (?, ?)";
+        Integer id = null;
         try{
-            PreparedStatement pstm= conn.prepareStatement(sql);
+            PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setString(1, vendedor.getNome());
             pstm.setDouble(2, vendedor.getComissao()); 
             pstm.executeUpdate();
@@ -34,6 +35,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
         }finally{
             sqlConn.desconectar(conn);
         }
+        return id;
     }
 
     @Override
@@ -71,7 +73,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
     }
 
     @Override
-    public ArrayList<Vendedor> listar(String nome) throws ExcecaoRepositorio,ExcecaoConexao {
+    public ArrayList listar(String nome) throws ExcecaoRepositorio,ExcecaoConexao {
 
         ArrayList lista = null;
         
