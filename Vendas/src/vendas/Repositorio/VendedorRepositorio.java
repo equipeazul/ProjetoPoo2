@@ -7,6 +7,7 @@ package vendas.Repositorio;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import vendas.Conexao.Conexao;
@@ -52,7 +53,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
     }
 
     @Override
-    public void alterar(Vendedor vendedor)  throws ExcecaoRepositorio,ExcecaoConexao {
+    public void alterar(Vendedor vendedor) throws ExcecaoRepositorio,ExcecaoConexao {
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
         String sql ="UPDATE Vendedores SET nome = ? , comissao = ? VALUES (?, ?) WHERE IdVendedor = ? ";
@@ -70,13 +71,66 @@ public class VendedorRepositorio implements IVendedorRepositorio{
     }
 
     @Override
-    public ArrayList<Vendedor> listar(String nome) {
-    return null;
+    public ArrayList<Vendedor> listar(String nome) throws ExcecaoRepositorio,ExcecaoConexao {
+
+        ArrayList lista = null;
+        
+        IConexao sqlConn = Conexao.getInstancia();
+        Connection conn = sqlConn.conectar();
+        String sql ="SELECT idvendedor, nome, comissao FROM Vendedores ";
+        
+        if (!nome.equals("")) {
+            sql = sql + " WHERE nome like '%" + nome + "%'";
+        }
+             
+        try{
+            PreparedStatement pstm= conn.prepareStatement(sql);
+            ResultSet rset = pstm.executeQuery();
+            
+            lista = new ArrayList();
+            while (rset.next()) {
+                Vendedor vendedor = new Vendedor();
+                vendedor = new Vendedor();
+                vendedor.setIdvendedor(rset.getInt("idvendedor"));
+                vendedor.setNome(rset.getString("nome"));
+                vendedor.setComissao(rset.getDouble("comissao"));
+                lista.add(vendedor);
+            }
+        }catch(SQLException e){
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoExcluirVendedor);
+        }finally{
+            sqlConn.desconectar(conn);
+        }
+        
+        return lista;
     }
 
     @Override
-    public Vendedor consultar(Integer id) {
-        return null;
+    public Vendedor consultar(Integer id) throws ExcecaoRepositorio,ExcecaoConexao {
+        
+        Vendedor vendedor = null;
+        
+        IConexao sqlConn = Conexao.getInstancia();
+        Connection conn = sqlConn.conectar();
+        String sql ="SELECT idvendedor, nome, comissao FROM Vendedores WHERE IdVendedor = ? ";
+        try{
+            PreparedStatement pstm= conn.prepareStatement(sql);
+            pstm.setInt(1, id);
+            ResultSet rset = pstm.executeQuery();
+            
+            if (rset.next()) {
+                vendedor = new Vendedor();
+                vendedor.setIdvendedor(rset.getInt("idvendedor"));
+                vendedor.setNome(rset.getString("nome"));
+                vendedor.setComissao(rset.getDouble("comissao"));
+            }
+        }catch(SQLException e){
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoExcluirVendedor);
+        }finally{
+            sqlConn.desconectar(conn);
+        }
+        
+        return vendedor;
     }
     
     
