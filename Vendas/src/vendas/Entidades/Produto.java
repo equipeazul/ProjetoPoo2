@@ -11,27 +11,26 @@ package vendas.entidades;
  */
 public class Produto {
     
-    private Integer idproduto;
+    private Integer idProduto;
     private String descricao;
     private String unidade;
-    private Double precovenda;
+    private Double precoVenda;
     private Fabricante fabricante;
     
     public Produto(){
-        Fabricante fabricante = new Fabricante();
-        
+        this.fabricante = new Fabricante();
     }
 
     public Integer getIdproduto() {
-        return idproduto;
+        return this.idProduto;
     }
 
-    public void setIdproduto(Integer idproduto) {
-        this.idproduto = idproduto;
+    public void setIdproduto(Integer idProduto) {
+        this.idProduto = idProduto;
     }
 
     public String getDescricao() {
-        return descricao;
+        return this.descricao;
     }
 
     public void setDescricao(String descricao) {
@@ -39,7 +38,7 @@ public class Produto {
     }
 
     public String getUnidade() {
-        return unidade;
+        return this.unidade;
     }
 
     public void setUnidade(String unidade) {
@@ -47,15 +46,15 @@ public class Produto {
     }
 
     public Double getPrecovenda() {
-        return precovenda;
+        return this.precoVenda;
     }
 
-    public void setPrecovenda(Double precovenda) {
-        this.precovenda = precovenda;
+    public void setPrecovenda(Double precoVenda) {
+        this.precoVenda = precoVenda;
     }
 
     public Fabricante getFabricante() {
-        return fabricante;
+        return this.fabricante;
     }
 
     public void setFabricantes(Fabricante fabricante) {

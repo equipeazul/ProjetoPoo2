@@ -11,20 +11,20 @@ package vendas.entidades;
  */
 public class Vendedor {
     
-    private int idvendedor;
+    private int idVendedor;
     private String nome;
     private double comissao;
 
-    public int getIdvendedor() {
-        return idvendedor;
+    public int getIdVendedor() {
+        return this.idVendedor;
     }
 
-    public void setIdvendedor(int idvendedor) {
-        this.idvendedor = idvendedor;
+    public void setIdVendedor(int idVendedor) {
+        this.idVendedor = idVendedor;
     }
 
     public String getNome() {
-        return nome;
+        return this.nome;
     }
 
     public void setNome(String nome) {
@@ -32,7 +32,7 @@ public class Vendedor {
     }
 
     public double getComissao() {
-        return comissao;
+        return this.comissao;
     }
 
     public void setComissao(double comissao) {

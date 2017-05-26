@@ -11,28 +11,28 @@ package vendas.entidades;
  */
 public class Fabricante {
     
-    private Integer idfabricante;
-    private String razaosocial;
+    private Integer idFabricante;
+    private String razaoSocial;
     private String telefone;
 
-    public Integer getIdfabricantes() {
-        return idfabricante;
+    public Integer getidFabricante() {
+        return this.idFabricante;
     }
 
-    public void setIdfabricantes(Integer idfabricantes) {
-        this.idfabricante = idfabricantes;
+    public void setidFabricante(Integer idFabricante) {
+        this.idFabricante = idFabricante;
     }
 
-    public String getRazaosocial() {
-        return razaosocial;
+    public String getRazaoSocial() {
+        return this.razaoSocial;
     }
 
-    public void setRazaosocial(String razaosocial) {
-        this.razaosocial = razaosocial;
+    public void setRazaoSocial(String razaoSocial) {
+        this.razaoSocial = razaoSocial;
     }
 
     public String getTelefone() {
-        return telefone;
+        return this.telefone;
     }
 
     public void setTelefone(String telefone) {

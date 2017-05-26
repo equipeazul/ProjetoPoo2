@@ -23,7 +23,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
     public void incluir(Vendedor vendedor) throws ExcecaoRepositorio,ExcecaoConexao {
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="INSERT INTO (nome, comissao) Vendedores VALUES (?, ?)";
+        String sql ="INSERT INTO (nome, comissao) vendedores VALUES (?, ?)";
         try{
             PreparedStatement pstm= conn.prepareStatement(sql);
             pstm.setString(1, vendedor.getNome());
@@ -40,7 +40,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
     public void excluir(Integer id) throws ExcecaoRepositorio,ExcecaoConexao  {
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="DELETE FROM Vendedores WHERE IdVendedor = ? ";
+        String sql ="DELETE FROM vendedores WHERE IdVendedor = ? ";
         try{
             PreparedStatement pstm= conn.prepareStatement(sql);
             pstm.setInt(1, id);
@@ -56,12 +56,12 @@ public class VendedorRepositorio implements IVendedorRepositorio{
     public void alterar(Vendedor vendedor) throws ExcecaoRepositorio,ExcecaoConexao {
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="UPDATE Vendedores SET nome = ? , comissao = ? VALUES (?, ?) WHERE IdVendedor = ? ";
+        String sql ="UPDATE vendedores SET nome = ? , comissao = ? VALUES (?, ?) WHERE idVendedor = ? ";
         try{
             PreparedStatement pstm= conn.prepareStatement(sql);
             pstm.setString(1, vendedor.getNome());
             pstm.setDouble(2, vendedor.getComissao()); 
-            pstm.setInt(3, vendedor.getIdvendedor()); 
+            pstm.setInt(3, vendedor.getIdVendedor()); 
             pstm.executeUpdate();
         }catch(SQLException e){
             throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoAlterarVendedor);
@@ -77,10 +77,10 @@ public class VendedorRepositorio implements IVendedorRepositorio{
         
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="SELECT idvendedor, nome, comissao FROM Vendedores ";
+        String sql ="SELECT idVendedor, nome, comissao FROM vendedores ";
         
         if (!nome.equals("")) {
-            sql = sql + " WHERE nome like '%" + nome + "%'";
+            sql = sql + " WHERE nome LIKE '%" + nome + "%'";
         }
              
         try{
@@ -91,7 +91,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
             while (rset.next()) {
                 Vendedor vendedor = new Vendedor();
                 vendedor = new Vendedor();
-                vendedor.setIdvendedor(rset.getInt("idvendedor"));
+                vendedor.setIdVendedor(rset.getInt("idVendedor"));
                 vendedor.setNome(rset.getString("nome"));
                 vendedor.setComissao(rset.getDouble("comissao"));
                 lista.add(vendedor);
@@ -112,7 +112,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
         
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="SELECT idvendedor, nome, comissao FROM Vendedores WHERE IdVendedor = ? ";
+        String sql ="SELECT idVendedor, nome, comissao FROM Vendedores WHERE idVendedor = ? ";
         try{
             PreparedStatement pstm= conn.prepareStatement(sql);
             pstm.setInt(1, id);
@@ -120,7 +120,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
             
             if (rset.next()) {
                 vendedor = new Vendedor();
-                vendedor.setIdvendedor(rset.getInt("idvendedor"));
+                vendedor.setIdVendedor(rset.getInt("idVendedor"));
                 vendedor.setNome(rset.getString("nome"));
                 vendedor.setComissao(rset.getDouble("comissao"));
             }

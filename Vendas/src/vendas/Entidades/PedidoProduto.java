@@ -16,10 +16,10 @@ public class PedidoProduto {
     private Integer quantidade; // <--- No banco de dados o atributo está em decimal, troque para integer!
 
     public PedidoProduto() {
-        produto = new Produto();
+        this.produto = new Produto();
     }
     public Produto getProduto() {
-        return produto;
+        return this.produto;
     }
 
     public void setProduto(Produto produto) {
@@ -27,7 +27,7 @@ public class PedidoProduto {
     }
 
     public double getValor() {
-        return valor;
+        return this.valor;
     }
 
     public void setValor(double valor) {
@@ -35,7 +35,7 @@ public class PedidoProduto {
     }
 
     public Integer getQuantidade() {
-        return quantidade;
+        return this.quantidade;
     }
 
     public void setQuantidade(Integer quantidade) {

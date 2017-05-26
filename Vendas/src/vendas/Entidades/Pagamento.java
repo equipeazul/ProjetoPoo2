@@ -5,74 +5,76 @@
  */
 package vendas.entidades;
 
+import java.util.Date;
+
 /**
  *
  * @author aluno
  */
 public class Pagamento {
     
-    private Integer idpagamento;
-    private String formapagamento;
-    private String dtvencimento;
+    private Integer idPagamento;
+    private String formaPagamento;
+    private Date dtVencimento;
     private Double valor;
-    private String dtpagamento;
-    private Double valorpago;
-    private String situação;
+    private Date dtPagamento;
+    private Double valorPago;
+    private String situacao;
 
-    public Integer getIdpagamento() {
-        return idpagamento;
+    public Integer getIdPagamento() {
+        return this.idPagamento;
     }
 
-    public void setIdpagamento(Integer idpagamento) {
-        this.idpagamento = idpagamento;
+    public void setIdPagamento(Integer idPagamento) {
+        this.idPagamento = idPagamento;
     }
 
     public String getFormapagamento() {
-        return formapagamento;
+        return this.formaPagamento;
     }
 
-    public void setFormapagamento(String formapagamento) {
-        this.formapagamento = formapagamento;
+    public void setFormapagamento(String formaPagamento) {
+        this.formaPagamento = formaPagamento;
     }
 
-    public String getDtvencimento() {
-        return dtvencimento;
+    public Date getDtVencimento() {
+        return dtVencimento;
     }
 
-    public void setDtvencimento(String dtvencimento) {
-        this.dtvencimento = dtvencimento;
+    public void setDtvencimento(Date dtVencimento) {
+        this.dtVencimento = dtVencimento;
     }
 
     public Double getValor() {
-        return valor;
+        return this.valor;
     }
 
     public void setValor(Double valor) {
         this.valor = valor;
     }
 
-    public String getDtpagamento() {
-        return dtpagamento;
+    public Date getdtPagamento() {
+        return this.dtPagamento;
     }
 
-    public void setDtpagamento(String dtpagamento) {
-        this.dtpagamento = dtpagamento;
+    public void setdtPagamento(Date dtPagamento) {
+        this.dtPagamento = dtPagamento;
     }
 
     public double getValorpago() {
-        return valorpago;
+        return this.valorPago;
     }
 
-    public void setValorpago(double valorpago) {
-        this.valorpago = valorpago;
+    public void setValorpago(double valorPago) {
+        this.valorPago = valorPago;
     }
 
-    public String getSituação() {
-        return situação;
+    public String getSituacao() {
+        return this.situacao;
     }
 
-    public void setSituação(String situação) {
-        this.situação = situação;
+    public void setSituação(String situacao) {
+        this.situacao = situacao;
     }
 
 }

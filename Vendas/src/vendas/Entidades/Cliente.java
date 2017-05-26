@@ -11,20 +11,20 @@ package vendas.entidades;
  */
 public class Cliente {
     
-   private Integer idcliente;
+   private Integer idCliente;
    private String nome;
    private String cpf;
 
-    public Integer getIdcliente() {
-        return idcliente;
+    public Integer getIdCliente() {
+        return this.idCliente;
     }
 
-    public void setIdcliente(Integer idcliente) {
-        this.idcliente = idcliente;
+    public void setIdCliente(Integer idCliente) {
+        this.idCliente = idCliente;
     }
 
     public String getNome() {
-        return nome;
+        return this.nome;
     }
 
     public void setNome(String nome) {
@@ -32,7 +32,7 @@ public class Cliente {
     }
 
     public String getCpf() {
-        return cpf;
+        return this.cpf;
     }
 
     public void setCpf(String cpf) {

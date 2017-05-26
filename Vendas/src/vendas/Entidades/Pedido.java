@@ -6,6 +6,7 @@
 package vendas.entidades;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -13,8 +14,8 @@ import java.util.ArrayList;
  */
 public class Pedido {
     
-    private Integer idpedido;
-    private String dtvenda;
+    private Integer idPedido;
+    private Date dtVenda;
     private Vendedor vendedor;
     private Cliente cliente;
     private String situacao;
@@ -22,30 +23,30 @@ public class Pedido {
     private ArrayList<Pagamento> listaPagamento;
     
     public Pedido(){
-      Cliente cliente = new Cliente();
-      Vendedor vendedor = new Vendedor();
-      listaPedidoProduto = new ArrayList();
-      listaPagamento = new ArrayList();
+      this.cliente = new Cliente();
+      this.vendedor = new Vendedor();
+      this.listaPedidoProduto = new ArrayList();
+      this.listaPagamento = new ArrayList();
     }
 
-    public Integer getIdpedido() {
-        return idpedido;
+    public Integer getIdPedido() {
+        return this.idPedido;
     }
 
-    public void setIdpedido(Integer idpedido) {
-        this.idpedido = idpedido;
+    public void setIdpedido(Integer idPedido) {
+        this.idPedido = idPedido;
     }
 
-    public String getDtvenda() {
-        return dtvenda;
+    public Date getDtvenda() {
+        return this.dtVenda;
     }
 
-    public void setDtvenda(String dtvenda) {
-        this.dtvenda = dtvenda;
+    public void setDtvenda(Date dtVenda) {
+        this.dtVenda = dtVenda;
     }
 
     public Vendedor getVendedores() {
-        return vendedor;
+        return this.vendedor;
     }
 
     public void setVendedor(Vendedor vendedor) {
@@ -53,7 +54,7 @@ public class Pedido {
     }
 
     public Cliente getCliente() {
-        return cliente;
+        return this.cliente;
     }
 
     public void setCliente(Cliente cliente) {
@@ -61,7 +62,7 @@ public class Pedido {
     }
 
     public String getSituacao() {
-        return situacao;
+        return this.situacao;
     }
 
     public void setSituacao(String situacao) {
