@@ -42,7 +42,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
     public void excluir(Integer id) throws ExcecaoRepositorio,ExcecaoConexao  {
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="DELETE FROM vendedores WHERE IdVendedor = ? ";
+        String sql ="DELETE FROM vendedores WHERE idVendedor = ? ";
         try{
             PreparedStatement pstm= conn.prepareStatement(sql);
             pstm.setInt(1, id);
