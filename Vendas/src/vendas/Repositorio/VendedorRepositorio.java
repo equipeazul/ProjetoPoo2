@@ -20,28 +20,53 @@ public class VendedorRepositorio implements IVendedorRepositorio{
 
     @Override
     public void incluir(Vendedor vendedor) throws ExcecaoRepositorio,ExcecaoConexao {
-        
-        IConexao g = Conexao.getInstancia();
-        Connection c = g.conectar();
+        IConexao sqlConn = Conexao.getInstancia();
+        Connection conn = sqlConn.conectar();
         String sql ="INSERT INTO (nome, comissao) Vendedores VALUES (?, ?)";
         try{
-            PreparedStatement pstm= c.prepareStatement(sql);
+            PreparedStatement pstm= conn.prepareStatement(sql);
             pstm.setString(1, vendedor.getNome());
             pstm.setDouble(2, vendedor.getComissao()); 
             pstm.executeUpdate();
         }catch(SQLException e){
             throw new ExcecaoRepositorio(e);
         }finally{
-            g.desconectar(c);
+            sqlConn.desconectar(conn);
         }
     }
 
     @Override
-    public void excluir(Integer id) {
+    public void excluir(Integer id) throws ExcecaoRepositorio,ExcecaoConexao  {
+        IConexao sqlConn = Conexao.getInstancia();
+        Connection conn = sqlConn.conectar();
+        String sql ="DELETE FROM Vendedores WHERE IdVendedor = ? ";
+        try{
+            PreparedStatement pstm= conn.prepareStatement(sql);
+            pstm.setInt(1, id);
+            pstm.executeUpdate();
+        }catch(SQLException e){
+            throw new ExcecaoRepositorio(e);
+        }finally{
+            sqlConn.desconectar(conn);
+        }
     }
 
     @Override
-    public void alterar(Vendedor vendedor) {
+    public void alterar(Vendedor vendedor)  throws ExcecaoRepositorio,ExcecaoConexao {
+        IConexao sqlConn = Conexao.getInstancia();
+        Connection conn = sqlConn.conectar();
+        String sql ="UPDATE Vendedores SET nome = ? , comissao = ?   VALUES (?, ?) WHERE IdVendedor = ? ";
+        try{
+            PreparedStatement pstm= conn.prepareStatement(sql);
+            pstm.setString(1, vendedor.getNome());
+            pstm.setDouble(2, vendedor.getComissao()); 
+            pstm.setInt(3, vendedor.getIdvendedor()); 
+            pstm.executeUpdate();
+        }catch(SQLException e){
+            throw new ExcecaoRepositorio(e);
+        }finally{
+            sqlConn.desconectar(conn);
+        }
     }
 
     @Override
