@@ -11,15 +11,23 @@ package vendas.Excecoes;
  */
 public class ExcecaoRepositorio extends Exception {
     
+    // Vendedores
     public static final String erroAoIncluirVendedor = "Erro ao incluir vendedor";
     public static final String erroAoExcluirVendedor = "Erro ao excluir vendedor";
     public static final String erroAoAlterarVendedor = "Erro ao alterar vendedor";
     public static final String erroAoConsultarVendedor = "Erro ao consultar vendedor";
     
+    // Produtos
     public static final String erroAoIncluirProduto = "Erro ao incluir produto";
     public static final String erroAoExcluirProduto = "Erro ao excluir produto";
     public static final String erroAoAlterarProduto = "Erro ao alterar produto";
     public static final String erroAoConsultarProduto = "Erro ao consultar produto";
+    
+    // Clientes
+    public static final String erroAoIncluirCliente = "Erro ao incluir cliente";
+    public static final String erroAoExcluirCliente = "Erro ao excluir cliente";
+    public static final String erroAoAlterarCliente = "Erro ao alterar cliente";
+    public static final String erroAoConsultarCliente = "Erro ao consultar cliente";
     
     public ExcecaoRepositorio() {
         
