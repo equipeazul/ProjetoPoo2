@@ -25,7 +25,7 @@ public class Produto {
         return this.idProduto;
     }
 
-    public void setIdproduto(Integer idProduto) {
+    public void setIdProduto(Integer idProduto) {
         this.idProduto = idProduto;
     }
 
@@ -57,7 +57,7 @@ public class Produto {
         return this.fabricante;
     }
 
-    public void setFabricantes(Fabricante fabricante) {
+    public void setFabricante(Fabricante fabricante) {
         this.fabricante = fabricante;
     }
 }
