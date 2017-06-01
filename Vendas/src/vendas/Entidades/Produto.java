@@ -45,11 +45,11 @@ public class Produto {
         this.unidade = unidade;
     }
 
-    public Double getPrecovenda() {
+    public Double getPrecoVenda() {
         return this.precoVenda;
     }
 
-    public void setPrecovenda(Double precoVenda) {
+    public void setPrecoVenda(Double precoVenda) {
         this.precoVenda = precoVenda;
     }
 

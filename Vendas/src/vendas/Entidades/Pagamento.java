@@ -14,6 +14,7 @@ import java.util.Date;
 public class Pagamento {
     
     private Integer idPagamento;
+    private Integer idPedido;
     private String formaPagamento;
     private Date dtVencimento;
     private Double valor;
@@ -27,6 +28,14 @@ public class Pagamento {
 
     public void setIdPagamento(Integer idPagamento) {
         this.idPagamento = idPagamento;
+    }
+
+    public Integer getIdPedido() {
+        return this.idPedido;
+    }
+
+    public void setIdPedido(Integer idPedido) {
+        this.idPedido = idPedido;
     }
 
     public String getFormaPagamento() {
