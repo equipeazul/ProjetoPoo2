@@ -37,15 +37,15 @@ public class Pedido {
         this.idPedido = idPedido;
     }
 
-    public Date getDtvenda() {
+    public Date getDtVenda() {
         return this.dtVenda;
     }
 
-    public void setDtvenda(Date dtVenda) {
+    public void setDtVenda(Date dtVenda) {
         this.dtVenda = dtVenda;
     }
 
-    public Vendedor getVendedores() {
+    public Vendedor getVendedor() {
         return this.vendedor;
     }
 
