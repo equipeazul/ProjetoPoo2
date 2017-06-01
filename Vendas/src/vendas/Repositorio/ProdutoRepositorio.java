@@ -31,7 +31,7 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setString(1, produto.getDescricao());
             pstm.setString(2, produto.getUnidade()); 
-            pstm.setDouble(3, produto.getPrecovenda());
+            pstm.setDouble(3, produto.getPrecoVenda());
             pstm.setInt(4, produto.getFabricante().getIdFabricante()); 
             pstm.executeUpdate();
         }catch(SQLException e){
@@ -71,7 +71,7 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
             PreparedStatement pstm= conn.prepareStatement(sql);
             pstm.setString(1, produto.getDescricao());
             pstm.setString(2, produto.getUnidade()); 
-            pstm.setDouble(3, produto.getPrecovenda()); 
+            pstm.setDouble(3, produto.getPrecoVenda()); 
             pstm.setDouble(4, produto.getIdproduto()); 
             pstm.executeUpdate();
         }catch(SQLException e){
@@ -105,7 +105,7 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
                 produto.setIdProduto(rset.getInt("idProduto"));
                 produto.setDescricao(rset.getString("descricao"));
                 produto.setUnidade(rset.getString("unidade"));
-                produto.setPrecovenda(rset.getDouble("precovenda"));
+                produto.setPrecoVenda(rset.getDouble("precovenda"));
                 
                 lista.add(produto);
             }
@@ -135,7 +135,7 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
                 produto.setIdProduto(rset.getInt("idProduto"));
                 produto.setDescricao(rset.getString("descricao"));
                 produto.setUnidade(rset.getString("unidade"));
-                produto.setPrecovenda(rset.getDouble("precovenda"));
+                produto.setPrecoVenda(rset.getDouble("precovenda"));
             }
         }catch(SQLException e){
             throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarProduto);
