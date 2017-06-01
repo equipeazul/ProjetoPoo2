@@ -12,12 +12,26 @@ package vendas.entidades;
 public class PedidoProduto {
     
     private Produto produto;
+    private Pedido pedido;
     private Double valor;
     private Integer quantidade; 
 
+    
     public PedidoProduto() {
         this.produto = new Produto();
+        this.pedido = new Pedido();
     }
+
+        public Pedido getPedido() {
+        return this.pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+
+
+
     public Produto getProduto() {
         return this.produto;
     }
