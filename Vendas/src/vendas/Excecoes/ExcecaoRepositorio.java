@@ -29,6 +29,18 @@ public class ExcecaoRepositorio extends Exception {
     public static final String erroAoAlterarCliente = "Erro ao alterar cliente";
     public static final String erroAoConsultarCliente = "Erro ao consultar cliente";
     
+    // Fabricantes
+    public static final String erroAoIncluirFabricante = "Erro ao incluir fabricante";
+    public static final String erroAoExcluirFabricante = "Erro ao excluir fabricante";
+    public static final String erroAoAlterarFabricante = "Erro ao alterar fabricante";
+    public static final String erroAoConsultarFabricante = "Erro ao consultar fabricante";
+    
+    // Pagamentos
+    public static final String erroAoIncluirPagamento = "Erro ao incluir pagamento";
+    public static final String erroAoExcluirPagamento = "Erro ao excluir pagamento";
+    public static final String erroAoAlterarPagamento = "Erro ao alterar pagamento";
+    public static final String erroAoConsultarPagamento = "Erro ao consultar pagamento";
+    
     public ExcecaoRepositorio() {
         
     }
