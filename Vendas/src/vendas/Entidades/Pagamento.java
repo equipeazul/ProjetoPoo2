@@ -20,7 +20,7 @@ public class Pagamento {
     private Date dtPagamento;
     private Double valorPago;
     private String situacao;
-
+    
     public Integer getIdPagamento() {
         return this.idPagamento;
     }
@@ -53,11 +53,11 @@ public class Pagamento {
         this.valor = valor;
     }
 
-    public Date getdtPagamento() {
+    public Date getDtPagamento() {
         return this.dtPagamento;
     }
 
-    public void setdtPagamento(Date dtPagamento) {
+    public void setDtPagamento(Date dtPagamento) {
         this.dtPagamento = dtPagamento;
     }
 
