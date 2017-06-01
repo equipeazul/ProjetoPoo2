@@ -73,9 +73,9 @@ public class VendedorRepositorio implements IVendedorRepositorio{
     }
 
     @Override
-    public ArrayList listar(String nome) throws ExcecaoRepositorio,ExcecaoConexao {
+    public ArrayList<Vendedor> listar(String nome) throws ExcecaoRepositorio,ExcecaoConexao {
 
-        ArrayList lista = null;
+        ArrayList<Vendedor> lista;
         
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
@@ -89,10 +89,9 @@ public class VendedorRepositorio implements IVendedorRepositorio{
             PreparedStatement pstm= conn.prepareStatement(sql);
             ResultSet rset = pstm.executeQuery();
             
-            lista = new ArrayList();
+            lista = new ArrayList<Vendedor>();
             while (rset.next()) {
                 Vendedor vendedor = new Vendedor();
-                vendedor = new Vendedor();
                 vendedor.setIdVendedor(rset.getInt("idVendedor"));
                 vendedor.setNome(rset.getString("nome"));
                 vendedor.setComissao(rset.getDouble("comissao"));
