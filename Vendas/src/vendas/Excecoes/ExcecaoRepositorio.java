@@ -41,6 +41,12 @@ public class ExcecaoRepositorio extends Exception {
     public static final String erroAoAlterarPagamento = "Erro ao alterar pagamento";
     public static final String erroAoConsultarPagamento = "Erro ao consultar pagamento";
     
+    // PedidoProdutos
+    public static final String erroAoIncluirPedidoProduto = "Erro ao incluir produto no pedido";
+    public static final String erroAoExcluirPedidoProduto = "Erro ao excluir produto do pedido";
+    public static final String erroAoAlterarPedidoProduto = "Erro ao alterar produto do pedido";
+    public static final String erroAoConsultarPedidoProduto = "Erro ao consultar produtos do pedido";
+    
     public ExcecaoRepositorio() {
         
     }
