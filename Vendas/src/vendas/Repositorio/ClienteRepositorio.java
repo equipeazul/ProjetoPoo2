@@ -36,8 +36,7 @@ public class ClienteRepositorio implements IClienteRepositorio {
             pstm.executeUpdate();
             
         }catch(SQLException e){
-           System.out.println(e);
-            // throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoIncluirProduto);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoIncluirCliente);
         }finally{
             sqlConn.desconectar(conn);
         }     
@@ -54,7 +53,7 @@ public class ClienteRepositorio implements IClienteRepositorio {
                pstm.executeUpdate();
                
            }catch(SQLException e){
-               throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoExcluirVendedor);
+               throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoExcluirCliente);
            }finally{
                sqlConn.desconectar(conn);
            } 
@@ -74,7 +73,7 @@ public class ClienteRepositorio implements IClienteRepositorio {
             
             pstm.executeUpdate();
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoAlterarVendedor);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoAlterarCliente);
         }finally{
             sqlConn.desconectar(conn);
         }
@@ -110,7 +109,7 @@ public class ClienteRepositorio implements IClienteRepositorio {
                 lista.add(cliente);
             }
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarVendedor);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarCliente);
         }finally{
             sqlConn.desconectar(conn);
         }
@@ -135,7 +134,7 @@ public class ClienteRepositorio implements IClienteRepositorio {
                 cliente.setCpf(rset.getString("cpf"));
             }
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarVendedor);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarCliente);
         }finally{
             sqlConn.desconectar(conn);
         }
