@@ -15,11 +15,11 @@ public class Fabricante {
     private String razaoSocial;
     private String telefone;
 
-    public Integer getidFabricante() {
+    public Integer getIdFabricante() {
         return this.idFabricante;
     }
 
-    public void setidFabricante(Integer idFabricante) {
+    public void setIdFabricante(Integer idFabricante) {
         this.idFabricante = idFabricante;
     }
 
