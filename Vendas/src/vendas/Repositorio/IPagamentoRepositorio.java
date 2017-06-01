@@ -15,7 +15,7 @@ import vendas.entidades.*;
  * @author Felipe
  */
 public interface IPagamentoRepositorio {
-    public void incluir(Integer idPedido, Pagamento pagamento)throws ExcecaoRepositorio,ExcecaoConexao ;
+    public void incluir(Pagamento pagamento)throws ExcecaoRepositorio,ExcecaoConexao ;
     public void excluir(Integer id)throws ExcecaoRepositorio,ExcecaoConexao ;
     public void alterar(Pagamento pagamento)throws ExcecaoRepositorio,ExcecaoConexao ;
     public ArrayList<Pagamento> listar(Integer idPedido)throws ExcecaoRepositorio,ExcecaoConexao ;
