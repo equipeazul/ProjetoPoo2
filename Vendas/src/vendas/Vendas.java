@@ -10,39 +10,38 @@ import vendas.Conexao.Conexao;
 import vendas.Conexao.IConexao;
 import vendas.Excecoes.ExcecaoRepositorio;
 import vendas.Excecoes.ExcecaoConexao;
-import vendas.Repositorio.IVendedorRepositorio;
+import vendas.Repositorio.*;
+import vendas.Repositorio.ProdutoRepositorio;
 import vendas.Repositorio.VendedorRepositorio;
+import vendas.entidades.Fabricante;
+import vendas.entidades.*;
 import vendas.entidades.Vendedor;
 
 /**
  *
  * @author Daniel
  */
-public class Vendas {
+//public class Vendas {
 
     /**
      * @param args the command line arguments
      * @author EquipeAzul
      */
-    public static void main(String[] args) {
+  /*  public static void main(String[] args) {
         
         try {
+
             
-            Vendedor vendedor = new Vendedor();
             
-            vendedor.setNome("Edson");
-            vendedor.setComissao(5);
+                    
             
-            IVendedorRepositorio vendedorRepositorio = new VendedorRepositorio();
-            
-            vendedorRepositorio.incluir(vendedor);
-            
-        } catch (ExcecaoConexao ex) {
-            System.out.println(ExcecaoConexao.erroAoConectar);
-        } catch (ExcecaoRepositorio ex) {
-            System.out.println(ExcecaoRepositorio.erroAoIncluirVendedor);
+       
+        } catch (Exception ex) {
+            System.out.println(ex);
         }
-        
+         
     }
     
-}
+    }
+
+*/
