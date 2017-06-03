@@ -20,4 +20,7 @@ public interface IClienteRepositorio {
     public void alterar(Cliente cliente)throws ExcecaoRepositorio,ExcecaoConexao ;
     public ArrayList<Cliente> listar(String nome)throws ExcecaoRepositorio,ExcecaoConexao ;
     public Cliente consultar(Integer id)throws ExcecaoRepositorio,ExcecaoConexao ;  
+    public Cliente consultarCpf(String cpf) throws ExcecaoRepositorio, ExcecaoConexao;
+    public Integer Ultimo() throws ExcecaoRepositorio, ExcecaoConexao;
+    public Boolean existe(Integer idCliente) throws ExcecaoRepositorio, ExcecaoConexao;
 }
