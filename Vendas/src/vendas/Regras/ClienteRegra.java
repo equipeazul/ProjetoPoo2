@@ -55,7 +55,7 @@ public class ClienteRegra {
             throw new ExcecaoRegras("Erro na DAO");
         }
         try{
-            dao.excluir(c);
+            dao.excluir(c.getIdCliente());
         } catch(ExcecaoConexao e){
             throw new ExcecaoRegras("Erro na conexão");
         } catch(ExcecaoRepositorio e){
