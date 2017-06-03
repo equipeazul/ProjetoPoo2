@@ -142,6 +142,77 @@ public class ClienteRepositorio implements IClienteRepositorio {
         return cliente;
     }
     
+    public Cliente consultarCpf(String cpf) throws ExcecaoRepositorio, ExcecaoConexao {
+        Cliente cliente = new Cliente();
+        
+        IConexao sqlConn = Conexao.getInstancia();
+        Connection conn = sqlConn.conectar();
+        String sql ="SELECT * FROM Clientes WHERE cpf = ? ";
+        try{
+            PreparedStatement pstm= conn.prepareStatement(sql);
+            pstm.setInt(1, cliente.getIdCliente());
+            ResultSet rset = pstm.executeQuery();
+            
+            if (rset.next()) {
+                cliente.setIdCliente(rset.getInt("idCliente"));
+                cliente.setNome(rset.getString("nome"));
+                cliente.setCpf(rset.getString("cpf"));
+
+ 
+            }
+        }catch(SQLException e){
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarVendedor);
+        }finally{
+            sqlConn.desconectar(conn);
+        }
+        
+        return cliente;
+    }
     
-    
+        
+   @Override
+    public Integer Ultimo() throws ExcecaoRepositorio, ExcecaoConexao {
+        Integer id = 0;
+        
+        IConexao sqlConn = Conexao.getInstancia();
+        Connection conn = sqlConn.conectar();
+        String sql ="SELECT MAX(idcliente) as id FROM Clientes;";
+        try{
+            PreparedStatement pstm = conn.prepareStatement(sql);
+         
+            ResultSet rset = pstm.executeQuery();
+            
+            if (rset.next()) {
+                id = rset.getInt("id");
+                return id;
+            }
+        }catch(SQLException e){
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarVendedor);
+        }finally{
+            sqlConn.desconectar(conn);
+        }
+        return id;
+        
+    }
+        
+    @Override
+    public Boolean existe(Integer idCliente) throws ExcecaoRepositorio, ExcecaoConexao {
+        IConexao sqlConn = Conexao.getInstancia();
+        Connection conn = sqlConn.conectar();
+        String sql ="SELECT * FROM Clientes WHERE idCliente = ? ";
+        try{
+            PreparedStatement pstm= conn.prepareStatement(sql);
+            pstm.setInt(1, idCliente);
+            ResultSet rset = pstm.executeQuery();
+            
+            return (rset.next());
+            
+        }catch(SQLException e){
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarVendedor);
+        }finally{
+            sqlConn.desconectar(conn);
+        }
+        
+    }   
+        
 }
