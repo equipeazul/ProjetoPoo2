@@ -53,7 +53,7 @@ public class PedidoRegra {
             throw new ExcecaoRegras("Erro na DAO");
         }
         try{
-            dao.excluir(p);
+            dao.excluir(p.getIdPedido());
         } catch(ExcecaoConexao e){
             throw new ExcecaoRegras("Erro na conexão");
         } catch(ExcecaoRepositorio e){
