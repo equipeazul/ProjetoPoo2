@@ -149,23 +149,11 @@ public class Teste extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        IFramePedidos iframepedidos = new IFramePedidos();
-        jDesktopPane1.add(iframepedidos);
-        iframepedidos.setResizable(true);
-        iframepedidos.setIconifiable(true);
-        iframepedidos.setClosable(true);   
-        iframepedidos.setSize(700,550);
-        iframepedidos.setVisible(true);
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        IFramePagamentos iframepagamentos =  new IFramePagamentos();
-        jDesktopPane1.add(iframepagamentos);
-        iframepagamentos.setResizable(true);
-        iframepagamentos.setIconifiable(true);
-        iframepagamentos.setClosable(true);   
-        iframepagamentos.setSize(700,550);
-        iframepagamentos.setVisible(true);
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
