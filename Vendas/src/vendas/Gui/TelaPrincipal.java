@@ -5,20 +5,27 @@
  */
 package vendas.Gui;
 
+import java.awt.Toolkit;
+import javax.swing.JInternalFrame;
+
 /**
  *
  * @author Felipe
  */
 public class TelaPrincipal extends javax.swing.JFrame {
 
+    private ClienteCadastro cadastroCliente = null;
+    private ClienteCadastro cadastroPedido = null;
     /**
      * Creates new form Teste
      */
     public TelaPrincipal() {
-        initComponents();
-        setSize(1500,950);
-        setLocationRelativeTo(null);
-        setResizable(false);
+        this.initComponents();
+        Toolkit tk = Toolkit.getDefaultToolkit();  
+        int xSize = ((int) tk.getScreenSize().getWidth());  
+        int ySize = ((int) tk.getScreenSize().getHeight());  
+        setSize(xSize,ySize);
+        this.setResizable(false);
         
     }
 
@@ -137,20 +144,35 @@ public class TelaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void abrirTela(JInternalFrame tela, int largura, int altura) {
+        tela.setResizable(true);
+        tela.setIconifiable(true);
+        tela.setClosable(true);   
+        tela.setSize(largura,altura);
+        tela.setVisible(true);
+        tela.setResizable(false);
+        tela.setLocation(140, 20);  
+        //tela.setState(ICONIFIED);
+        
+        //jDesktopPane1.setSelectedFrame(tela);
+        
+    }
+    
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        ClienteCadastro iframeclientes = new ClienteCadastro();
         
-        jDesktopPane1.add(iframeclientes);
-        iframeclientes.setResizable(true);
-        iframeclientes.setIconifiable(true);
-        iframeclientes.setClosable(true);   
-        iframeclientes.setSize(700,550);
-        iframeclientes.setVisible(true);
-        
+        if (cadastroCliente == null) {
+            cadastroCliente = new ClienteCadastro();
+            jDesktopPane1.add(cadastroCliente);
+        }
+        abrirTela(cadastroCliente, 800, 420);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        if (cadastroPedido == null) {
+            cadastroPedido = new ClienteCadastro();
+            jDesktopPane1.add(cadastroPedido);
+        }
+        abrirTela(cadastroCliente, 800, 600);      
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
