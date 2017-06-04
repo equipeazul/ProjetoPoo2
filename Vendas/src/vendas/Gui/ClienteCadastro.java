@@ -33,14 +33,15 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
     public void configurar(String ac) {
         
         if(ac.equals("C")){
-            try{
+            try
+            {
                 
                 Integer id = 0;
                 
-               //Criar DAO
-               IClienteRepositorio clienteDAO = new ClienteRepositorio();
+                //Criar DAO
+                IClienteRepositorio clienteDAO = new ClienteRepositorio();
 
-               if (txtID.getText().equals("")) {
+                if (txtID.getText().equals("")) {
                     id = clienteDAO.Ultimo();
                 }
                 else
@@ -48,15 +49,15 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
                     id = Integer.parseInt(txtID.getText());
                 }
                 
-               //Criar Objeto Basico
-               Cliente cliente = new Cliente();
-               cliente = clienteDAO.consultar(id);
+                //Criar Objeto Basico
+                Cliente cliente = new Cliente();
+                cliente = clienteDAO.consultar(id);
                 if(cliente != null)
-               {
-                  txtNome.setText(cliente.getNome());  
-                  txtID.setText(cliente.getIdCliente().toString());
-                  txtCpf.setText(cliente.getCpf()); 
-               }
+                {
+                   txtNome.setText(cliente.getNome());  
+                   txtID.setText(cliente.getIdCliente().toString());
+                   txtCpf.setText(cliente.getCpf()); 
+                }
                   
             }catch(ExcecaoRepositorio | ExcecaoConexao ex){
                     JOptionPane.showMessageDialog(null, ex);
@@ -67,6 +68,9 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
         if (ac.equals("I")){
            // Limpando os campos
             txtID.setText("");
+        }
+        
+        if (txtID.getText().equals("")){
             txtNome.setText("");
             txtCpf.setText("");
         }
@@ -76,12 +80,11 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
         btnExcluir.setEnabled(ac.equals("C") && !txtID.getText().equals(""));
         btnSalvar.setEnabled(!ac.equals("C"));
         btnCancelar.setEnabled(!ac.equals("C"));
+        btnIrPara.setEnabled(ac.equals("C"));
+        btnPesquisar.setEnabled(ac.equals("C"));
         
         txtNome.setEnabled(!ac.equals("C"));
         txtCpf.setEnabled(!ac.equals("C"));
-        
-        
-        
         
     }
    
@@ -109,8 +112,8 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         txtID = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnIrPara = new javax.swing.JButton();
+        btnPesquisar = new javax.swing.JButton();
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -176,14 +179,14 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
 
         txtID.setEnabled(false);
 
-        jButton1.setText("Ir para");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnIrPara.setText("Ir para");
+        btnIrPara.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnIrParaActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Pesquisar");
+        btnPesquisar.setText("Pesquisar");
 
         jDesktopPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -197,8 +200,8 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
         jDesktopPane1.setLayer(btnCancelar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(txtID, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnIrPara, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnPesquisar, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -213,11 +216,11 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
                         .addContainerGap()
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnIncluir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnIrPara, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(40, 40, 40)
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
+                            .addComponent(btnPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
                         .addGap(35, 35, 35)
                         .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
@@ -251,8 +254,8 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnIrPara)
+                    .addComponent(btnPesquisar))
                 .addGap(39, 39, 39)
                 .addComponent(jLabel4)
                 .addGap(17, 17, 17)
@@ -289,17 +292,7 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNomeActionPerformed
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
-
-        
-            configurar("I");
-            
-            
-            
-            
-            
-            
-           
-
+        configurar("I");
     }//GEN-LAST:event_btnIncluirActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -316,29 +309,15 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
           }catch(ExcecaoRepositorio | ExcecaoConexao ex){
                JOptionPane.showMessageDialog(null,ex);
           }
-                  
         }
-
-
-
     }//GEN-LAST:event_btnExcluirActionPerformed
     
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-
-       
-            configurar("A");
-            
-            
-
-
+        configurar("A");
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
-      //  RelatorioCliente relatorioCliente = new RelatorioCliente();
-        
-   //     relatorioCliente.main();
-                  
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
@@ -354,7 +333,7 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null,txtID.getText());
                 //Criar o DAO
                 clienteDAO.incluir(cliente);
-                JOptionPane.showMessageDialog(null, "Cliente foi ao cadastrado");
+                JOptionPane.showMessageDialog(null, "Cliente foi cadastrado");
 
             
             }else{
@@ -371,11 +350,10 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        
-            configurar("C");
+        configurar("C");
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnIrParaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrParaActionPerformed
         
         try{
             Integer id = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o ID do cliente"));
@@ -384,26 +362,23 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
                txtID.setText(id.toString());
                configurar("C");
             }else{
-            JOptionPane.showMessageDialog(null, "Cliente não existe");
-            
+               JOptionPane.showMessageDialog(null, "Cliente não existe");
             }
-            
-            
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Valor invalido");
         }
         
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnIrParaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnIncluir;
+    private javax.swing.JButton btnIrPara;
+    private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel2;
