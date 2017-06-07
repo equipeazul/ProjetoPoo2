@@ -12,46 +12,46 @@ package vendas.Excecoes;
 public class ExcecaoRepositorio extends Exception {
     
     // Vendedores
-    public static final String erroAoIncluirVendedor = "Erro ao incluir vendedor";
-    public static final String erroAoExcluirVendedor = "Erro ao excluir vendedor";
-    public static final String erroAoAlterarVendedor = "Erro ao alterar vendedor";
-    public static final String erroAoConsultarVendedor = "Erro ao consultar vendedor";
+    public static final String ERRO_AO_INCLUIR_VENDEDOR = "Erro ao incluir vendedor";
+    public static final String ERRO_AO_EXCLUIR_VENDEDOR = "Erro ao excluir vendedor";
+    public static final String ERRO_AO_ALTERAR_VENDEDOR = "Erro ao alterar vendedor";
+    public static final String ERRO_AO_CONSULTAR_VENDEDOR = "Erro ao consultar vendedor";
     
     // Produtos
-    public static final String erroAoIncluirProduto = "Erro ao incluir produto";
-    public static final String erroAoExcluirProduto = "Erro ao excluir produto";
-    public static final String erroAoAlterarProduto = "Erro ao alterar produto";
-    public static final String erroAoConsultarProduto = "Erro ao consultar produto";
+    public static final String ERRO_AO_INCLUIR_PRODUTO = "Erro ao incluir produto";
+    public static final String ERRO_AO_EXCLUIR_PRODUTO = "Erro ao excluir produto";
+    public static final String ERRO_AO_ALTERAR_PRODUTO = "Erro ao alterar produto";
+    public static final String ERRO_AO_CONSULTAR_PRODUTO = "Erro ao consultar produto";
     
     // Clientes
-    public static final String erroAoIncluirCliente = "Erro ao incluir cliente";
-    public static final String erroAoExcluirCliente = "Erro ao excluir cliente";
-    public static final String erroAoAlterarCliente = "Erro ao alterar cliente";
-    public static final String erroAoConsultarCliente = "Erro ao consultar cliente";
+    public static final String ERRO_AO_INCLUIR_CLIENTE = "Erro ao incluir cliente";
+    public static final String ERRO_AO_EXCLUIR_CLIENTE = "Erro ao excluir cliente";
+    public static final String ERRO_AO_ALTERAR_CLIENTE = "Erro ao alterar cliente";
+    public static final String ERRO_AO_CONSULTAR_CLIENTE = "Erro ao consultar cliente";
     
     // Fabricantes
-    public static final String erroAoIncluirFabricante = "Erro ao incluir fabricante";
-    public static final String erroAoExcluirFabricante = "Erro ao excluir fabricante";
-    public static final String erroAoAlterarFabricante = "Erro ao alterar fabricante";
-    public static final String erroAoConsultarFabricante = "Erro ao consultar fabricante";
+    public static final String ERRO_AO_INCLUIR_FABRICANTE = "Erro ao incluir fabricante";
+    public static final String ERRO_AO_EXCLUIR_FABRICANTE = "Erro ao excluir fabricante";
+    public static final String ERRO_AO_ALTERAR_FABRICANTE = "Erro ao alterar fabricante";
+    public static final String ERRO_AO_CONSULTAR_FABRICANTE = "Erro ao consultar fabricante";
     
     // Pagamentos
-    public static final String erroAoIncluirPagamento = "Erro ao incluir pagamento";
-    public static final String erroAoExcluirPagamento = "Erro ao excluir pagamento";
-    public static final String erroAoAlterarPagamento = "Erro ao alterar pagamento";
-    public static final String erroAoConsultarPagamento = "Erro ao consultar pagamento";
+    public static final String ERRO_AO_INCLUIR_PAGAMENTO = "Erro ao incluir pagamento";
+    public static final String ERRO_AO_EXCLUIR_PAGAMENTO = "Erro ao excluir pagamento";
+    public static final String ERRO_AO_ALTERAR_PAGAMENTO = "Erro ao alterar pagamento";
+    public static final String ERRO_AO_CONSULTAR_PAGAMENTO = "Erro ao consultar pagamento";
     
     // PedidoProdutos
-    public static final String erroAoIncluirPedidoProduto = "Erro ao incluir produto no pedido";
-    public static final String erroAoExcluirPedidoProduto = "Erro ao excluir produto do pedido";
-    public static final String erroAoAlterarPedidoProduto = "Erro ao alterar produto do pedido";
-    public static final String erroAoConsultarPedidoProduto = "Erro ao consultar produtos do pedido";
+    public static final String ERRO_AO_INCLUIR_PEDIDOPRODUTO = "Erro ao incluir produto no pedido";
+    public static final String ERRO_AO_EXCLUIR_PEDIDOPRODUTO = "Erro ao excluir produto do pedido";
+    public static final String ERRO_AO_ALTERAR_PEDIDOPRODUTO = "Erro ao alterar produto do pedido";
+    public static final String ERRO_AO_CONSULTAR_PEDIDOPRODUTO = "Erro ao consultar produtos do pedido";
     
     // Pedidos
-    public static final String erroAoIncluirPedido = "Erro ao incluir pedido";
-    public static final String erroAoExcluirPedido = "Erro ao excluir pedido";
-    public static final String erroAoAlterarPedido = "Erro ao alterar pedido";
-    public static final String erroAoConsultarPedido = "Erro ao consultar pedido";
+    public static final String ERRO_AO_INCLUIR_PEDIDO = "Erro ao incluir pedido";
+    public static final String ERRO_AO_EXCLUIR_PEDIDO = "Erro ao excluir pedido";
+    public static final String ERRO_AO_ALTERAR_PEDIDO = "Erro ao alterar pedido";
+    public static final String ERRO_AO_CONSULTAR_PEDIDO = "Erro ao consultar pedido";
     
     public ExcecaoRepositorio() {
         

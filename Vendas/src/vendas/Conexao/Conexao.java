@@ -45,7 +45,7 @@ public class Conexao implements IConexao {
         try {
             conn = DriverManager.getConnection(url, usuario, senha);
         } catch (SQLException ex) {
-            throw new ExcecaoConexao(ExcecaoConexao.erroAoConectar);
+            throw new ExcecaoConexao(ExcecaoConexao.ERRO_AO_CONECTAR);
         }
         return conn;
     }
@@ -57,7 +57,7 @@ public class Conexao implements IConexao {
         try {
             conn.close();
         } catch (SQLException ex) {
-            throw new ExcecaoConexao(ExcecaoConexao.erroAoDesconectar);
+            throw new ExcecaoConexao(ExcecaoConexao.ERRO_AO_DESCONECTAR);
         }
     }
     

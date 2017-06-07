@@ -11,20 +11,12 @@ package vendas.entidades;
  */
 public class PedidoProduto {
     
-    private Integer idPedido;
     private Produto produto;
     private Double valor;
     private Integer quantidade; 
 
     public PedidoProduto() {
         this.produto = new Produto();
-    }
-    public Integer getIdPedido() {
-        return this.idPedido;
-    }
-    
-    public void setIdPedido(Integer idPedido) {
-        this.idPedido = idPedido;
     }
 
     public Produto getProduto() {

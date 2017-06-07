@@ -21,4 +21,7 @@ public interface IVendedorRepositorio {
     public void alterar(Vendedor vendedor)throws ExcecaoRepositorio,ExcecaoConexao ;
     public ArrayList listar(String nome)throws ExcecaoRepositorio,ExcecaoConexao ;
     public Vendedor consultar(Integer id)throws ExcecaoRepositorio,ExcecaoConexao ;
+    public Integer ultimo() throws ExcecaoRepositorio, ExcecaoConexao;
+    public Boolean existe(Integer Id) throws ExcecaoRepositorio, ExcecaoConexao;
+    
 }

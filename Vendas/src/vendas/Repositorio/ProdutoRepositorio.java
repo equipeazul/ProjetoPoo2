@@ -35,7 +35,7 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
             pstm.setInt(4, produto.getFabricante().getIdFabricante()); 
             pstm.executeUpdate();
         }catch(SQLException e){
-           throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoIncluirProduto);
+           throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_INCLUIR_PRODUTO);
         }finally{
             sqlConn.desconectar(conn);
         }
@@ -54,7 +54,7 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
                pstm.setInt(1, id);
                pstm.executeUpdate();
            }catch(SQLException e){
-               throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoExcluirProduto);
+               throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_EXCLUIR_PRODUTO);
            }finally{
                sqlConn.desconectar(conn);
            }    
@@ -75,7 +75,7 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
             pstm.setDouble(4, produto.getIdproduto()); 
             pstm.executeUpdate();
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoAlterarProduto);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_ALTERAR_PEDIDO);
         }finally{
             sqlConn.desconectar(conn);
         }
@@ -110,7 +110,7 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
                 lista.add(produto);
             }
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarProduto);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_ALTERAR_PRODUTO);
         }finally{
             sqlConn.desconectar(conn);
         }
@@ -138,13 +138,58 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
                 produto.setPrecoVenda(rset.getDouble("precovenda"));
             }
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarProduto);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_ALTERAR_PRODUTO);
         }finally{
             sqlConn.desconectar(conn);
         }
         
         return produto;
     }        
+    
+    @Override
+    public Integer ultimo() throws ExcecaoRepositorio, ExcecaoConexao {
+        Integer id = 0;
+        
+        IConexao sqlConn = Conexao.getInstancia();
+        Connection conn = sqlConn.conectar();
+        String sql ="SELECT MAX(idproduto) as id FROM Produtos;";
+        try{
+            PreparedStatement pstm = conn.prepareStatement(sql);
+         
+            ResultSet rset = pstm.executeQuery();
+            
+            if (rset.next()) {
+                id = rset.getInt("id");
+                return id;
+            }
+        }catch(SQLException e){
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_PRODUTO);
+        }finally{
+            sqlConn.desconectar(conn);
+        }
+        return id;
+       
+    }
+    
+@Override
+    public Boolean existe(Integer id) throws ExcecaoRepositorio, ExcecaoConexao {
+        IConexao sqlConn = Conexao.getInstancia();
+        Connection conn = sqlConn.conectar();
+        String sql ="SELECT idProduto FROM Produtos WHERE idProduto = ? ";
+        try{
+            PreparedStatement pstm= conn.prepareStatement(sql);
+            pstm.setInt(1, id);
+            ResultSet rset = pstm.executeQuery();
+            
+            return (rset.next());
+            
+        }catch(SQLException e){
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_PRODUTO);
+        }finally{
+            sqlConn.desconectar(conn);
+        }
+        
+    }       
 }
     
 

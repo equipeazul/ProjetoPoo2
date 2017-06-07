@@ -19,5 +19,7 @@ public interface IPagamentoRepositorio {
     public void excluir(Integer id)throws ExcecaoRepositorio,ExcecaoConexao ;
     public void alterar(Pagamento pagamento)throws ExcecaoRepositorio,ExcecaoConexao ;
     public ArrayList<Pagamento> listar(Integer idPedido)throws ExcecaoRepositorio,ExcecaoConexao ;
-    public Pagamento consultar(Integer idPagamento)throws ExcecaoRepositorio,ExcecaoConexao ;    
+    public Pagamento consultar(Integer idPagamento)throws ExcecaoRepositorio,ExcecaoConexao ; 
+    public Integer ultimo() throws ExcecaoRepositorio, ExcecaoConexao;
+    
 }

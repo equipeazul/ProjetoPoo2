@@ -11,8 +11,8 @@ package vendas.Excecoes;
  */
 public class ExcecaoConexao extends Exception{
     
-    public static final String erroAoConectar = "Erro ao conectar";
-    public static final String erroAoDesconectar = "Erro ao desconectar";
+    public static final String ERRO_AO_CONECTAR = "Erro ao conectar com o banco de dados";
+    public static final String ERRO_AO_DESCONECTAR = "Erro ao desconectar do banco de dados";
     
     public ExcecaoConexao() {
         

@@ -37,7 +37,7 @@ public class FabricanteRepositorio implements IFabricanteRepositorio {
             pstm.executeUpdate();
             
         }catch(SQLException e){
-           throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoIncluirFabricante);
+           throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_INCLUIR_FABRICANTE);
         }finally{
             sqlConn.desconectar(conn);
         }   
@@ -54,7 +54,7 @@ public class FabricanteRepositorio implements IFabricanteRepositorio {
                pstm.executeUpdate();
                
            }catch(SQLException e){
-               throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoExcluirFabricante);
+               throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_EXCLUIR_FABRICANTE);
            }finally{
                sqlConn.desconectar(conn);
            }   
@@ -74,7 +74,7 @@ public class FabricanteRepositorio implements IFabricanteRepositorio {
             
             pstm.executeUpdate();
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoAlterarFabricante);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_ALTERAR_FABRICANTE);
         }finally{
             sqlConn.desconectar(conn);
         }
@@ -109,7 +109,7 @@ public class FabricanteRepositorio implements IFabricanteRepositorio {
                 lista.add(fabricante);
             }
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarFabricante);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_FABRICANTE);
         }finally{
             sqlConn.desconectar(conn);
         }
@@ -136,12 +136,56 @@ public class FabricanteRepositorio implements IFabricanteRepositorio {
  
             }
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarFabricante);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_FABRICANTE);
         }finally{
             sqlConn.desconectar(conn);
         }
         
         return fabricante;    
     }
+
+    @Override
+    public Integer ultimo() throws ExcecaoRepositorio, ExcecaoConexao {
+        Integer id = 0;
+        
+        IConexao sqlConn = Conexao.getInstancia();
+        Connection conn = sqlConn.conectar();
+        String sql ="SELECT MAX(idfabricante) as id FROM Fabricantes;";
+        try{
+            PreparedStatement pstm = conn.prepareStatement(sql);
+         
+            ResultSet rset = pstm.executeQuery();
+            
+            if (rset.next()) {
+                id = rset.getInt("id");
+                return id;
+            }
+        }catch(SQLException e){
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_FABRICANTE);
+        }finally{
+            sqlConn.desconectar(conn);
+        }
+        return id;
+        
+    }
     
+    @Override
+    public Boolean existe(Integer id) throws ExcecaoRepositorio, ExcecaoConexao {
+        IConexao sqlConn = Conexao.getInstancia();
+        Connection conn = sqlConn.conectar();
+        String sql ="SELECT idFabricante FROM Fabricantes WHERE idFabricante = ? ";
+        try{
+            PreparedStatement pstm= conn.prepareStatement(sql);
+            pstm.setInt(1, id);
+            ResultSet rset = pstm.executeQuery();
+            
+            return (rset.next());
+            
+        }catch(SQLException e){
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_FABRICANTE);
+        }finally{
+            sqlConn.desconectar(conn);
+        }
+        
+    }   
 }

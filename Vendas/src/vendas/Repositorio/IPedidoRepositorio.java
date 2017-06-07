@@ -21,5 +21,12 @@ public interface IPedidoRepositorio {
     public void alterar(Pedido pedido)throws ExcecaoRepositorio,ExcecaoConexao ;
     public ArrayList listar(String nome)throws ExcecaoRepositorio,ExcecaoConexao ;
     public Pedido consultar(Integer id)throws ExcecaoRepositorio,ExcecaoConexao ;
+    public Integer ultimo() throws ExcecaoRepositorio, ExcecaoConexao;
+    public Boolean existe(Integer Id) throws ExcecaoRepositorio, ExcecaoConexao;
     
+    public void incluirProduto(Integer idPedido, PedidoProduto pedidoProduto)throws ExcecaoRepositorio,ExcecaoConexao ;
+    public void excluirProduto(Integer idPedido, Integer idProduto)throws ExcecaoRepositorio,ExcecaoConexao ;
+    public void alterarProduto(Integer idPedido, PedidoProduto pedidoProduto)throws ExcecaoRepositorio,ExcecaoConexao ;
+    public ArrayList<PedidoProduto> listarProduto(Integer IdPedido)throws ExcecaoRepositorio,ExcecaoConexao ;
+    public PedidoProduto consultarProduto(Integer idPedido, Integer idProduto)throws ExcecaoRepositorio,ExcecaoConexao ;    
 }

@@ -19,5 +19,7 @@ public interface IFabricanteRepositorio {
     public void excluir(Integer id)throws ExcecaoRepositorio,ExcecaoConexao ;
     public void alterar(Fabricante fabricante)throws ExcecaoRepositorio,ExcecaoConexao ;
     public ArrayList<Fabricante> listar(String nome)throws ExcecaoRepositorio,ExcecaoConexao ;
-    public Fabricante consultar(Integer id)throws ExcecaoRepositorio,ExcecaoConexao ;      
+    public Fabricante consultar(Integer id)throws ExcecaoRepositorio,ExcecaoConexao ; 
+    public Integer ultimo() throws ExcecaoRepositorio, ExcecaoConexao;
+    public Boolean existe(Integer Id) throws ExcecaoRepositorio, ExcecaoConexao;
 }

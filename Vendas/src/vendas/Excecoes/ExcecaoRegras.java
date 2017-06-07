@@ -11,7 +11,7 @@ package vendas.Excecoes;
  */
 public class ExcecaoRegras extends Exception {
     
-    public static final String erroIdClienteNaoExiste = "Id do cliente não existe";
+    public static final String ERRO_IDCLIENTE_NAO_EXISTE = "Id do cliente não existe";
     
     public ExcecaoRegras() {
         

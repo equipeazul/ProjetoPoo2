@@ -27,7 +27,7 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
      */
     public ClienteCadastro(){
         initComponents();
-       // configurar("C");
+        configurar("C");
     }
 
     public void configurar(String ac) {
@@ -42,7 +42,7 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
                 IClienteRepositorio clienteDAO = new ClienteRepositorio();
 
                 if (txtID.getText().equals("")) {
-                    id = clienteDAO.Ultimo();
+                    id = clienteDAO.ultimo();
                 }
                 else
                 {
@@ -60,7 +60,7 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
                 }
                   
             }catch(ExcecaoRepositorio | ExcecaoConexao ex){
-                    JOptionPane.showMessageDialog(null, ex);
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
             }
            
         }
@@ -325,7 +325,7 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
             configurar("C");            
             JOptionPane.showMessageDialog(null, "Cliente foi excluso");
           }catch(ExcecaoRepositorio | ExcecaoConexao ex){
-               JOptionPane.showMessageDialog(null,ex);
+               JOptionPane.showMessageDialog(null,ex.getMessage());
           }
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
@@ -360,7 +360,7 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "Cliente foi alterado");
             }
         }catch(ExcecaoRepositorio | ExcecaoConexao ex){
-                JOptionPane.showMessageDialog(null, ex);
+                JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         
         configurar("C");
@@ -382,7 +382,9 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
             }else{
                JOptionPane.showMessageDialog(null, "Cliente não existe");
             }
-        }catch(Exception e){
+        }catch(ExcecaoRepositorio | ExcecaoConexao ex){
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+        }catch(Exception ex){
             JOptionPane.showMessageDialog(null, "Valor invalido");
         }
         

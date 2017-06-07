@@ -42,7 +42,7 @@ public class PagamentoRepositorio implements IPagamentoRepositorio{
             
             pstm.executeUpdate();
         }catch(SQLException e){
-           throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoIncluirPagamento);
+           throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_INCLUIR_PAGAMENTO);
         }finally{
             sqlConn.desconectar(conn);
         }   
@@ -58,7 +58,7 @@ public class PagamentoRepositorio implements IPagamentoRepositorio{
                pstm.setInt(1, id);
                pstm.executeUpdate();
            }catch(SQLException e){
-               throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoExcluirPagamento);
+               throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_EXCLUIR_PAGAMENTO);
            }finally{
                sqlConn.desconectar(conn);
            }        }
@@ -80,7 +80,7 @@ public class PagamentoRepositorio implements IPagamentoRepositorio{
             pstm.setInt(7, pagamento.getIdPagamento()); 
             pstm.executeUpdate();
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoAlterarPagamento);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_ALTERAR_PAGAMENTO);
         }finally{
             sqlConn.desconectar(conn);
         }
@@ -121,7 +121,7 @@ public class PagamentoRepositorio implements IPagamentoRepositorio{
                 lista.add(pagamento);
             }
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarPagamento);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_PAGAMENTO);
         }finally{
             sqlConn.desconectar(conn);
         }
@@ -152,12 +152,37 @@ public class PagamentoRepositorio implements IPagamentoRepositorio{
  
             }
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarPagamento);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_PAGAMENTO);
         }finally{
             sqlConn.desconectar(conn);
         }
         
         return pagamento; 
+    }
+    
+    @Override
+    public Integer ultimo() throws ExcecaoRepositorio, ExcecaoConexao {
+        Integer id = 0;
+        
+        IConexao sqlConn = Conexao.getInstancia();
+        Connection conn = sqlConn.conectar();
+        String sql ="SELECT MAX(idpagamento) as id FROM Pagamentos;";
+        try{
+            PreparedStatement pstm = conn.prepareStatement(sql);
+         
+            ResultSet rset = pstm.executeQuery();
+            
+            if (rset.next()) {
+                id = rset.getInt("id");
+                return id;
+            }
+        }catch(SQLException e){
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_PAGAMENTO);
+        }finally{
+            sqlConn.desconectar(conn);
+        }
+        return id;
+        
     }
     
 }

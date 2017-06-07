@@ -152,10 +152,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tela.setVisible(true);
         tela.setResizable(false);
         tela.setLocation(140, 20);  
-        //tela.setState(ICONIFIED);
         
-        //jDesktopPane1.setSelectedFrame(tela);
+        jDesktopPane1.setSelectedFrame(tela);
         
+        //for (int i = 0; i < jDesktopPane1.getComponentCount(); i++) {
+        //    jDesktopPane1.getComponent(i).setVisible(jDesktopPane1.getComponent(i).equals(tela));
+        //}
     }
     
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -172,7 +174,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             cadastroPedido = new ClienteCadastro();
             jDesktopPane1.add(cadastroPedido);
         }
-        abrirTela(cadastroCliente, 800, 600);      
+        abrirTela(cadastroPedido, 800, 600);      
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

@@ -31,7 +31,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
             pstm.setDouble(2, vendedor.getComissao()); 
             pstm.executeUpdate();
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoIncluirVendedor);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_INCLUIR_VENDEDOR);
         }finally{
             sqlConn.desconectar(conn);
         }
@@ -48,7 +48,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
             pstm.setInt(1, id);
             pstm.executeUpdate();
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoExcluirVendedor);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_EXCLUIR_VENDEDOR);
         }finally{
             sqlConn.desconectar(conn);
         }
@@ -66,7 +66,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
             pstm.setInt(3, vendedor.getIdVendedor()); 
             pstm.executeUpdate();
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoAlterarVendedor);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_ALTERAR_VENDEDOR);
         }finally{
             sqlConn.desconectar(conn);
         }
@@ -98,7 +98,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
                 lista.add(vendedor);
             }
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarVendedor);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_VENDEDOR);
         }finally{
             sqlConn.desconectar(conn);
         }
@@ -126,7 +126,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
                 vendedor.setComissao(rset.getDouble("comissao"));
             }
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarVendedor);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_VENDEDOR);
         }finally{
             sqlConn.desconectar(conn);
         }
@@ -134,5 +134,50 @@ public class VendedorRepositorio implements IVendedorRepositorio{
         return vendedor;
     }
     
+    @Override
+    public Integer ultimo() throws ExcecaoRepositorio, ExcecaoConexao {
+        Integer id = 0;
+        
+        IConexao sqlConn = Conexao.getInstancia();
+        Connection conn = sqlConn.conectar();
+        String sql ="SELECT MAX(idvendedor) as id FROM Vendedores;";
+        try{
+            PreparedStatement pstm = conn.prepareStatement(sql);
+         
+            ResultSet rset = pstm.executeQuery();
+            
+            if (rset.next()) {
+                id = rset.getInt("id");
+                return id;
+            }
+        }catch(SQLException e){
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_VENDEDOR);
+        }finally{
+            sqlConn.desconectar(conn);
+        }
+        return id;
+        
+    }
+    
+    @Override
+    public Boolean existe(Integer id) throws ExcecaoRepositorio, ExcecaoConexao {
+        IConexao sqlConn = Conexao.getInstancia();
+        Connection conn = sqlConn.conectar();
+        String sql ="SELECT idVendedor FROM Vendedores WHERE idVendedor = ? ";
+        try{
+            PreparedStatement pstm= conn.prepareStatement(sql);
+            pstm.setInt(1, id);
+            ResultSet rset = pstm.executeQuery();
+            
+            return (rset.next());
+            
+        }catch(SQLException e){
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_VENDEDOR);
+        }finally{
+            sqlConn.desconectar(conn);
+        }
+        
+    }   
+       
     
 }

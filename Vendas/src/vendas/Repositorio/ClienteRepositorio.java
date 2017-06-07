@@ -36,7 +36,7 @@ public class ClienteRepositorio implements IClienteRepositorio {
             pstm.executeUpdate();
             
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoIncluirCliente);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_INCLUIR_CLIENTE);
         }finally{
             sqlConn.desconectar(conn);
         }     
@@ -53,7 +53,7 @@ public class ClienteRepositorio implements IClienteRepositorio {
                pstm.executeUpdate();
                
            }catch(SQLException e){
-               throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoExcluirCliente);
+               throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_EXCLUIR_CLIENTE);
            }finally{
                sqlConn.desconectar(conn);
            } 
@@ -73,7 +73,7 @@ public class ClienteRepositorio implements IClienteRepositorio {
             
             pstm.executeUpdate();
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoAlterarCliente);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_ALTERAR_CLIENTE);
         }finally{
             sqlConn.desconectar(conn);
         }
@@ -109,7 +109,7 @@ public class ClienteRepositorio implements IClienteRepositorio {
                 lista.add(cliente);
             }
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarCliente);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_ALTERAR_CLIENTE);
         }finally{
             sqlConn.desconectar(conn);
         }
@@ -134,7 +134,7 @@ public class ClienteRepositorio implements IClienteRepositorio {
                 cliente.setCpf(rset.getString("cpf"));
             }
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarCliente);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_CLIENTE);
         }finally{
             sqlConn.desconectar(conn);
         }
@@ -157,11 +157,9 @@ public class ClienteRepositorio implements IClienteRepositorio {
                 cliente.setIdCliente(rset.getInt("idCliente"));
                 cliente.setNome(rset.getString("nome"));
                 cliente.setCpf(rset.getString("cpf"));
-
- 
             }
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarVendedor);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_CLIENTE);
         }finally{
             sqlConn.desconectar(conn);
         }
@@ -171,7 +169,7 @@ public class ClienteRepositorio implements IClienteRepositorio {
     
         
    @Override
-    public Integer Ultimo() throws ExcecaoRepositorio, ExcecaoConexao {
+    public Integer ultimo() throws ExcecaoRepositorio, ExcecaoConexao {
         Integer id = 0;
         
         IConexao sqlConn = Conexao.getInstancia();
@@ -187,28 +185,28 @@ public class ClienteRepositorio implements IClienteRepositorio {
                 return id;
             }
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarVendedor);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_CLIENTE);
         }finally{
             sqlConn.desconectar(conn);
         }
         return id;
         
     }
-        
+    
     @Override
-    public Boolean existe(Integer idCliente) throws ExcecaoRepositorio, ExcecaoConexao {
+    public Boolean existe(Integer id) throws ExcecaoRepositorio, ExcecaoConexao {
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="SELECT * FROM Clientes WHERE idCliente = ? ";
+        String sql ="SELECT idCliente FROM Clientes WHERE idCliente = ? ";
         try{
             PreparedStatement pstm= conn.prepareStatement(sql);
-            pstm.setInt(1, idCliente);
+            pstm.setInt(1, id);
             ResultSet rset = pstm.executeQuery();
             
             return (rset.next());
             
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.erroAoConsultarVendedor);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_CLIENTE);
         }finally{
             sqlConn.desconectar(conn);
         }

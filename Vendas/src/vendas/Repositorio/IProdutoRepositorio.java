@@ -20,5 +20,7 @@ public interface IProdutoRepositorio {
     public void alterar(Produto produto)throws ExcecaoRepositorio,ExcecaoConexao ;
     public ArrayList listar(String descricao)throws ExcecaoRepositorio,ExcecaoConexao ;
     public Produto consultar(Integer id)throws ExcecaoRepositorio,ExcecaoConexao ;
+    public Integer ultimo() throws ExcecaoRepositorio, ExcecaoConexao;
+    public Boolean existe(Integer Id) throws ExcecaoRepositorio, ExcecaoConexao;
     
 }
