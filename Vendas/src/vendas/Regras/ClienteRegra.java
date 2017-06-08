@@ -14,109 +14,57 @@ import vendas.entidades.Cliente;
  * @author heitor santos
  */
 public class ClienteRegra {
+    
     private final static IClienteRepositorio dao = new ClienteRepositorio();
-    public  void validar(Cliente c) throws ExcecaoRegras{
-        if(c.getNome()==null){
-            throw new ExcecaoRegras("Descrição inválida");
-        }
-        if(c.getNome().trim().equals("")){
-            throw new ExcecaoRegras("Descrição inválida");
+    
+    public  void verificarExistencia(Integer id) throws ExcecaoRepositorio, ExcecaoConexao, ExcecaoRegras{
+        if(!dao.existe(id)){
+            throw new ExcecaoRegras(ExcecaoRegras.ERRO_IDCLIENTE_NAO_EXISTE);
         }
     }
-    public  void verificarDuplicidade(Cliente c) throws ExcecaoRegras{
-        try{
-            Cliente x= dao.consultarCpf(c.getCpf());
-            if(x!=null){
-                throw new ExcecaoRegras("Cliente já existe");
-            }
-            } catch(ExcecaoConexao e){
-                throw new ExcecaoRegras("Erro na conexão");
-            } catch(ExcecaoRepositorio e){
-                throw new ExcecaoRegras("Erro na DAO");
-            }              
+    
+    public  void jaCadastrado(Integer id) throws ExcecaoRepositorio, ExcecaoConexao, ExcecaoRegras{
+        if(dao.existe(id)){
+            throw new ExcecaoRegras(ExcecaoRegras.ERRO_IDCLIENTE_JA_CADASTRADO);
+        }
+    }
+    
+    public  void validar(Cliente cliente) throws ExcecaoRegras{
+        if(cliente.getNome().trim().equals("")){
+            throw new ExcecaoRegras(ExcecaoRegras.ERRO_NOME_CLIENTE_INVALIDO);
+        }
+    }
+    
+    public  void verificarDuplicidadeCpf(String cpf) throws ExcecaoRepositorio, ExcecaoConexao, ExcecaoRegras{
+        Cliente cliente = dao.consultarCpf(cpf);
+        if(cliente != null){
+            throw new ExcecaoRegras(ExcecaoRegras.ERRO_CPF_JA_CADASTRADO);
+        }
     }  
-    public  void incluir(Cliente c)throws ExcecaoRegras{
-        try{
-            dao.incluir(c);
-        }catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        }catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        }              
+    public  void incluir(Cliente cliente) throws ExcecaoRepositorio, ExcecaoConexao{
+        dao.incluir(cliente);
     }
-    public  void excluir(Cliente c)throws ExcecaoRegras{
-        if(c.getIdCliente()==null){
-            throw new ExcecaoRegras("ID inválido");
-        }
-        try{
-            Cliente x = dao.consultar(c.getIdCliente());
-            if(x==null){
-                throw new ExcecaoRegras("Cliente não existe");
-            }
-        }catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        }catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        }
-        try{
-            dao.excluir(c.getIdCliente());
-        } catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        } catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        }       
+    
+    public  void excluir(Cliente cliente) throws ExcecaoRepositorio, ExcecaoConexao{
+        dao.excluir(cliente.getIdCliente());
     }
-    public void alterar(Cliente c)throws ExcecaoRegras{
-        
-        try{
-            dao.alterar(c);
-        } catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        } catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        } 
+    
+    public void alterar(Cliente cliente) throws ExcecaoRepositorio, ExcecaoConexao{
+        dao.alterar(cliente);
     }
-    public ArrayList<Cliente> listar(String nome)throws ExcecaoRegras{
-        
-        try{
-            return dao.listar(nome);
-        } catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        } catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        }             
+    public ArrayList<Cliente> listar(String nome) throws ExcecaoRepositorio, ExcecaoConexao{
+        return dao.listar(nome);
     } 
-    public Cliente consultar(Integer id)throws ExcecaoRegras{
-        try{
-            return dao.consultar(id);
-        } catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        } catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        }         
+    
+    public Cliente consultar(Integer id) throws ExcecaoRepositorio, ExcecaoConexao{
+        return dao.consultar(id);
     }
 
-    public Integer ultimo()throws ExcecaoRegras{
-        try{
-            return dao.ultimo();
-        } catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        } catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        }         
+    public Integer ultimo() throws ExcecaoRepositorio, ExcecaoConexao{
+        return dao.ultimo();
     }    
     
-    public Boolean existe(Integer id)throws ExcecaoRegras{
-        try{
-            return dao.existe(id);
-        } catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        } catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        }         
+    public Boolean existe(Integer id) throws ExcecaoRepositorio, ExcecaoConexao{
+        return dao.existe(id);
     }    
-        
-
-    
-    
 }

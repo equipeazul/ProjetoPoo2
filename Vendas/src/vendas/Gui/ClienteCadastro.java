@@ -61,7 +61,7 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
                    txtCpf.setText(cliente.getCpf()); 
                 }
                   
-            }catch(ExcecaoRegras ex){
+            }catch(ExcecaoConexao | ExcecaoRepositorio | ExcecaoRegras ex){
                     JOptionPane.showMessageDialog(null, ex.getMessage());
             }
            
@@ -332,7 +332,7 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
             txtID.setText("");
             configurar("C");            
             JOptionPane.showMessageDialog(null, "Cliente foi excluso");
-          }catch(ExcecaoRegras ex){
+          }catch(ExcecaoConexao | ExcecaoRepositorio | ExcecaoRegras ex){
                JOptionPane.showMessageDialog(null,ex.getMessage());
           }
         }
@@ -365,7 +365,7 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
                 f.alterarCliente(cliente);
                JOptionPane.showMessageDialog(null, "Cliente foi alterado");
             }
-        }catch(ExcecaoRegras ex){
+        }catch(ExcecaoConexao | ExcecaoRepositorio | ExcecaoRegras ex){
                 JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         
@@ -381,15 +381,15 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
         
         Fachada f = Fachada.getInstancia();
         
-        try{
+        try
+        {
             Integer id = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o ID do cliente"));
             
-            if (f.existeCliente(id)){
-               txtID.setText(id.toString());
-               configurar("C");
-            }else{
-               JOptionPane.showMessageDialog(null, "Cliente não existe");
-            }
+            f.consultarCliente(id);
+            txtID.setText(id.toString());
+            configurar("C");
+        } catch (ExcecaoConexao | ExcecaoRepositorio | ExcecaoRegras ex) {
+           JOptionPane.showMessageDialog(null, ex.getMessage());
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Valor invalido");
         }

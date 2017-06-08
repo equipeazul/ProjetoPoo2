@@ -1,7 +1,9 @@
 package vendas.fachada;
 
 import java.util.ArrayList;
+import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRegras;
+import vendas.Excecoes.ExcecaoRepositorio;
 import vendas.Regras.ClienteRegra;
 import vendas.Regras.VendedorRegra;
 import vendas.entidades.Cliente;
@@ -22,7 +24,7 @@ public class Fachada {
     }
     
     public static Fachada getInstancia(){
-        if(instancia==null)
+        if(instancia == null)
             instancia = new Fachada();
         return instancia;
     }
@@ -31,32 +33,34 @@ public class Fachada {
      * Cliente
      *########################################################################*/
     
-    public void incluirCliente(Cliente c)throws ExcecaoRegras{
-        clienteRegra.verificarDuplicidade(c);
-        clienteRegra.incluir(c);
+    public void incluirCliente(Cliente cliente) throws ExcecaoRepositorio, ExcecaoConexao, ExcecaoRegras{
+        clienteRegra.jaCadastrado(cliente.getIdCliente());
+        clienteRegra.verificarDuplicidadeCpf(cliente.getCpf());
+        clienteRegra.validar(cliente);
+        clienteRegra.incluir(cliente);
     }
     
-    public void excluirCliente(Cliente c)throws ExcecaoRegras{
-        clienteRegra.excluir(c);
+    public void excluirCliente(Cliente cliente) throws ExcecaoRepositorio, ExcecaoConexao, ExcecaoRegras{
+        clienteRegra.verificarExistencia(cliente.getIdCliente());
+        clienteRegra.excluir(cliente);
     }
     
-    public void alterarCliente(Cliente c)throws ExcecaoRegras{
-        clienteRegra.alterar(c);
+    public void alterarCliente(Cliente cliente) throws ExcecaoRepositorio, ExcecaoConexao, ExcecaoRegras{
+        clienteRegra.verificarExistencia(cliente.getIdCliente());
+        clienteRegra.validar(cliente);
+        clienteRegra.alterar(cliente);
     }
        
-    public Cliente consultarCliente(Integer id)throws ExcecaoRegras{
+    public Cliente consultarCliente(Integer id) throws ExcecaoRepositorio, ExcecaoConexao, ExcecaoRegras{
+        clienteRegra.verificarExistencia(id);
         return clienteRegra.consultar(id);
     }
     
-    public Integer ultimoCliente()throws ExcecaoRegras{
+    public Integer ultimoCliente() throws ExcecaoRepositorio, ExcecaoConexao{
         return clienteRegra.ultimo();
     }
     
-    public Boolean existeCliente(Integer id)throws ExcecaoRegras{
-       return clienteRegra.existe(id);         
-    }
-    
-    public ArrayList<Cliente> listarClientes(String nome)throws ExcecaoRegras{
+    public ArrayList<Cliente> listarClientes(String nome) throws ExcecaoRepositorio, ExcecaoConexao, ExcecaoRegras{
         return clienteRegra.listar(nome);
     }
    
@@ -69,12 +73,12 @@ public class Fachada {
         vendedorRegra.incluir(c);
     }
     
-    public void excluirVendedor(Vendedor c)throws ExcecaoRegras{
-        vendedorRegra.excluir(c);
+    public void excluirVendedor(Vendedor vendedor)throws ExcecaoRegras{
+        vendedorRegra.excluir(vendedor);
     }
     
-    public void alterarVendedor(Vendedor c)throws ExcecaoRegras{
-        vendedorRegra.alterar(c);
+    public void alterarVendedor(Vendedor vendedor)throws ExcecaoRegras{
+        vendedorRegra.alterar(vendedor);
     }
        
     public Vendedor consultarVendedor(Integer id)throws ExcecaoRegras{
