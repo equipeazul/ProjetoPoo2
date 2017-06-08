@@ -11,10 +11,12 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import vendas.Excecoes.ExcecaoConexao;
+import vendas.Excecoes.ExcecaoRegras;
 import vendas.Excecoes.ExcecaoRepositorio;
 import vendas.Repositorio.ClienteRepositorio;
 import vendas.Repositorio.IClienteRepositorio;
 import vendas.entidades.Cliente;
+import vendas.fachada.Fachada;
 
 /**
  *
@@ -39,10 +41,10 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
                 Integer id = 0;
                 
                 //Criar DAO
-                IClienteRepositorio clienteDAO = new ClienteRepositorio();
+                Fachada f = Fachada.getInstancia();
 
                 if (txtID.getText().equals("")) {
-                    id = clienteDAO.ultimo();
+                    id = f.ultimoCliente();
                 }
                 else
                 {
@@ -51,7 +53,7 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
                 
                 //Criar Objeto Basico
                 Cliente cliente = new Cliente();
-                cliente = clienteDAO.consultar(id);
+                cliente = f.consultarCliente(id);
                 if(cliente != null)
                 {
                    txtNome.setText(cliente.getNome());  
@@ -59,7 +61,7 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
                    txtCpf.setText(cliente.getCpf()); 
                 }
                   
-            }catch(ExcecaoRepositorio | ExcecaoConexao ex){
+            }catch(ExcecaoRegras ex){
                     JOptionPane.showMessageDialog(null, ex.getMessage());
             }
            
@@ -317,14 +319,20 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
         Integer dialogButton = JOptionPane.YES_NO_OPTION;
         JOptionPane.showConfirmDialog(null, "Deseja excluir o registro?","Atenção",dialogButton);
        
-        IClienteRepositorio clienteDAO = new ClienteRepositorio();
+         Cliente cliente = new Cliente();
+        cliente.setIdCliente(Integer.parseInt(txtID.getText()));
+        cliente.setNome(txtNome.getText());
+        cliente.setCpf(txtCpf.getText()); 
+        
+         Fachada f = Fachada.getInstancia();
         if(dialogButton == JOptionPane.YES_OPTION){
           try{  
-            clienteDAO.excluir(Integer.parseInt(txtID.getText()));
+               f.excluirCliente(cliente);
+           
             txtID.setText("");
             configurar("C");            
             JOptionPane.showMessageDialog(null, "Cliente foi excluso");
-          }catch(ExcecaoRepositorio | ExcecaoConexao ex){
+          }catch(ExcecaoRegras ex){
                JOptionPane.showMessageDialog(null,ex.getMessage());
           }
         }
@@ -341,25 +349,23 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
     
         Cliente cliente = new Cliente();
+        cliente.setIdCliente(Integer.parseInt(txtID.getText()));
         cliente.setNome(txtNome.getText());
         cliente.setCpf(txtCpf.getText()); 
-          
-        IClienteRepositorio clienteDAO = new ClienteRepositorio();
         
+        Fachada f = Fachada.getInstancia();
+              
         try{
             if (txtID.getText().equals("")){
-                JOptionPane.showMessageDialog(null,txtID.getText());
-                //Criar o DAO
-                clienteDAO.incluir(cliente);
-                JOptionPane.showMessageDialog(null, "Cliente foi cadastrado");
+                f.incluirCliente(cliente);
+               JOptionPane.showMessageDialog(null, "Cliente foi cadastrado");
 
             
             }else{
-                cliente.setIdCliente(Integer.parseInt(txtID.getText()));  
-                clienteDAO.alterar(cliente);
-                JOptionPane.showMessageDialog(null, "Cliente foi alterado");
+                f.alterarCliente(cliente);
+               JOptionPane.showMessageDialog(null, "Cliente foi alterado");
             }
-        }catch(ExcecaoRepositorio | ExcecaoConexao ex){
+        }catch(ExcecaoRegras ex){
                 JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         
@@ -373,21 +379,20 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
 
     private void btnIrParaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrParaActionPerformed
         
+        Fachada f = Fachada.getInstancia();
+        
         try{
             Integer id = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o ID do cliente"));
-            IClienteRepositorio clienteDAO = new ClienteRepositorio();
-            if (clienteDAO.existe(id)){
+            
+            if (f.existeCliente(id)){
                txtID.setText(id.toString());
                configurar("C");
             }else{
                JOptionPane.showMessageDialog(null, "Cliente não existe");
             }
-        }catch(ExcecaoRepositorio | ExcecaoConexao ex){
-                JOptionPane.showMessageDialog(null, ex.getMessage());
-        }catch(Exception ex){
+        }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Valor invalido");
         }
-        
         
     }//GEN-LAST:event_btnIrParaActionPerformed
 
