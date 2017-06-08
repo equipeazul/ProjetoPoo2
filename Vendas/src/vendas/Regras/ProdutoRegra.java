@@ -22,6 +22,7 @@ public class ProdutoRegra {
         }
     }  
     public static void verificarDuplicidade(Produto p) throws ExcecaoRegras{
+        /*
         try{
             Produto x= dao.consultar(p.getIdProduto());
             if(x!=null){
@@ -32,6 +33,7 @@ public class ProdutoRegra {
             } catch(ExcecaoRepositorio e){
                 throw new ExcecaoRegras("Erro na DAO");
             }              
+*/
     }
     public static void incluir(Produto p)throws ExcecaoRegras{
         try{
@@ -43,6 +45,7 @@ public class ProdutoRegra {
         }              
     }
     public static void excluir(Produto p)throws ExcecaoRegras{
+        /*
         if(p.getIdProduto()==null){
             throw new ExcecaoRegras("ID inválido");
         }
@@ -62,9 +65,11 @@ public class ProdutoRegra {
             throw new ExcecaoRegras("Erro na conexão");
         } catch(ExcecaoRepositorio e){
             throw new ExcecaoRegras("Erro na DAO");
-        }       
+        } 
+*/
     }
     public static void alterar(Produto p)throws ExcecaoRegras{
+        /*
         if(p.getIdProduto()==null){
             throw new ExcecaoRegras("ID inválido");
         }
@@ -85,6 +90,7 @@ public class ProdutoRegra {
         } catch(ExcecaoRepositorio e){
             throw new ExcecaoRegras("Erro na DAO");
         } 
+*/
     } 
     public static void listar(Produto p)throws ExcecaoRegras{
         if(p.getDescricao()==null){

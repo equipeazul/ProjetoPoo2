@@ -57,7 +57,7 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
                 if(vendedor != null)
                 {
                    txtNome.setText(vendedor.getNome());  
-                   txtID.setText(vendedor.getIdVendedor().toString());
+                   txtID.setText(Integer.toString(vendedor.getIdVendedor()));
                 }
                   
             }catch(ExcecaoRegras ex){

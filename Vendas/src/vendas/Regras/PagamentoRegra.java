@@ -19,18 +19,7 @@ public class PagamentoRegra {
             throw new ExcecaoRegras("Descrição inválida");
         }
     }    
-    public static void verificarDuplicidade(Pagamento p) throws ExcecaoRegras{
-        try{
-            Pagamento x= dao.consultar(p.getPedido().getIdPedido());
-            if(x!=null){
-                throw new ExcecaoRegras("Pagamento já existe");
-            }
-            } catch(ExcecaoConexao e){
-                throw new ExcecaoRegras("Erro na conexão");
-            } catch(ExcecaoRepositorio e){
-                throw new ExcecaoRegras("Erro na DAO");
-            }              
-    }
+        
     public static void incluir(Pagamento p)throws ExcecaoRegras{
         try{
             dao.incluir(p);
@@ -41,6 +30,7 @@ public class PagamentoRegra {
         }              
     }
     public static void excluir(Pagamento p)throws ExcecaoRegras{
+        /*
         if(p.getIdPagamento()==null){
             throw new ExcecaoRegras("ID inválido");
         }
@@ -60,7 +50,8 @@ public class PagamentoRegra {
             throw new ExcecaoRegras("Erro na conexão");
         } catch(ExcecaoRepositorio e){
             throw new ExcecaoRegras("Erro na DAO");
-        }       
+        } 
+*/
     } 
     public static void alterar(Pagamento p)throws ExcecaoRegras{
         if(p.getIdPagamento()==null){
@@ -85,6 +76,7 @@ public class PagamentoRegra {
         } 
     }
     public static void listar(Pagamento p)throws ExcecaoRegras{
+        /*
         if(p.getPedido().getIdPedido()==null){
             throw new ExcecaoRegras("ID inválido");
         }
@@ -94,6 +86,7 @@ public class PagamentoRegra {
             throw new ExcecaoRegras("Erro na conexão");
         } catch(ExcecaoRepositorio e){
             throw new ExcecaoRegras("Erro na DAO");
-        }             
+        } 
+*/
     }  
 }

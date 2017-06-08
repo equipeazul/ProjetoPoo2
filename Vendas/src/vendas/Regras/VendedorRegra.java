@@ -44,21 +44,8 @@ public class VendedorRegra {
         }              
     } 
     public static void excluir(Vendedor v)throws ExcecaoRegras{
-        if(v.getIdVendedor()==null){
-            throw new ExcecaoRegras("ID inválido");
-        }
         try{
-            Vendedor x = dao.consultar(v.getIdVendedor());
-            if(x==null){
-                throw new ExcecaoRegras("Cliente não existe");
-            }
-        }catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        }catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        }
-        try{
-            dao.excluir(v);
+            dao.excluir(v.getIdVendedor());
         } catch(ExcecaoConexao e){
             throw new ExcecaoRegras("Erro na conexão");
         } catch(ExcecaoRepositorio e){
@@ -66,19 +53,6 @@ public class VendedorRegra {
         }       
     }
     public static void alterar(Vendedor v)throws ExcecaoRegras{
-        if(v.getIdVendedor()==null){
-            throw new ExcecaoRegras("ID inválido");
-        }
-        try{
-            Vendedor x = dao.consultar(v.getIdVendedor());
-            if(x==null){
-                throw new ExcecaoRegras("Cliente não existe");
-            }
-        }catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        }catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        }
         try{
             dao.alterar(v);
         } catch(ExcecaoConexao e){

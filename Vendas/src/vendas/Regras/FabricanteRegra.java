@@ -27,8 +27,9 @@ public class FabricanteRegra {
         }
     } 
     public static void verificarDuplicidade(Fabricante f) throws ExcecaoRegras{
+        /*
         try{
-            Fabricante x= dao.consultar(f.getRazaoSocial());
+            Fabricante x = dao.consultar(f.getRazaoSocial());
             if(x!=null){
                 throw new ExcecaoRegras("Fabricante já existe");
             }
@@ -36,7 +37,8 @@ public class FabricanteRegra {
                 throw new ExcecaoRegras("Erro na conexão");
             } catch(ExcecaoRepositorio e){
                 throw new ExcecaoRegras("Erro na DAO");
-            }              
+            }
+*/
     }  
     public static void incluir(Fabricante f)throws ExcecaoRegras{
         try{
@@ -62,7 +64,7 @@ public class FabricanteRegra {
             throw new ExcecaoRegras("Erro na DAO");
         }
         try{
-            dao.excluir(f);
+            dao.excluir(f.getIdFabricante());
         } catch(ExcecaoConexao e){
             throw new ExcecaoRegras("Erro na conexão");
         } catch(ExcecaoRepositorio e){

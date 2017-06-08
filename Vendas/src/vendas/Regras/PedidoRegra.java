@@ -41,6 +41,7 @@ public class PedidoRegra {
         }              
     }
     public static void excluir(Pedido p)throws ExcecaoRegras{
+        /*
         if(p.getIdPedido()==null){
             throw new ExcecaoRegras("ID inválido");
         }
@@ -60,9 +61,10 @@ public class PedidoRegra {
             throw new ExcecaoRegras("Erro na conexão");
         } catch(ExcecaoRepositorio e){
             throw new ExcecaoRegras("Erro na DAO");
-        }       
+        } 
+        */
     }
-        public static void alterar(Pedido p)throws ExcecaoRegras{
+    public static void alterar(Pedido p)throws ExcecaoRegras{
         if(p.getIdPedido()==null){
             throw new ExcecaoRegras("ID inválido");
         }
