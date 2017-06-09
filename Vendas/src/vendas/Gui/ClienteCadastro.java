@@ -41,10 +41,10 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
                 Integer id = 0;
                 
                 //Criar DAO
-                Fachada f = Fachada.getInstancia();
+                Fachada fachada = Fachada.getInstancia();
 
                 if (txtID.getText().equals("")) {
-                    id = f.ultimoCliente();
+                    id = fachada.ultimoCliente();
                 }
                 else
                 {
@@ -53,15 +53,18 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
                 
                 //Criar Objeto Basico
                 Cliente cliente = new Cliente();
-                cliente = f.consultarCliente(id);
-                if(cliente != null)
-                {
-                   txtNome.setText(cliente.getNome());  
-                   txtID.setText(cliente.getIdCliente().toString());
-                   txtCpf.setText(cliente.getCpf()); 
+                
+                if (id != 0) {
+                    cliente = fachada.consultarCliente(id);
+                    if(cliente != null)
+                    {
+                       txtNome.setText(cliente.getNome());  
+                       txtID.setText(cliente.getIdCliente().toString());
+                       txtCpf.setText(cliente.getCpf()); 
+                    }
                 }
                   
-            }catch(ExcecaoConexao | ExcecaoRepositorio | ExcecaoRegras ex){
+            }catch(ExcecaoRegras ex){
                     JOptionPane.showMessageDialog(null, ex.getMessage());
             }
            
@@ -324,15 +327,15 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
         cliente.setNome(txtNome.getText());
         cliente.setCpf(txtCpf.getText()); 
         
-         Fachada f = Fachada.getInstancia();
+         Fachada fachada = Fachada.getInstancia();
         if(dialogButton == JOptionPane.YES_OPTION){
           try{  
-               f.excluirCliente(cliente);
+               fachada.excluirCliente(cliente);
            
             txtID.setText("");
             configurar("C");            
             JOptionPane.showMessageDialog(null, "Cliente foi excluso");
-          }catch(ExcecaoConexao | ExcecaoRepositorio | ExcecaoRegras ex){
+          }catch(ExcecaoRegras ex){
                JOptionPane.showMessageDialog(null,ex.getMessage());
           }
         }
@@ -349,23 +352,23 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
     
         Cliente cliente = new Cliente();
-        cliente.setIdCliente(Integer.parseInt(txtID.getText()));
         cliente.setNome(txtNome.getText());
         cliente.setCpf(txtCpf.getText()); 
         
-        Fachada f = Fachada.getInstancia();
+        Fachada fachada = Fachada.getInstancia();
               
         try{
             if (txtID.getText().equals("")){
-                f.incluirCliente(cliente);
+                fachada.incluirCliente(cliente);
                JOptionPane.showMessageDialog(null, "Cliente foi cadastrado");
 
             
             }else{
-                f.alterarCliente(cliente);
-               JOptionPane.showMessageDialog(null, "Cliente foi alterado");
+                cliente.setIdCliente(Integer.parseInt(txtID.getText()));
+                fachada.alterarCliente(cliente);
+                JOptionPane.showMessageDialog(null, "Cliente foi alterado");
             }
-        }catch(ExcecaoConexao | ExcecaoRepositorio | ExcecaoRegras ex){
+        }catch(ExcecaoRegras ex){
                 JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         
@@ -379,16 +382,16 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
 
     private void btnIrParaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrParaActionPerformed
         
-        Fachada f = Fachada.getInstancia();
+        Fachada fachada = Fachada.getInstancia();
         
         try
         {
             Integer id = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o ID do cliente"));
             
-            f.consultarCliente(id);
+            fachada.consultarCliente(id);
             txtID.setText(id.toString());
             configurar("C");
-        } catch (ExcecaoConexao | ExcecaoRepositorio | ExcecaoRegras ex) {
+        } catch (ExcecaoRegras ex) {
            JOptionPane.showMessageDialog(null, ex.getMessage());
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Valor invalido");

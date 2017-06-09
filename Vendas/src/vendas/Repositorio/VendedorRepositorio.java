@@ -23,12 +23,12 @@ public class VendedorRepositorio implements IVendedorRepositorio{
     public Integer incluir(Vendedor vendedor) throws ExcecaoRepositorio,ExcecaoConexao {
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="INSERT INTO (nome, comissao) vendedores VALUES (?, ?)";
+        String sql ="INSERT INTO (nome, comissao) vendedores VALUES (?, ?)INSERT INTO vendedores  (nome, comisao) VALUES (?,?)";
         Integer id = null;
         try{
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setString(1, vendedor.getNome());
-            pstm.setDouble(2, vendedor.getComissao()); 
+            pstm.setDouble(2, vendedor.getComissao());            
             pstm.executeUpdate();
         }catch(SQLException e){
             throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_INCLUIR_VENDEDOR);

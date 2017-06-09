@@ -17,15 +17,13 @@ public class ClienteRegra {
     
     private final static IClienteRepositorio dao = new ClienteRepositorio();
     
-    public  void verificarExistencia(Integer id) throws ExcecaoRepositorio, ExcecaoConexao, ExcecaoRegras{
-        if(!dao.existe(id)){
-            throw new ExcecaoRegras(ExcecaoRegras.ERRO_IDCLIENTE_NAO_EXISTE);
-        }
-    }
-    
-    public  void jaCadastrado(Integer id) throws ExcecaoRepositorio, ExcecaoConexao, ExcecaoRegras{
-        if(dao.existe(id)){
-            throw new ExcecaoRegras(ExcecaoRegras.ERRO_IDCLIENTE_JA_CADASTRADO);
+    public  void verificarExistencia(Integer id) throws ExcecaoRegras{
+        try {
+            if(!dao.existe(id)){
+               throw new ExcecaoRegras(ExcecaoRegras.ERRO_IDCLIENTE_NAO_EXISTE);
+            }   
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+          throw new ExcecaoRegras(ex.getMessage()); 
         }
     }
     
@@ -35,36 +33,68 @@ public class ClienteRegra {
         }
     }
     
-    public  void verificarDuplicidadeCpf(String cpf) throws ExcecaoRepositorio, ExcecaoConexao, ExcecaoRegras{
-        Cliente cliente = dao.consultarCpf(cpf);
-        if(cliente != null){
-            throw new ExcecaoRegras(ExcecaoRegras.ERRO_CPF_JA_CADASTRADO);
+    public  void verificarDuplicidadeCpf(String cpf) throws ExcecaoRegras{
+        try {
+            Cliente cliente = dao.consultarCpf(cpf);
+            if(cliente != null){
+                throw new ExcecaoRegras(ExcecaoRegras.ERRO_CPF_JA_CADASTRADO);
+            }
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+          throw new ExcecaoRegras(ex.getMessage()); 
         }
     }  
-    public  void incluir(Cliente cliente) throws ExcecaoRepositorio, ExcecaoConexao{
-        dao.incluir(cliente);
+    public  void incluir(Cliente cliente) throws ExcecaoRegras{
+        try {
+            dao.incluir(cliente);
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+          throw new ExcecaoRegras(ex.getMessage()); 
+        }
     }
     
-    public  void excluir(Cliente cliente) throws ExcecaoRepositorio, ExcecaoConexao{
-        dao.excluir(cliente.getIdCliente());
+    public  void excluir(Cliente cliente) throws ExcecaoRegras{
+        try {
+            dao.excluir(cliente.getIdCliente());
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+          throw new ExcecaoRegras(ex.getMessage()); 
+        }
     }
     
-    public void alterar(Cliente cliente) throws ExcecaoRepositorio, ExcecaoConexao{
-        dao.alterar(cliente);
+    public void alterar(Cliente cliente) throws ExcecaoRegras{
+        try {
+            dao.alterar(cliente);
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+            throw new ExcecaoRegras(ex.getMessage()); 
+        }
     }
-    public ArrayList<Cliente> listar(String nome) throws ExcecaoRepositorio, ExcecaoConexao{
-        return dao.listar(nome);
+    public ArrayList<Cliente> listar(String nome) throws ExcecaoRegras{
+        try {
+            return dao.listar(nome);
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+            throw new ExcecaoRegras(ex.getMessage()); 
+        }
     } 
     
-    public Cliente consultar(Integer id) throws ExcecaoRepositorio, ExcecaoConexao{
-        return dao.consultar(id);
+    public Cliente consultar(Integer id) throws ExcecaoRegras{
+        try {
+            return dao.consultar(id);
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+            throw new ExcecaoRegras(ex.getMessage()); 
+        }
     }
 
-    public Integer ultimo() throws ExcecaoRepositorio, ExcecaoConexao{
-        return dao.ultimo();
+    public Integer ultimo() throws ExcecaoRegras{
+        try {
+            return dao.ultimo();
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+            throw new ExcecaoRegras(ex.getMessage()); 
+        }
     }    
     
-    public Boolean existe(Integer id) throws ExcecaoRepositorio, ExcecaoConexao{
-        return dao.existe(id);
+    public Boolean existe(Integer id) throws ExcecaoRegras{
+        try {
+            return dao.existe(id);
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+            throw new ExcecaoRegras(ex.getMessage()); 
+        }
     }    
 }

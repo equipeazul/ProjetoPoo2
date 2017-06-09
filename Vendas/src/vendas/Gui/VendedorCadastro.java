@@ -41,10 +41,10 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
                 Integer id = 0;
                 
                 //Criar DAO
-                Fachada f = Fachada.getInstancia();
+                Fachada fachada = Fachada.getInstancia();
 
                 if (txtID.getText().equals("")) {
-                    id = f.ultimoVendedor();
+                    id = fachada.ultimoVendedor();
                 }
                 else
                 {
@@ -53,11 +53,14 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
                 
                 //Criar Objeto Basico
                 Vendedor vendedor = new Vendedor();
-                vendedor = f.consultarVendedor(id);
-                if(vendedor != null)
-                {
-                   txtNome.setText(vendedor.getNome());  
-                   txtID.setText(Integer.toString(vendedor.getIdVendedor()));
+                if(id != 0){
+                    vendedor = fachada.consultarVendedor(id);
+                    if(vendedor != null)
+                    {
+                        txtNome.setText(vendedor.getNome());  
+                        txtID.setText(Integer.toString(vendedor.getIdVendedor()));
+                        txtComissao.setText(String.valueOf(vendedor.getComissao())); 
+                    }
                 }
                   
             }catch(ExcecaoRegras ex){
@@ -73,7 +76,7 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
         
         if (txtID.getText().equals("")){
             txtNome.setText("");
-            txtCpf.setText("");
+            txtComissao.setText("");
         }
         
         btnIncluir.setEnabled(ac.equals("C"));
@@ -85,7 +88,7 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
         btnPesquisar.setEnabled(ac.equals("C"));
         
         txtNome.setEnabled(!ac.equals("C"));
-        txtCpf.setEnabled(!ac.equals("C"));
+        txtComissao.setEnabled(!ac.equals("C"));
         
     }
     
@@ -114,7 +117,7 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtCpf = new javax.swing.JTextField();
+        txtComissao = new javax.swing.JTextField();
 
         btnIncluir.setText("Incluir");
         btnIncluir.addActionListener(new java.awt.event.ActionListener() {
@@ -171,7 +174,7 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Cadastro de clientes");
+        jLabel5.setText("Cadastro de vendedores");
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -179,6 +182,11 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
         jLabel4.setText("ID");
 
         txtID.setEnabled(false);
+        txtID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIDActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel2.setText("Nome");
@@ -190,7 +198,7 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabel3.setText("CPF");
+        jLabel3.setText("Comissão");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -204,7 +212,7 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtComissao, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(295, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -221,9 +229,20 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtComissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(58, Short.MAX_VALUE))
         );
+
+        jDesktopPane1.setLayer(btnIncluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnEditar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnExcluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnSalvar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnCancelar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnIrPara, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnPesquisar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -278,16 +297,6 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(59, 59, 59))
         );
-        jDesktopPane1.setLayer(btnIncluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(btnEditar, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(btnExcluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(btnSalvar, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(btnCancelar, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(btnIrPara, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(btnPesquisar, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -320,11 +329,12 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
         Vendedor vendedor = new Vendedor();
         vendedor.setIdVendedor(Integer.parseInt(txtID.getText()));
         vendedor.setNome(txtNome.getText());
+        vendedor.setComissao(Double.parseDouble(txtComissao.getText()));
         
-         Fachada f = Fachada.getInstancia();
+         Fachada fachada = Fachada.getInstancia();
         if(dialogButton == JOptionPane.YES_OPTION){
           try{  
-               f.excluirVendedor(vendedor);
+               fachada.excluirVendedor(vendedor);
            
             txtID.setText("");
             configurar("C");            
@@ -346,20 +356,21 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
     
         Vendedor vendedor = new Vendedor();
-        vendedor.setIdVendedor(Integer.parseInt(txtID.getText()));
         vendedor.setNome(txtNome.getText());
+        vendedor.setComissao(Double.parseDouble(txtComissao.getText()));
         
-        Fachada f = Fachada.getInstancia();
+        Fachada fachada = Fachada.getInstancia();
               
         try{
             if (txtID.getText().equals("")){
-                f.incluirVendedor(vendedor);
+                fachada.incluirVendedor(vendedor);
                JOptionPane.showMessageDialog(null, "Vendedor foi cadastrado");
 
             
             }else{
-                f.alterarVendedor(vendedor);
-               JOptionPane.showMessageDialog(null, "Vendedor foi alterado");
+                vendedor.setIdVendedor(Integer.parseInt(txtID.getText()));
+                fachada.alterarVendedor(vendedor);
+                JOptionPane.showMessageDialog(null, "Vendedor foi alterado");
             }
         }catch(ExcecaoRegras ex){
                 JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -375,22 +386,25 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
 
     private void btnIrParaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrParaActionPerformed
         
-        Fachada f = Fachada.getInstancia();
+        Fachada fachada = Fachada.getInstancia();
         
         try{
             Integer id = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o ID do vendedor"));
             
-            if (f.existeVendedor(id)){
+               fachada.consultarVendedor(id);
                txtID.setText(id.toString());
-               configurar("C");
-            }else{
-               JOptionPane.showMessageDialog(null, "Vendedor não existe");
-            }
+               configurar("C");          
+        } catch (ExcecaoRegras ex) {
+           JOptionPane.showMessageDialog(null, ex.getMessage());
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Valor invalido");
         }
         
     }//GEN-LAST:event_btnIrParaActionPerformed
+
+    private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIDActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
@@ -407,7 +421,7 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtCpf;
+    private javax.swing.JTextField txtComissao;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables

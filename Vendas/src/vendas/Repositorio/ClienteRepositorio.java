@@ -118,7 +118,7 @@ public class ClienteRepositorio implements IClienteRepositorio {
 
     @Override
     public Cliente consultar(Integer id) throws ExcecaoRepositorio, ExcecaoConexao {
-        Cliente cliente = new Cliente();
+        Cliente cliente = null;
         
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
@@ -129,6 +129,7 @@ public class ClienteRepositorio implements IClienteRepositorio {
             ResultSet rset = pstm.executeQuery();
             
             if (rset.next()) {
+                cliente = new Cliente();
                 cliente.setIdCliente(rset.getInt("idCliente"));
                 cliente.setNome(rset.getString("nome"));
                 cliente.setCpf(rset.getString("cpf"));
@@ -143,17 +144,18 @@ public class ClienteRepositorio implements IClienteRepositorio {
     }
     
     public Cliente consultarCpf(String cpf) throws ExcecaoRepositorio, ExcecaoConexao {
-        Cliente cliente = new Cliente();
+        Cliente cliente = null;
         
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
         String sql ="SELECT * FROM Clientes WHERE cpf = ? ";
         try{
             PreparedStatement pstm= conn.prepareStatement(sql);
-            pstm.setInt(1, cliente.getIdCliente());
+            pstm.setString(1, cpf);
             ResultSet rset = pstm.executeQuery();
             
             if (rset.next()) {
+                cliente = new Cliente();
                 cliente.setIdCliente(rset.getInt("idCliente"));
                 cliente.setNome(rset.getString("nome"));
                 cliente.setCpf(rset.getString("cpf"));
@@ -199,7 +201,7 @@ public class ClienteRepositorio implements IClienteRepositorio {
         Connection conn = sqlConn.conectar();
         String sql ="SELECT idCliente FROM Clientes WHERE idCliente = ? ";
         try{
-            PreparedStatement pstm= conn.prepareStatement(sql);
+            PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setInt(1, id);
             ResultSet rset = pstm.executeQuery();
             
