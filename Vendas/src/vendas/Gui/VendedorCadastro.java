@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRegras;
 import vendas.Excecoes.ExcecaoRepositorio;
-import static vendas.Gui.TelaCadastro.componente;
+//import static vendas.Gui.TelaCadastro.componente;
 import vendas.Repositorio.VendedorRepositorio;
 import vendas.Repositorio.IVendedorRepositorio;
 import vendas.entidades.Vendedor;
@@ -26,6 +26,7 @@ import vendas.fachada.Fachada;
 public class VendedorCadastro extends TelaCadastro {
 
     private static TelaCadastro instancia;
+    protected static java.awt.Component componente;
     
     protected final String CONSULTA = "C";
     protected final String INCLUSAO = "I";
@@ -49,6 +50,12 @@ public class VendedorCadastro extends TelaCadastro {
         initComponents();
         //configurar(CONSULTA);
     }
+    
+    public void fechar() {
+        componente = null;
+        this.dispose();
+    }
+
     
     public static TelaCadastro abrir(javax.swing.JDesktopPane principal) {
         if (componente == null) {

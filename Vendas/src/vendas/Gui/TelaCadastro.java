@@ -6,6 +6,7 @@
 package vendas.Gui;
 
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
@@ -14,9 +15,7 @@ import javax.swing.event.InternalFrameEvent;
  * @author Daniel
  */
 public abstract class TelaCadastro extends javax.swing.JInternalFrame{
-    
-    protected static java.awt.Component componente;
-    
+        
     protected final String CONSULTA = "C";
     protected final String INCLUSAO = "I";
     protected final String ALTERACAO = "A";
@@ -26,8 +25,7 @@ public abstract class TelaCadastro extends javax.swing.JInternalFrame{
     public TelaCadastro() {
         addInternalFrameListener(new InternalFrameAdapter(){
             public void internalFrameClosing(InternalFrameEvent e) {
-                componente = null;
-                dispose();
+               fechar();                
             }
         });
     }
@@ -35,18 +33,19 @@ public abstract class TelaCadastro extends javax.swing.JInternalFrame{
     
     public void show(int largura, int altura) {
         this.setResizable(true);
-        this.setIconifiable(true);
         this.setClosable(true);   
         this.setSize(largura,altura);
         this.setVisible(true);
         this.setResizable(false);
         this.setLocation(140, 20);  
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setFocusable(true);
+        try {
+            this.setSelected(true);            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Janela foi fechada.");
+        }
+        
     }
     
-    /*
-    public void fechar() {
-        componente = null;
-        this.dispose();
-    }*/
+    public abstract void fechar();
 }
