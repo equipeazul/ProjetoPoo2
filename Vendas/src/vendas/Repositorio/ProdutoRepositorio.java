@@ -48,7 +48,7 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
     {
         IConexao sqlConn = Conexao.getInstancia();
            Connection conn = sqlConn.conectar();
-           String sql ="DELETE FROM produtos WHERE idProduto = ? ";
+           String sql ="DELETE FROM Produtos WHERE idProduto = ? ";
            try{
                PreparedStatement pstm= conn.prepareStatement(sql);
                pstm.setInt(1, id);
@@ -66,13 +66,14 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
     {
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="UPDATE produto SET descricao = ? , unidade = ?, precovenda = ?  WHERE idProduto = ? ";
+        String sql ="UPDATE Produtos SET descricao = ? , unidade = ?, precovenda = ?, idfabricante = ?  WHERE idProduto = ? ";
         try{
             PreparedStatement pstm= conn.prepareStatement(sql);
             pstm.setString(1, produto.getDescricao());
             pstm.setString(2, produto.getUnidade()); 
             pstm.setDouble(3, produto.getPrecoVenda()); 
-            pstm.setDouble(4, produto.getIdproduto()); 
+            pstm.setInt(4, produto.getFabricante().getIdFabricante()); 
+            pstm.setInt(5, produto.getIdproduto()); 
             pstm.executeUpdate();
         }catch(SQLException e){
             throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_ALTERAR_PEDIDO);
@@ -106,6 +107,7 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
                 produto.setDescricao(rset.getString("descricao"));
                 produto.setUnidade(rset.getString("unidade"));
                 produto.setPrecoVenda(rset.getDouble("precovenda"));
+                produto.getFabricante().setIdFabricante(rset.getInt("idfabricante"));
                 
                 lista.add(produto);
             }
@@ -125,7 +127,7 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
         
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="SELECT idProduto, descricao, unidade, precovenda FROM Produto WHERE idProduto = ? ";
+        String sql ="SELECT idProduto, descricao, unidade, precovenda, idfabricante FROM Produto WHERE idProduto = ? ";
         try{
             PreparedStatement pstm= conn.prepareStatement(sql);
             pstm.setInt(1, id);
@@ -136,6 +138,7 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
                 produto.setDescricao(rset.getString("descricao"));
                 produto.setUnidade(rset.getString("unidade"));
                 produto.setPrecoVenda(rset.getDouble("precovenda"));
+                produto.getFabricante().setIdFabricante(rset.getInt("idfabricante"));
             }
         }catch(SQLException e){
             throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_ALTERAR_PRODUTO);

@@ -1,5 +1,6 @@
 package vendas.Regras;
 
+import java.util.ArrayList;
 import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRegras;
 import vendas.Excecoes.ExcecaoRepositorio;
@@ -12,96 +13,77 @@ import vendas.entidades.Produto;
  * @author heitor santos
  */
 public class ProdutoRegra {
+    
     private final static IProdutoRepositorio dao = new ProdutoRepositorio();
-    public static void validar(Produto p) throws ExcecaoRegras{
-        if(p.getDescricao()==null){
-            throw new ExcecaoRegras("Descrição inválida");
+    
+    public  void verificarExistencia(Integer id) throws ExcecaoRegras{
+        try {
+            if(!dao.existe(id)){
+               throw new ExcecaoRegras(ExcecaoRegras.ERRO_IDPRODUTO_NAO_EXISTE);
+            }   
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+          throw new ExcecaoRegras(ex.getMessage()); 
         }
-        if(p.getDescricao().trim().equals("")){
-            throw new ExcecaoRegras("Descrição inválida");
-        }
-    }  
-    public static void verificarDuplicidade(Produto p) throws ExcecaoRegras{
-        /*
-        try{
-            Produto x= dao.consultar(p.getIdProduto());
-            if(x!=null){
-                throw new ExcecaoRegras("Cliente já existe");
-            }
-            } catch(ExcecaoConexao e){
-                throw new ExcecaoRegras("Erro na conexão");
-            } catch(ExcecaoRepositorio e){
-                throw new ExcecaoRegras("Erro na DAO");
-            }              
-*/
     }
-    public static void incluir(Produto p)throws ExcecaoRegras{
-        try{
-            dao.incluir(p);
-        }catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        }catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        }              
+    
+    public  void validar(Produto produto) throws ExcecaoRegras{
+        if(produto.getDescricao().trim().equals("")){
+            throw new ExcecaoRegras(ExcecaoRegras.ERRO_DESCRICAO_PRODUTO_INVALIDO);
+        }
     }
-    public static void excluir(Produto p)throws ExcecaoRegras{
-        /*
-        if(p.getIdProduto()==null){
-            throw new ExcecaoRegras("ID inválido");
+    
+    public  void incluir(Produto produto) throws ExcecaoRegras{
+        try {
+            dao.incluir(produto);
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+          throw new ExcecaoRegras(ex.getMessage()); 
         }
-        try{
-            Produto x = dao.consultar(p.getIdProduto());
-            if(x==null){
-                throw new ExcecaoRegras("Cliente não existe");
-            }
-        }catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        }catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        }
-        try{
-            dao.excluir(p);
-        } catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        } catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        } 
-*/
     }
-    public static void alterar(Produto p)throws ExcecaoRegras{
-        /*
-        if(p.getIdProduto()==null){
-            throw new ExcecaoRegras("ID inválido");
+    
+    public  void excluir(Produto produto) throws ExcecaoRegras{
+        try {
+            dao.excluir(produto.getIdproduto());
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+          throw new ExcecaoRegras(ex.getMessage()); 
         }
-        try{
-            Produto x = dao.consultar(p.getIdProduto());
-            if(x==null){
-                throw new ExcecaoRegras("Cliente não existe");
-            }
-        }catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        }catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
+    }
+    
+    public void alterar(Produto produto) throws ExcecaoRegras{
+        try {
+            dao.alterar(produto);
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+            throw new ExcecaoRegras(ex.getMessage()); 
         }
-        try{
-            dao.alterar(p);
-        } catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        } catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        } 
-*/
+    }
+    public ArrayList<Produto> listar(String descricao) throws ExcecaoRegras{
+        try {
+            return dao.listar(descricao);
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+            throw new ExcecaoRegras(ex.getMessage()); 
+        }
     } 
-    public static void listar(Produto p)throws ExcecaoRegras{
-        if(p.getDescricao()==null){
-            throw new ExcecaoRegras("ID inválido");
+    
+    public Produto consultar(Integer id) throws ExcecaoRegras{
+        try {
+            return dao.consultar(id);
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+            throw new ExcecaoRegras(ex.getMessage()); 
         }
-        try{
-            dao.listar(p.getDescricao());
-        } catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        } catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        }             
+    }
+
+    public Integer ultimo() throws ExcecaoRegras{
+        try {
+            return dao.ultimo();
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+            throw new ExcecaoRegras(ex.getMessage()); 
+        }
     }    
+    
+    public Boolean existe(Integer id) throws ExcecaoRegras{
+        try {
+            return dao.existe(id);
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+            throw new ExcecaoRegras(ex.getMessage()); 
+        }
+    } 
 }

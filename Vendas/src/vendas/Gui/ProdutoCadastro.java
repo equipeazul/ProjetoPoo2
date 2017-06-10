@@ -13,40 +13,36 @@ import javax.swing.JOptionPane;
 import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRegras;
 import vendas.Excecoes.ExcecaoRepositorio;
-//import static vendas.Gui.TelaCadastro.componente;
-import vendas.Repositorio.VendedorRepositorio;
-import vendas.Repositorio.IVendedorRepositorio;
-import vendas.entidades.Vendedor;
+import vendas.Repositorio.ClienteRepositorio;
+import vendas.Repositorio.IClienteRepositorio;
+import vendas.entidades.Cliente;
+import vendas.entidades.Produto;
 import vendas.fachada.Fachada;
 
 /**
  *
  * @author Felipe
  */
-public class VendedorCadastro extends TelaCadastro {
+public class ProdutoCadastro extends TelaCadastro {
 
     private static TelaCadastro instancia;
     protected static java.awt.Component componente;
     
-    protected final String CONSULTA = "C";
-    protected final String INCLUSAO = "I";
-    protected final String ALTERACAO = "A";
-    protected final String EXCLUSAO = "E";
-    protected final String VAZIO = "";
-
-    private final String DESEJA_EXCLUIR = "Deseja excluir o vendedor ?";
+    
+    private final String DESEJA_EXCLUIR = "Deseja excluir o Produto ?";
     private final String ATENCAO = "Atenção";
     
-    private final String FOI_EXCLUSO = "Vendedor foi excluso";
-    private final String FOI_CADASTRADO = "Vendedor foi cadastrado";
-    private final String FOI_ALTERADO = "Vendedor foi alterado";
-    private final String DIGITE_ID = "Digite o ID do vendedor";
-    private final String VALOR_ID_INVALIDO = "ID do vendedor é invalido";
+    private final String FOI_EXCLUSO = "Produto foi excluso";
+    private final String FOI_CADASTRADO = "Produto foi cadastrado";
+    private final String FOI_ALTERADO = "Produto foi alterado";
+    private final String DIGITE_ID = "Digite o ID do Produto";
+    private final String VALOR_ID_INVALIDO = "ID do Produto é invalido";
+    
     
     /**
-     * Creates new form IFrameClientes
+     * Creates new form IFrameProdutos
      */
-    public VendedorCadastro(){
+    private ProdutoCadastro(){
         initComponents();
         configurar(CONSULTA);
     }
@@ -56,16 +52,15 @@ public class VendedorCadastro extends TelaCadastro {
         this.dispose();
     }
 
-    
     public static TelaCadastro abrir(javax.swing.JDesktopPane principal) {
         if (componente == null) {
-            instancia = new VendedorCadastro();
+            instancia = new ProdutoCadastro();
             componente = principal.add(instancia);
         }
         instancia.show(800, 450);
         return instancia;
     }
-
+    
     private void configurar(String ac) {
         
         if(ac.equals(CONSULTA)){
@@ -74,10 +69,11 @@ public class VendedorCadastro extends TelaCadastro {
                 
                 Integer id = 0;
                 
+                //Criar DAO
                 Fachada fachada = Fachada.getInstancia();
 
                 if (txtID.getText().equals(VAZIO)) {
-                    id = fachada.ultimoVendedor();
+                    id = fachada.ultimoProduto();
                 }
                 else
                 {
@@ -85,14 +81,17 @@ public class VendedorCadastro extends TelaCadastro {
                 }
                 
                 //Criar Objeto Basico
-                Vendedor vendedor = new Vendedor();
-                if(id != 0){
-                    vendedor = fachada.consultarVendedor(id);
-                    if(vendedor != null)
+                Produto produto = new Produto();
+                
+                if (id != 0) {
+                    produto = fachada.consultarProduto(id);
+                    if(produto != null)
                     {
-                        txtNome.setText(vendedor.getNome());  
-                        txtID.setText(Integer.toString(vendedor.getIdVendedor()));
-                        txtComissao.setText(String.valueOf(vendedor.getComissao())); 
+                       txtDescricao.setText(produto.getDescricao());  
+                       txtID.setText(produto.getIdproduto().toString());
+                       txtUnidade.setText(produto.getUnidade()); 
+                       txtIdFabricante.setText(produto.getIdproduto().toString());
+                       txtPrecoVenda.setText(produto.getIdproduto().toString());
                     }
                 }
                   
@@ -108,8 +107,10 @@ public class VendedorCadastro extends TelaCadastro {
         }
         
         if (txtID.getText().equals(VAZIO)){
-            txtNome.setText(VAZIO);
-            txtComissao.setText(VAZIO);
+            txtDescricao.setText(VAZIO);
+            txtUnidade.setText(VAZIO);
+            txtIdFabricante.setText(VAZIO);
+            txtPrecoVenda.setText(VAZIO);
         }
         
         btnIncluir.setEnabled(ac.equals(CONSULTA));
@@ -120,8 +121,10 @@ public class VendedorCadastro extends TelaCadastro {
         btnIrPara.setEnabled(ac.equals(CONSULTA));
         btnPesquisar.setEnabled(ac.equals(CONSULTA));
         
-        txtNome.setEnabled(!ac.equals(CONSULTA));
-        txtComissao.setEnabled(!ac.equals(CONSULTA));
+        txtDescricao.setEnabled(!ac.equals(CONSULTA));
+        txtUnidade.setEnabled(!ac.equals(CONSULTA));
+        txtIdFabricante.setEnabled(!ac.equals(CONSULTA));
+        txtPrecoVenda.setEnabled(!ac.equals(CONSULTA));
         
     }
     
@@ -138,7 +141,6 @@ public class VendedorCadastro extends TelaCadastro {
         btnIncluir = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnIrPara = new javax.swing.JButton();
@@ -148,9 +150,14 @@ public class VendedorCadastro extends TelaCadastro {
         jLabel4 = new javax.swing.JLabel();
         txtID = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtNome = new javax.swing.JTextField();
+        txtDescricao = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtComissao = new javax.swing.JTextField();
+        txtUnidade = new javax.swing.JTextField();
+        txtIdFabricante = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        txtPrecoVenda = new javax.swing.JTextField();
+        txtNomeFabricante = new javax.swing.JTextField();
 
         btnIncluir.setText("Incluir");
         btnIncluir.addActionListener(new java.awt.event.ActionListener() {
@@ -170,13 +177,6 @@ public class VendedorCadastro extends TelaCadastro {
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirActionPerformed(evt);
-            }
-        });
-
-        jButton4.setText("Relatorio dos Clientes");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
             }
         });
 
@@ -212,7 +212,7 @@ public class VendedorCadastro extends TelaCadastro {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Cadastro de vendedores");
+        jLabel5.setText("Cadastro de produtos");
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -220,23 +220,24 @@ public class VendedorCadastro extends TelaCadastro {
         jLabel4.setText("ID");
 
         txtID.setEnabled(false);
-        txtID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIDActionPerformed(evt);
-            }
-        });
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabel2.setText("Nome");
+        jLabel2.setText("Descricição");
 
-        txtNome.addActionListener(new java.awt.event.ActionListener() {
+        txtDescricao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomeActionPerformed(evt);
+                txtDescricaoActionPerformed(evt);
             }
         });
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabel3.setText("Comissão");
+        jLabel3.setText("Unidade");
+
+        jLabel6.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jLabel6.setText("Fabricante");
+
+        jLabel7.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jLabel7.setText("Preço de venda");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -244,13 +245,26 @@ public class VendedorCadastro extends TelaCadastro {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel2)
                     .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtComissao, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel7)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3)
+                                .addComponent(txtUnidade, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(25, 25, 25)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtIdFabricante))
+                            .addGap(18, 18, 18)
+                            .addComponent(txtNomeFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(txtPrecoVenda, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                            .addGap(401, 401, 401))))
                 .addContainerGap(295, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -263,55 +277,50 @@ public class VendedorCadastro extends TelaCadastro {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtComissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtUnidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtIdFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNomeFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtPrecoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(252, Short.MAX_VALUE))
         );
-
-        jDesktopPane1.setLayer(btnIncluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(btnEditar, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(btnExcluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(btnSalvar, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(btnCancelar, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(btnIrPara, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(btnPesquisar, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(2, 2, 2)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnIncluir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnIrPara, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(118, 118, 118))
-            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnIncluir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnIrPara, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(118, 118, 118))
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -331,18 +340,23 @@ public class VendedorCadastro extends TelaCadastro {
                     .addComponent(btnPesquisar))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(282, 282, 282)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59))
+                .addGap(374, 374, 374))
         );
+        jDesktopPane1.setLayer(btnIncluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnEditar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnExcluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnSalvar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnCancelar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnIrPara, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnPesquisar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jDesktopPane1))
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,9 +366,9 @@ public class VendedorCadastro extends TelaCadastro {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
+    private void txtDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescricaoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeActionPerformed
+    }//GEN-LAST:event_txtDescricaoActionPerformed
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
         configurar(INCLUSAO);
@@ -364,15 +378,15 @@ public class VendedorCadastro extends TelaCadastro {
         Integer dialogButton = JOptionPane.YES_NO_OPTION;
         JOptionPane.showConfirmDialog(null, DESEJA_EXCLUIR,ATENCAO,dialogButton);
        
-        Vendedor vendedor = new Vendedor();
-        vendedor.setIdVendedor(Integer.parseInt(txtID.getText()));
-        vendedor.setNome(txtNome.getText());
-        vendedor.setComissao(Double.parseDouble(txtComissao.getText()));
+        Cliente cliente = new Cliente();
+        cliente.setIdCliente(Integer.parseInt(txtID.getText()));
+        cliente.setNome(txtDescricao.getText());
+        cliente.setCpf(txtUnidade.getText()); 
         
          Fachada fachada = Fachada.getInstancia();
         if(dialogButton == JOptionPane.YES_OPTION){
           try{  
-               fachada.excluirVendedor(vendedor);
+               fachada.excluirCliente(cliente);
            
             txtID.setText(VAZIO);
             configurar(CONSULTA);            
@@ -387,27 +401,23 @@ public class VendedorCadastro extends TelaCadastro {
         configurar(ALTERACAO);
     }//GEN-LAST:event_btnEditarActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-
-    }//GEN-LAST:event_jButton4ActionPerformed
-
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
     
-        Vendedor vendedor = new Vendedor();
-        vendedor.setNome(txtNome.getText());
-        vendedor.setComissao(Double.parseDouble(txtComissao.getText()));
+        Cliente cliente = new Cliente();
+        cliente.setNome(txtDescricao.getText());
+        cliente.setCpf(txtUnidade.getText()); 
         
         Fachada fachada = Fachada.getInstancia();
               
         try{
             if (txtID.getText().equals(VAZIO)){
-                fachada.incluirVendedor(vendedor);
+                fachada.incluirCliente(cliente);
                JOptionPane.showMessageDialog(null, FOI_CADASTRADO);
 
             
             }else{
-                vendedor.setIdVendedor(Integer.parseInt(txtID.getText()));
-                fachada.alterarVendedor(vendedor);
+                cliente.setIdCliente(Integer.parseInt(txtID.getText()));
+                fachada.alterarCliente(cliente);
                 JOptionPane.showMessageDialog(null, FOI_ALTERADO);
             }
         }catch(ExcecaoRegras ex){
@@ -426,12 +436,13 @@ public class VendedorCadastro extends TelaCadastro {
         
         Fachada fachada = Fachada.getInstancia();
         
-        try{
+        try
+        {
             Integer id = Integer.parseInt(JOptionPane.showInputDialog(null, DIGITE_ID));
             
-               fachada.consultarVendedor(id);
-               txtID.setText(id.toString());
-               configurar(CONSULTA);          
+            fachada.consultarCliente(id);
+            txtID.setText(id.toString());
+            configurar(CONSULTA);
         } catch (ExcecaoRegras ex) {
            JOptionPane.showMessageDialog(null, ex.getMessage());
         }catch(Exception e){
@@ -440,12 +451,8 @@ public class VendedorCadastro extends TelaCadastro {
         
     }//GEN-LAST:event_btnIrParaActionPerformed
 
-    private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIDActionPerformed
-
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        // TODO add your handling code here:
+       //
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -456,15 +463,19 @@ public class VendedorCadastro extends TelaCadastro {
     private javax.swing.JButton btnIrPara;
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JButton jButton4;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtComissao;
+    private javax.swing.JTextField txtDescricao;
     private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtIdFabricante;
+    private javax.swing.JTextField txtNomeFabricante;
+    private javax.swing.JTextField txtPrecoVenda;
+    private javax.swing.JTextField txtUnidade;
     // End of variables declaration//GEN-END:variables
 }

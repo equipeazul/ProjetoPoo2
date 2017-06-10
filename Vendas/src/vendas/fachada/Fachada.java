@@ -5,8 +5,10 @@ import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRegras;
 import vendas.Excecoes.ExcecaoRepositorio;
 import vendas.Regras.ClienteRegra;
+import vendas.Regras.ProdutoRegra;
 import vendas.Regras.VendedorRegra;
 import vendas.entidades.Cliente;
+import vendas.entidades.Produto;
 import vendas.entidades.Vendedor;
 
 /**
@@ -17,10 +19,12 @@ public class Fachada {
     private static Fachada instancia;
     private final ClienteRegra clienteRegra;
     private final VendedorRegra vendedorRegra;
+    private final ProdutoRegra produtoRegra;
     
     private Fachada(){
         clienteRegra = new ClienteRegra();
         vendedorRegra = new VendedorRegra();
+        produtoRegra = new ProdutoRegra();
     }
     
     public static Fachada getInstancia(){
@@ -94,6 +98,39 @@ public class Fachada {
     
     public ArrayList<Vendedor> listarVendedores(String nome)throws ExcecaoRegras{
         return vendedorRegra.listar(nome);
+    }
+   
+    /*#########################################################################
+     * Produto
+     *########################################################################*/
+    
+    public void incluirProduto(Produto produto) throws ExcecaoRegras{
+        produtoRegra.validar(produto);
+        produtoRegra.incluir(produto);
+    }
+    
+    public void excluirProduto(Produto produto) throws ExcecaoRegras{
+        produtoRegra.verificarExistencia(produto.getIdproduto());
+        produtoRegra.excluir(produto);
+    }
+    
+    public void alterarProduto(Produto produto) throws ExcecaoRegras{
+        produtoRegra.verificarExistencia(produto.getIdproduto());
+        produtoRegra.validar(produto);
+        produtoRegra.alterar(produto);
+    }
+       
+    public Produto consultarProduto(Integer id) throws ExcecaoRegras{
+        produtoRegra.verificarExistencia(id);
+        return produtoRegra.consultar(id);
+    }
+    
+    public Integer ultimoProduto() throws ExcecaoRegras{
+        return produtoRegra.ultimo();
+    }
+    
+    public ArrayList<Produto> listarProdutos(String descricao) throws ExcecaoRegras{
+        return produtoRegra.listar(descricao);
     }
    
 
