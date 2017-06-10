@@ -68,6 +68,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
 
         jButton4.setText("Fabricantes");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Produtos");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -156,9 +161,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         VendedorCadastro.abrir(jDesktopPane1);
     }//GEN-LAST:event_jButton6ActionPerformed
 
+
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         ProdutoCadastro.abrir(jDesktopPane1);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        FabricanteCadastro.abrir(jDesktopPane1);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -16,32 +16,33 @@ import vendas.Excecoes.ExcecaoRepositorio;
 import vendas.Repositorio.ClienteRepositorio;
 import vendas.Repositorio.IClienteRepositorio;
 import vendas.entidades.Cliente;
+import vendas.entidades.Fabricante;
 import vendas.fachada.Fachada;
 
 /**
  *
  * @author Felipe
  */
-public class ClienteCadastro extends TelaCadastro {
+public class FabricanteCadastro extends TelaCadastro {
 
     private static TelaCadastro instancia;
     protected static java.awt.Component componente;
     
     
-    private final String DESEJA_EXCLUIR = "Deseja excluir o cliente ?";
+    private final String DESEJA_EXCLUIR = "Deseja excluir o fabricante ?";
     private final String ATENCAO = "Atenção";
     
-    private final String FOI_EXCLUSO = "Cliente foi  excluso";
-    private final String FOI_CADASTRADO = "Cliente foi cadastrado";
-    private final String FOI_ALTERADO = "Cliente foi alterado";
-    private final String DIGITE_ID = "Digite o ID do cliente";
-    private final String VALOR_ID_INVALIDO = "ID do cliente é invalido";
+    private final String FOI_EXCLUSO = "Fabricante foi  excluso";
+    private final String FOI_CADASTRADO = "Fabricante foi cadastrado";
+    private final String FOI_ALTERADO = "Fabricante foi alterado";
+    private final String DIGITE_ID = "Digite o ID do fabricante";
+    private final String VALOR_ID_INVALIDO = "ID do fabricante é invalido";
     
     
     /**
-     * Creates new form IFrameClientes
+     * Creates new form IFrameFabricante
      */
-    private ClienteCadastro(){
+    private FabricanteCadastro(){
         initComponents();
         configurar(CONSULTA);
     }
@@ -53,7 +54,7 @@ public class ClienteCadastro extends TelaCadastro {
 
     public static TelaCadastro abrir(javax.swing.JDesktopPane principal) {
         if (componente == null) {
-            instancia = new ClienteCadastro();
+            instancia = new FabricanteCadastro();
             componente = principal.add(instancia);
         }
         instancia.show(800, 450);
@@ -72,7 +73,7 @@ public class ClienteCadastro extends TelaCadastro {
                 Fachada fachada = Fachada.getInstancia();
 
                 if (txtID.getText().equals(VAZIO)) {
-                    id = fachada.ultimoCliente();
+                    id = fachada.ultimoFabricante();
                 }
                 else
                 {
@@ -80,15 +81,15 @@ public class ClienteCadastro extends TelaCadastro {
                 }
                 
                 //Criar Objeto Basico
-                Cliente cliente = new Cliente();
+                Fabricante fabricante = new Fabricante();
                 
                 if (id != 0) {
-                    cliente = fachada.consultarCliente(id);
-                    if(cliente != null)
+                    fabricante = fachada.consultarFabricante(id);
+                    if(fabricante != null)
                     {
-                       txtNome.setText(cliente.getNome());  
-                       txtID.setText(cliente.getIdCliente().toString());
-                       txtCpf.setText(cliente.getCpf()); 
+                       txtNome.setText(fabricante.getRazaoSocial());  
+                       txtID.setText(fabricante.getIdFabricante().toString());
+                       txtCpf.setText(fabricante.getTelefone()); 
                     }
                 }
                   
@@ -200,7 +201,7 @@ public class ClienteCadastro extends TelaCadastro {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Cadastro de clientes");
+        jLabel5.setText("Cadastro de fabricante");
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -254,16 +255,6 @@ public class ClienteCadastro extends TelaCadastro {
                 .addContainerGap(58, Short.MAX_VALUE))
         );
 
-        jDesktopPane1.setLayer(btnIncluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(btnEditar, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(btnExcluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(btnSalvar, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(btnCancelar, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(btnIrPara, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(btnPesquisar, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
@@ -312,6 +303,15 @@ public class ClienteCadastro extends TelaCadastro {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(374, 374, 374))
         );
+        jDesktopPane1.setLayer(btnIncluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnEditar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnExcluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnSalvar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnCancelar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnIrPara, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnPesquisar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -333,21 +333,23 @@ public class ClienteCadastro extends TelaCadastro {
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
         configurar(INCLUSAO);
+        
+        
     }//GEN-LAST:event_btnIncluirActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         Integer dialogButton = JOptionPane.YES_NO_OPTION;
         JOptionPane.showConfirmDialog(null, DESEJA_EXCLUIR,ATENCAO,dialogButton);
        
-        Cliente cliente = new Cliente();
-        cliente.setIdCliente(Integer.parseInt(txtID.getText()));
-        cliente.setNome(txtNome.getText());
-        cliente.setCpf(txtCpf.getText()); 
+        Fabricante fabricante = new Fabricante();
+        fabricante.setIdFabricante(Integer.parseInt(txtID.getText()));
+        fabricante.setRazaoSocial(txtNome.getText());
+        fabricante.setTelefone(txtCpf.getText()); 
         
          Fachada fachada = Fachada.getInstancia();
         if(dialogButton == JOptionPane.YES_OPTION){
           try{  
-               fachada.excluirCliente(cliente);
+               fachada.excluir(fabricante);
            
             txtID.setText(VAZIO);
             configurar(CONSULTA);            
@@ -360,6 +362,7 @@ public class ClienteCadastro extends TelaCadastro {
     
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         configurar(ALTERACAO);
+        
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
@@ -401,7 +404,7 @@ public class ClienteCadastro extends TelaCadastro {
         {
             Integer id = Integer.parseInt(JOptionPane.showInputDialog(null, DIGITE_ID));
             
-            fachada.consultarCliente(id);
+            fachada.consultarFabricante(id);
             txtID.setText(id.toString());
             configurar(CONSULTA);
         } catch (ExcecaoRegras ex) {
