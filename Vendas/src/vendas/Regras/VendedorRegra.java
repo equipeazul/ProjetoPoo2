@@ -7,7 +7,6 @@ import vendas.Excecoes.ExcecaoRegras;
 import vendas.Excecoes.ExcecaoRepositorio;
 import vendas.Repositorio.IVendedorRepositorio;
 import vendas.Repositorio.VendedorRepositorio;
-import vendas.entidades.Cliente;
 import vendas.entidades.Vendedor;
 
 /**
