@@ -140,6 +140,19 @@ public class FabricanteRegra {
         }
     }
     
+    
+    public  void verificarExistenciaNoProduto(Integer id) throws ExcecaoRegras{
+        try {
+            
+            if(dao.existeNoProduto(id)){
+               throw new ExcecaoRegras(ExcecaoRegras.ERRO_IDFABRICANTE_EXISTE_PRODUTO);
+            }   
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+          throw new ExcecaoRegras(ex.getMessage()); 
+        }
+    }
+    
+    
    
         
     

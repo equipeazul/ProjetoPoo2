@@ -213,6 +213,27 @@ public class ClienteRepositorio implements IClienteRepositorio {
             sqlConn.desconectar(conn);
         }
         
-    }   
+    }
+    
+    public Boolean existeNoPedido(Integer id) throws ExcecaoRepositorio, ExcecaoConexao {
+        IConexao sqlConn = Conexao.getInstancia();
+        Connection conn = sqlConn.conectar();
+        String sql ="SELECT * FROM PEDIDOs WHERE idCliente = ?;";
+        try{
+            PreparedStatement pstm= conn.prepareStatement(sql);
+            pstm.setInt(1, id);
+            ResultSet rset = pstm.executeQuery();
+            
+            return (rset.next());
+            
+        }catch(SQLException e){
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_CLIENTE);
+        }finally{
+            sqlConn.desconectar(conn);
+        }
+        
+    }       
+    
+    
         
 }

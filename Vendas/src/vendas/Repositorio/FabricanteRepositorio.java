@@ -187,5 +187,26 @@ public class FabricanteRepositorio implements IFabricanteRepositorio {
             sqlConn.desconectar(conn);
         }
         
-    }   
+    }
+    
+    public Boolean existeNoProduto(Integer id) throws ExcecaoRepositorio, ExcecaoConexao {
+        IConexao sqlConn = Conexao.getInstancia();
+        Connection conn = sqlConn.conectar();
+        String sql ="SELECT * FROM Produtos WHERE idFabricante = ?;";
+        try{
+            PreparedStatement pstm= conn.prepareStatement(sql);
+            pstm.setInt(1, id);
+            ResultSet rset = pstm.executeQuery();
+            
+            return (rset.next());
+            
+        }catch(SQLException e){
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_FABRICANTE);
+        }finally{
+            sqlConn.desconectar(conn);
+        }
+        
+    }           
+    
+    
 }

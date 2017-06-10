@@ -2,6 +2,7 @@
 package vendas.Regras;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import vendas.Excecoes.ExcecaoRegras;
 import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRepositorio;
@@ -26,6 +27,17 @@ public class ClienteRegra {
           throw new ExcecaoRegras(ex.getMessage()); 
         }
     }
+    
+    public  void verificarExistenciaNoPedido(Integer id) throws ExcecaoRegras{
+        try {
+            
+            if(dao.existeNoPedido(id)){
+               throw new ExcecaoRegras(ExcecaoRegras.ERRO_IDCLIENTE_EXISTE_PEDIDO);
+            }   
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+          throw new ExcecaoRegras(ex.getMessage()); 
+        }
+    }      
     
     public  void validar(Cliente cliente) throws ExcecaoRegras{
         if(cliente.getNome().trim().equals("")){

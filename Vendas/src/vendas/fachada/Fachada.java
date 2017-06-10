@@ -49,6 +49,7 @@ public class Fachada {
     
     public void excluirCliente(Cliente cliente) throws ExcecaoRegras{
         clienteRegra.verificarExistencia(cliente.getIdCliente());
+        clienteRegra.verificarExistenciaNoPedido(cliente.getIdCliente());
         clienteRegra.excluir(cliente);
     }
     
@@ -145,6 +146,7 @@ public class Fachada {
     
     public void excluirFabricante(Fabricante fabricante) throws ExcecaoRegras{
         fabricanteRegra.verificarExistencia(fabricante.getIdFabricante());
+        fabricanteRegra.verificarExistenciaNoProduto(fabricante.getIdFabricante());
         FabricanteRegra.excluir(fabricante);        
     }
     
