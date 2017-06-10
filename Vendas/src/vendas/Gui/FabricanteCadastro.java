@@ -211,7 +211,7 @@ public class FabricanteCadastro extends TelaCadastro {
         txtID.setEnabled(false);
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabel2.setText("Nome");
+        jLabel2.setText("Razao Social");
 
         txtNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -220,7 +220,7 @@ public class FabricanteCadastro extends TelaCadastro {
         });
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabel3.setText("CPF");
+        jLabel3.setText("Telefone");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -349,7 +349,7 @@ public class FabricanteCadastro extends TelaCadastro {
          Fachada fachada = Fachada.getInstancia();
         if(dialogButton == JOptionPane.YES_OPTION){
           try{  
-               fachada.excluir(fabricante);
+               fachada.excluirFabricante(fabricante);
            
             txtID.setText(VAZIO);
             configurar(CONSULTA);            
@@ -367,21 +367,21 @@ public class FabricanteCadastro extends TelaCadastro {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
     
-        Cliente cliente = new Cliente();
-        cliente.setNome(txtNome.getText());
-        cliente.setCpf(txtCpf.getText()); 
+        Fabricante fabricante = new Fabricante();
+        fabricante.setRazaoSocial(txtNome.getText());
+        fabricante.setTelefone(txtCpf.getText()); 
         
         Fachada fachada = Fachada.getInstancia();
               
         try{
             if (txtID.getText().equals(VAZIO)){
-                fachada.incluirCliente(cliente);
+                fachada.incluirFabricante(fabricante);
                JOptionPane.showMessageDialog(null, FOI_CADASTRADO);
 
             
             }else{
-                cliente.setIdCliente(Integer.parseInt(txtID.getText()));
-                fachada.alterarCliente(cliente);
+                fabricante.setIdFabricante(Integer.parseInt(txtID.getText()));
+                fachada.alterarFabricante(fabricante);
                 JOptionPane.showMessageDialog(null, FOI_ALTERADO);
             }
         }catch(ExcecaoRegras ex){

@@ -5,9 +5,11 @@ import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRegras;
 import vendas.Excecoes.ExcecaoRepositorio;
 import vendas.Regras.ClienteRegra;
+import vendas.Regras.FabricanteRegra;
 import vendas.Regras.ProdutoRegra;
 import vendas.Regras.VendedorRegra;
 import vendas.entidades.Cliente;
+import vendas.entidades.Fabricante;
 import vendas.entidades.Produto;
 import vendas.entidades.Vendedor;
 
@@ -20,11 +22,13 @@ public class Fachada {
     private final ClienteRegra clienteRegra;
     private final VendedorRegra vendedorRegra;
     private final ProdutoRegra produtoRegra;
+    private final FabricanteRegra fabricanteRegra;
     
     private Fachada(){
         clienteRegra = new ClienteRegra();
         vendedorRegra = new VendedorRegra();
         produtoRegra = new ProdutoRegra();
+        fabricanteRegra = new FabricanteRegra();
     }
     
     public static Fachada getInstancia(){
@@ -132,6 +136,35 @@ public class Fachada {
     public ArrayList<Produto> listarProdutos(String descricao) throws ExcecaoRegras{
         return produtoRegra.listar(descricao);
     }
-   
+       
+      /*#########################################################################
+     * Fabricante
+     *########################################################################*/
+    
+    
+    public void excluirFabricante(Fabricante fabricante) throws ExcecaoRegras{
+        fabricanteRegra.verificarExistencia(fabricante.getIdFabricante());
+        FabricanteRegra.excluir(fabricante);        
+    }
+    
+    public void incluirFabricante(Fabricante fabricante) throws ExcecaoRegras{
+     //   FabricanteRegra.verificarDuplicidade(fabricante);
+        FabricanteRegra.incluir(fabricante);
+    }
+    
+    public void alterarFabricante(Fabricante fabricante)throws ExcecaoRegras{
+        FabricanteRegra.alterar(fabricante);
+    }
+    
+    public Fabricante consultarFabricante(Integer id)throws ExcecaoRegras{
+        Fabricante fabricante = new Fabricante();
+        fabricante = FabricanteRegra.consultar(id);
+        return fabricante;
+    }
+    
+    public Integer ultimoFabricante() throws ExcecaoRegras{
+        Integer id  = FabricanteRegra.ultimo();
+        return id;
+    }
 
 }
