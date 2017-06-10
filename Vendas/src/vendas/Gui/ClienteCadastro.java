@@ -43,7 +43,7 @@ public class ClienteCadastro extends TelaCadastro {
      */
     private ClienteCadastro(){
         initComponents();
-        //configurar(CONSULTA);
+        configurar(CONSULTA);
     }
     
     public void fechar() {

@@ -48,7 +48,7 @@ public class VendedorCadastro extends TelaCadastro {
      */
     public VendedorCadastro(){
         initComponents();
-        //configurar(CONSULTA);
+        configurar(CONSULTA);
     }
     
     public void fechar() {
