@@ -75,9 +75,9 @@ public class Fachada {
      * Vendedor
      *########################################################################*/
     
-    public void incluirVendedor(Vendedor c)throws ExcecaoRegras{
-        vendedorRegra.validar(c);
-        vendedorRegra.incluir(c);
+    public void incluirVendedor(Vendedor vendedor)throws ExcecaoRegras{
+        vendedorRegra.validar(vendedor);
+        vendedorRegra.incluir(vendedor);
     }
     
     public void excluirVendedor(Vendedor vendedor)throws ExcecaoRegras{

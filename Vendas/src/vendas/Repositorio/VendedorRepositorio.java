@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import vendas.Conexao.Conexao;
 import vendas.entidades.Vendedor;
 import vendas.Conexao.IConexao;
@@ -23,7 +24,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
     public Integer incluir(Vendedor vendedor) throws ExcecaoRepositorio,ExcecaoConexao {
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="INSERT INTO (nome, comissao) vendedores VALUES (?, ?)INSERT INTO vendedores  (nome, comisao) VALUES (?,?)";
+        String sql ="INSERT INTO vendedores  (nome, comisao) VALUES (?,?)";
         Integer id = null;
         try{
             PreparedStatement pstm = conn.prepareStatement(sql);
@@ -58,7 +59,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
     public void alterar(Vendedor vendedor) throws ExcecaoRepositorio,ExcecaoConexao {
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="UPDATE vendedores SET nome = ? , comissao = ? VALUES (?, ?) WHERE idVendedor = ? ";
+        String sql ="UPDATE vendedores SET nome = ? , comisao = ? WHERE idVendedor = ? ";
         try{
             PreparedStatement pstm= conn.prepareStatement(sql);
             pstm.setString(1, vendedor.getNome());
@@ -79,7 +80,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
         
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="SELECT idVendedor, nome, comissao FROM vendedores ";
+        String sql ="SELECT idVendedor, nome, comisao FROM vendedores ";
         
         if (!nome.equals("")) {
             sql = sql + " WHERE nome LIKE '%" + nome + "%'";
@@ -94,7 +95,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
                 Vendedor vendedor = new Vendedor();
                 vendedor.setIdVendedor(rset.getInt("idVendedor"));
                 vendedor.setNome(rset.getString("nome"));
-                vendedor.setComissao(rset.getDouble("comissao"));
+                vendedor.setComissao(rset.getDouble("comisao"));
                 lista.add(vendedor);
             }
         }catch(SQLException e){
@@ -108,12 +109,11 @@ public class VendedorRepositorio implements IVendedorRepositorio{
 
     @Override
     public Vendedor consultar(Integer id) throws ExcecaoRepositorio,ExcecaoConexao {
-        
         Vendedor vendedor = null;
         
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="SELECT idVendedor, nome, comissao FROM Vendedores WHERE idVendedor = ? ";
+        String sql ="SELECT * FROM Vendedores WHERE idVendedor = ? ;";
         try{
             PreparedStatement pstm= conn.prepareStatement(sql);
             pstm.setInt(1, id);
@@ -123,7 +123,7 @@ public class VendedorRepositorio implements IVendedorRepositorio{
                 vendedor = new Vendedor();
                 vendedor.setIdVendedor(rset.getInt("idVendedor"));
                 vendedor.setNome(rset.getString("nome"));
-                vendedor.setComissao(rset.getDouble("comissao"));
+                vendedor.setComissao(rset.getDouble("comisao"));
             }
         }catch(SQLException e){
             throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_VENDEDOR);

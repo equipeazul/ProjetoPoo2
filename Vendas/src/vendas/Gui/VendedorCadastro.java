@@ -42,11 +42,12 @@ public class VendedorCadastro extends TelaCadastro {
     private final String FOI_ALTERADO = "Vendedor foi alterado";
     private final String DIGITE_ID = "Digite o ID do vendedor";
     private final String VALOR_ID_INVALIDO = "ID do vendedor é invalido";
+    private final String VAlOR_COMISSÃO_INVALIDO = "Valor da Comessão invalido";
     
     /**
      * Creates new form IFrameClientes
      */
-    public VendedorCadastro(){
+    private VendedorCadastro(){
         initComponents();
         configurar(CONSULTA);
     }
@@ -82,10 +83,11 @@ public class VendedorCadastro extends TelaCadastro {
                 else
                 {
                     id = Integer.parseInt(txtID.getText());
-                }
+                }                
                 
                 //Criar Objeto Basico
                 Vendedor vendedor = new Vendedor();
+                
                 if(id != 0){
                     vendedor = fachada.consultarVendedor(id);
                     if(vendedor != null)
@@ -367,8 +369,12 @@ public class VendedorCadastro extends TelaCadastro {
         Vendedor vendedor = new Vendedor();
         vendedor.setIdVendedor(Integer.parseInt(txtID.getText()));
         vendedor.setNome(txtNome.getText());
+        //inserir double da string do jtextfield
+        try{
         vendedor.setComissao(Double.parseDouble(txtComissao.getText()));
-        
+        }catch(NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, FOI_CADASTRADO);
+        }
          Fachada fachada = Fachada.getInstancia();
         if(dialogButton == JOptionPane.YES_OPTION){
           try{  
@@ -395,7 +401,12 @@ public class VendedorCadastro extends TelaCadastro {
     
         Vendedor vendedor = new Vendedor();
         vendedor.setNome(txtNome.getText());
+        //inserir double da string do jtextfield
+        try{
         vendedor.setComissao(Double.parseDouble(txtComissao.getText()));
+        }catch(NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, VAlOR_COMISSÃO_INVALIDO);
+        }
         
         Fachada fachada = Fachada.getInstancia();
               
@@ -429,9 +440,9 @@ public class VendedorCadastro extends TelaCadastro {
         try{
             Integer id = Integer.parseInt(JOptionPane.showInputDialog(null, DIGITE_ID));
             
-               fachada.consultarVendedor(id);
-               txtID.setText(id.toString());
-               configurar(CONSULTA);          
+                fachada.consultarVendedor(id);
+                txtID.setText(id.toString());
+                configurar(CONSULTA);          
         } catch (ExcecaoRegras ex) {
            JOptionPane.showMessageDialog(null, ex.getMessage());
         }catch(Exception e){

@@ -397,13 +397,12 @@ public class ClienteCadastro extends TelaCadastro {
         
         Fachada fachada = Fachada.getInstancia();
         
-        try
-        {
+        try{
             Integer id = Integer.parseInt(JOptionPane.showInputDialog(null, DIGITE_ID));
             
-            fachada.consultarCliente(id);
-            txtID.setText(id.toString());
-            configurar(CONSULTA);
+                fachada.consultarCliente(id);
+                txtID.setText(id.toString());
+                configurar(CONSULTA);
         } catch (ExcecaoRegras ex) {
            JOptionPane.showMessageDialog(null, ex.getMessage());
         }catch(Exception e){
