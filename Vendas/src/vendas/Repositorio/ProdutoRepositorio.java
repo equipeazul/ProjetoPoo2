@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import vendas.Conexao.*;
 import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRepositorio;
@@ -26,6 +27,8 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
         String sql ="INSERT INTO Produtos (descricao, unidade, precovenda, idfabricante) values (?,?,?,?);";
+        
+
         
         try{
             PreparedStatement pstm = conn.prepareStatement(sql);
@@ -123,17 +126,20 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
     @Override
     public Produto consultar(Integer id)throws ExcecaoRepositorio,ExcecaoConexao
     {
-        Produto produto = new Produto();
+        Produto produto = null;
+        
+        
         
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="SELECT idProduto, descricao, unidade, precovenda, idfabricante FROM Produto WHERE idProduto = ? ";
+        String sql ="SELECT * FROM Produtos WHERE idProduto = ? ";
         try{
             PreparedStatement pstm= conn.prepareStatement(sql);
             pstm.setInt(1, id);
             ResultSet rset = pstm.executeQuery();
             
             if (rset.next()) {
+                produto = new Produto();
                 produto.setIdProduto(rset.getInt("idProduto"));
                 produto.setDescricao(rset.getString("descricao"));
                 produto.setUnidade(rset.getString("unidade"));
@@ -192,7 +198,28 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
             sqlConn.desconectar(conn);
         }
         
-    }       
+    }
+    
+    @Override
+    public Boolean existeNoPedido(Integer id) throws ExcecaoRepositorio, ExcecaoConexao {
+        IConexao sqlConn = Conexao.getInstancia();
+        Connection conn = sqlConn.conectar();
+        String sql ="SELECT idProduto FROM PEDIDOPRODUTOS WHERE idProduto = ? ";
+        try{
+            PreparedStatement pstm= conn.prepareStatement(sql);
+            pstm.setInt(1, id);
+            ResultSet rset = pstm.executeQuery();
+            
+            return (rset.next());
+            
+        }catch(SQLException e){
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_PRODUTO);
+        }finally{
+            sqlConn.desconectar(conn);
+        }
+        
+    }           
+    
 }
     
 

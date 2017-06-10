@@ -22,5 +22,5 @@ public interface IProdutoRepositorio {
     public Produto consultar(Integer id)throws ExcecaoRepositorio,ExcecaoConexao ;
     public Integer ultimo() throws ExcecaoRepositorio, ExcecaoConexao;
     public Boolean existe(Integer Id) throws ExcecaoRepositorio, ExcecaoConexao;
-    
+    public Boolean existeNoPedido(Integer Id) throws ExcecaoRepositorio, ExcecaoConexao;
 }

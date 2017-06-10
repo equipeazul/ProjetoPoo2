@@ -74,6 +74,7 @@ public class ProdutoCadastro extends TelaCadastro {
 
                 if (txtID.getText().equals(VAZIO)) {
                     id = fachada.ultimoProduto();
+                    
                 }
                 else
                 {
@@ -84,14 +85,15 @@ public class ProdutoCadastro extends TelaCadastro {
                 Produto produto = new Produto();
                 
                 if (id != 0) {
+                    
                     produto = fachada.consultarProduto(id);
                     if(produto != null)
                     {
                        txtDescricao.setText(produto.getDescricao());  
                        txtID.setText(produto.getIdproduto().toString());
                        txtUnidade.setText(produto.getUnidade()); 
-                       txtIdFabricante.setText(produto.getIdproduto().toString());
-                       txtPrecoVenda.setText(produto.getIdproduto().toString());
+                       txtIdFabricante.setText(produto.getFabricante().getIdFabricante().toString());
+                       txtPrecoVenda.setText(String.valueOf(produto.getPrecoVenda()));
                     }
                 }
                   
@@ -239,6 +241,8 @@ public class ProdutoCadastro extends TelaCadastro {
         jLabel7.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel7.setText("Preço de venda");
 
+        txtNomeFabricante.setEnabled(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -378,15 +382,16 @@ public class ProdutoCadastro extends TelaCadastro {
         Integer dialogButton = JOptionPane.YES_NO_OPTION;
         JOptionPane.showConfirmDialog(null, DESEJA_EXCLUIR,ATENCAO,dialogButton);
        
-        Cliente cliente = new Cliente();
-        cliente.setIdCliente(Integer.parseInt(txtID.getText()));
-        cliente.setNome(txtDescricao.getText());
-        cliente.setCpf(txtUnidade.getText()); 
+        Produto produto = new Produto();
+        produto.setIdProduto(Integer.parseInt(txtID.getText()));
+        produto.setDescricao(txtDescricao.getText());
+        produto.setUnidade(txtUnidade.getText());
+        produto.setPrecoVenda(Double.parseDouble(txtPrecoVenda.getText()));
         
          Fachada fachada = Fachada.getInstancia();
         if(dialogButton == JOptionPane.YES_OPTION){
           try{  
-               fachada.excluirCliente(cliente);
+               fachada.excluirProduto(produto);
            
             txtID.setText(VAZIO);
             configurar(CONSULTA);            
@@ -403,21 +408,24 @@ public class ProdutoCadastro extends TelaCadastro {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
     
-        Cliente cliente = new Cliente();
-        cliente.setNome(txtDescricao.getText());
-        cliente.setCpf(txtUnidade.getText()); 
+        Produto produto = new Produto();
+        produto.setDescricao(txtDescricao.getText());
+        produto.setUnidade(txtUnidade.getText()); 
+        produto.setPrecoVenda(Double.parseDouble(txtPrecoVenda.getText()));
+        produto.getFabricante().setIdFabricante(Integer.parseInt(txtIdFabricante.getText()));
+        
         
         Fachada fachada = Fachada.getInstancia();
               
         try{
             if (txtID.getText().equals(VAZIO)){
-                fachada.incluirCliente(cliente);
+                fachada.incluirProduto(produto);
                JOptionPane.showMessageDialog(null, FOI_CADASTRADO);
 
             
             }else{
-                cliente.setIdCliente(Integer.parseInt(txtID.getText()));
-                fachada.alterarCliente(cliente);
+                produto.setIdProduto(Integer.parseInt(txtID.getText()));
+                fachada.alterarProduto(produto);
                 JOptionPane.showMessageDialog(null, FOI_ALTERADO);
             }
         }catch(ExcecaoRegras ex){

@@ -60,7 +60,7 @@
                               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel5" min="-2" pref="613" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="-33" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -292,6 +292,9 @@
             <Component class="javax.swing.JTextField" name="txtPrecoVenda">
             </Component>
             <Component class="javax.swing.JTextField" name="txtNomeFabricante">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

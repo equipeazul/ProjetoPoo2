@@ -1,6 +1,7 @@
 package vendas.Regras;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRegras;
 import vendas.Excecoes.ExcecaoRepositorio;
@@ -18,6 +19,7 @@ public class ProdutoRegra {
     
     public  void verificarExistencia(Integer id) throws ExcecaoRegras{
         try {
+            
             if(!dao.existe(id)){
                throw new ExcecaoRegras(ExcecaoRegras.ERRO_IDPRODUTO_NAO_EXISTE);
             }   
@@ -25,6 +27,17 @@ public class ProdutoRegra {
           throw new ExcecaoRegras(ex.getMessage()); 
         }
     }
+    
+    public  void verificarExistenciaNoPedido(Integer id) throws ExcecaoRegras{
+        try {
+            
+            if(dao.existeNoPedido(id)){
+               throw new ExcecaoRegras(ExcecaoRegras.ERRO_IDPRODUTO_EXISTE_PEDIDO);
+            }   
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+          throw new ExcecaoRegras(ex.getMessage()); 
+        }
+    }    
     
     public  void validar(Produto produto) throws ExcecaoRegras{
         if(produto.getDescricao().trim().equals("")){

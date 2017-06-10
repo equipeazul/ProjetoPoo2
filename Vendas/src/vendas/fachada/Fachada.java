@@ -115,6 +115,7 @@ public class Fachada {
     
     public void excluirProduto(Produto produto) throws ExcecaoRegras{
         produtoRegra.verificarExistencia(produto.getIdproduto());
+        produtoRegra.verificarExistenciaNoPedido(produto.getIdproduto());
         produtoRegra.excluir(produto);
     }
     
