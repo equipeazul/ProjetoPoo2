@@ -23,6 +23,8 @@ public class ExcecaoRegras extends Exception {
     public static final String ERRO_DESCRICAO_PRODUTO_INVALIDO = "Descrição do produto inválida";
     public static final String ERRO_IDCLIENTE_EXISTE_PEDIDO = "Existe pedidos para este cliente";
     public static final String ERRO_IDFABRICANTE_EXISTE_PRODUTO = "Existe produtos para este fabricante";
+    
+    public static final String ERRO_ID_PEDIDO_NAO_EXISTE = "Id do pedido não existe";
 
     public ExcecaoRegras() {
         

@@ -5,20 +5,12 @@
  */
 package vendas.Gui;
 
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFrame;
+
 import javax.swing.JOptionPane;
-import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRegras;
-import vendas.Excecoes.ExcecaoRepositorio;
-import vendas.Repositorio.ClienteRepositorio;
-import vendas.Repositorio.IClienteRepositorio;
-import vendas.entidades.Cliente;
 import vendas.entidades.Pedido;
-import vendas.entidades.Vendedor;
 import vendas.fachada.Fachada;
+import vendas.util.Funcoes;
 
 
 /**
@@ -33,15 +25,13 @@ public class PedidoCadastro extends TelaCadastro {
     
     private final String DESEJA_EXCLUIR = "Deseja excluir o Pedido ?";
     private final String ATENCAO = "Atenção";
-    
     private final String FOI_EXCLUSO = "Pedido foi  excluso";
     private final String FOI_CADASTRADO = "Pedido foi cadastrado";
     private final String FOI_ALTERADO = "Pedido foi alterado";
-    private final String DIGITE_ID_CLIENTE = "Digite o ID do cliente";
-    private final String VALOR_ID_CLIENTE_INVALIDO = "ID do cliente é invalido";
-    private final String DIGITE_ID_VENDEDOR = "Digite o ID do Vendedor";
-    private final String VALOR_ID_VENDEDOR_INVALIDO = "ID do vendedor é invalido";
+    private final String DIGITE_ID_PEDIDO = "Digite o ID do pedido";
+    private final String VALOR_ID_PEDIDO_INVALIDO = "Valor do ID do pedido é invalido";
     
+        
     /**
      * Creates new form IFrameClientes
      */
@@ -86,17 +76,17 @@ public class PedidoCadastro extends TelaCadastro {
                 //Criar Objeto Basico
                 Pedido pedido = new Pedido();
                 
-                /*if (id != 0) {
+                if (id != 0) {
                     pedido = fachada.consultarPedido(id);
                     if(pedido != null)
                     {
                        txtID.setText(pedido.getIdPedido().toString());  
                        txtIDCliente.setText(pedido.getCliente().getIdCliente().toString());
-                       txtIDVendedor.setText(pedido.getVendedor().getIdVendedor().toString());
+                       txtSituacao.setText(pedido.getVendedor().getIdVendedor().toString());
                        txtData.setText(pedido.getDtVenda().toString());
                      
                     }
-                }*/
+                }
                   
             }catch(ExcecaoRegras ex){
                     JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -110,7 +100,7 @@ public class PedidoCadastro extends TelaCadastro {
         }
         
         if (txtID.getText().equals(VAZIO)){
-            txtIDVendedor.setText(VAZIO);
+            txtSituacao.setText(VAZIO);
             txtIDCliente.setText(VAZIO);
             txtData.setText(VAZIO);
         }
@@ -123,7 +113,7 @@ public class PedidoCadastro extends TelaCadastro {
         btnIrPara.setEnabled(ac.equals(CONSULTA));
         btnPesquisar.setEnabled(ac.equals(CONSULTA));
         
-        txtIDVendedor.setEnabled(!ac.equals(CONSULTA));
+        txtSituacao.setEnabled(!ac.equals(CONSULTA));
         txtIDCliente.setEnabled(!ac.equals(CONSULTA));
         
     }
@@ -150,12 +140,13 @@ public class PedidoCadastro extends TelaCadastro {
         jLabel4 = new javax.swing.JLabel();
         txtID = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtIDVendedor = new javax.swing.JTextField();
+        txtSituacao = new javax.swing.JTextField();
         txtData = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtIDCliente = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
+        txtIDVendedor = new javax.swing.JTextField();
 
         btnIncluir.setText("Incluir");
         btnIncluir.addActionListener(new java.awt.event.ActionListener() {
@@ -222,9 +213,9 @@ public class PedidoCadastro extends TelaCadastro {
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel2.setText("Cliente");
 
-        txtIDVendedor.addActionListener(new java.awt.event.ActionListener() {
+        txtSituacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIDVendedorActionPerformed(evt);
+                txtSituacaoActionPerformed(evt);
             }
         });
 
@@ -245,6 +236,12 @@ public class PedidoCadastro extends TelaCadastro {
         jLabel8.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel8.setText("Situação");
 
+        txtIDVendedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIDVendedorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -252,6 +249,7 @@ public class PedidoCadastro extends TelaCadastro {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtIDVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -263,10 +261,10 @@ public class PedidoCadastro extends TelaCadastro {
                     .addComponent(jLabel2)
                     .addComponent(jLabel8)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(txtIDVendedor, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txtIDCliente, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(535, Short.MAX_VALUE))
+                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -285,11 +283,13 @@ public class PedidoCadastro extends TelaCadastro {
                 .addComponent(txtIDCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
-                .addGap(4, 4, 4)
-                .addComponent(txtIDVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtIDVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
                 .addComponent(jLabel8)
-                .addGap(71, 71, 71))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45))
         );
 
         jDesktopPane1.setLayer(btnIncluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -310,31 +310,32 @@ public class PedidoCadastro extends TelaCadastro {
                 .addGap(2, 2, 2)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnIncluir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnIrPara, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(118, 118, 118))
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(253, Short.MAX_VALUE))
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(95, Short.MAX_VALUE))))
+                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnIncluir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnIrPara, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(118, 118, 118))))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -365,35 +366,37 @@ public class PedidoCadastro extends TelaCadastro {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtIDVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDVendedorActionPerformed
+    private void txtSituacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSituacaoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtIDVendedorActionPerformed
+    }//GEN-LAST:event_txtSituacaoActionPerformed
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
         configurar(INCLUSAO);
     }//GEN-LAST:event_btnIncluirActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        /*Integer dialogButton = JOptionPane.YES_NO_OPTION;
+        Integer dialogButton = JOptionPane.YES_NO_OPTION;
         JOptionPane.showConfirmDialog(null, DESEJA_EXCLUIR,ATENCAO,dialogButton);
        
         Pedido pedido = new Pedido();
         pedido.setIdPedido(Integer.parseInt(txtID.getText()));
-        pedido.setDtVenda(txtData.getText()));
-        pedido.setIdCliente(txtIDCliente.getText()); 
+        pedido.setDtVenda(Funcoes.StringToDate(txtData.getText()));
+        pedido.getCliente().setIdCliente(Integer.parseInt(txtIDCliente.getText())); 
+        pedido.getVendedor().setIdVendedor(Integer.parseInt(txtIDVendedor.getText())); 
+        pedido.setSituacao(txtSituacao.getText());
         
          Fachada fachada = Fachada.getInstancia();
         if(dialogButton == JOptionPane.YES_OPTION){
-          try{  
-               fachada.excluirCliente(cliente);
+            try{  
+               fachada.excluirPedido(pedido);
            
-            txtID.setText(VAZIO);
-            configurar(CONSULTA);            
-            JOptionPane.showMessageDialog(null, FOI_EXCLUSO);
+                txtID.setText(VAZIO);
+                configurar(CONSULTA);            
+                JOptionPane.showMessageDialog(null, FOI_EXCLUSO);
           }catch(ExcecaoRegras ex){
                JOptionPane.showMessageDialog(null,ex.getMessage());
           }
-        }*/
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
     
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -402,21 +405,24 @@ public class PedidoCadastro extends TelaCadastro {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
     
-        Cliente cliente = new Cliente();
-        cliente.setNome(txtIDVendedor.getText());
-       // cliente.setCpf(txtCpf.getText()); 
+        Pedido pedido = new Pedido();
+        pedido.setIdPedido(Integer.parseInt(txtID.getText()));
+        pedido.setDtVenda(Funcoes.StringToDate(txtData.getText()));
+        pedido.getCliente().setIdCliente(Integer.parseInt(txtIDCliente.getText())); 
+        pedido.getVendedor().setIdVendedor(Integer.parseInt(txtIDVendedor.getText())); 
+        pedido.setSituacao(txtSituacao.getText());
         
         Fachada fachada = Fachada.getInstancia();
               
         try{
             if (txtID.getText().equals(VAZIO)){
-                fachada.incluirCliente(cliente);
+                fachada.incluirPedido(pedido);
                JOptionPane.showMessageDialog(null, FOI_CADASTRADO);
 
             
             }else{
-                cliente.setIdCliente(Integer.parseInt(txtID.getText()));
-                fachada.alterarCliente(cliente);
+                pedido.setIdPedido(Integer.parseInt(txtID.getText()));
+                fachada.alterarPedido(pedido);
                 JOptionPane.showMessageDialog(null, FOI_ALTERADO);
             }
         }catch(ExcecaoRegras ex){
@@ -434,20 +440,20 @@ public class PedidoCadastro extends TelaCadastro {
     private void btnIrParaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrParaActionPerformed
         
         Fachada fachada = Fachada.getInstancia();
-        /*
+        
         try
         {
-            Integer id = Integer.parseInt(JOptionPane.showInputDialog(null, DIGITE_ID));
+            Integer id = Integer.parseInt(JOptionPane.showInputDialog(null, DIGITE_ID_PEDIDO));
             
-            fachada.consultarCliente(id);
+            fachada.consultarPedido(id);
             txtID.setText(id.toString());
             configurar(CONSULTA);
         } catch (ExcecaoRegras ex) {
            JOptionPane.showMessageDialog(null, ex.getMessage());
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, VALOR_ID_INVALIDO);
+            JOptionPane.showMessageDialog(null, VALOR_ID_PEDIDO_INVALIDO);
         }
-        */
+        
     }//GEN-LAST:event_btnIrParaActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
@@ -457,6 +463,10 @@ public class PedidoCadastro extends TelaCadastro {
     private void txtIDClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDClienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIDClienteActionPerformed
+
+    private void txtIDVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDVendedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIDVendedorActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
@@ -478,5 +488,6 @@ public class PedidoCadastro extends TelaCadastro {
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtIDCliente;
     private javax.swing.JTextField txtIDVendedor;
+    private javax.swing.JTextField txtSituacao;
     // End of variables declaration//GEN-END:variables
 }

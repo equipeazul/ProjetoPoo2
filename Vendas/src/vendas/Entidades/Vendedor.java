@@ -11,15 +11,15 @@ package vendas.entidades;
  */
 public class Vendedor {
     
-    private int idVendedor;
+    private Integer idVendedor;
     private String nome;
     private double comissao;
 
-    public int getIdVendedor() {
+    public Integer getIdVendedor() {
         return this.idVendedor;
     }
 
-    public void setIdVendedor(int idVendedor) {
+    public void setIdVendedor(Integer idVendedor) {
         this.idVendedor = idVendedor;
     }
 

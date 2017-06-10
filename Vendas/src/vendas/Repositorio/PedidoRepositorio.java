@@ -125,10 +125,7 @@ public class PedidoRepositorio implements IPedidoRepositorio
         
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="SELECT Pedidos.*, Clientes.Nome as nomeCliente, Vendedores.Nome as nomeVendedor FROM Pedidos " +
-                " LEFT JOIN Clientes ON Pedidos.idcliente = Clientes.idcliente " +
-                " LEFT JOIN Vendedores ON Pedidos.idvendedor = Vendedores.idvendedor WHERE idPedido = ? ";
-        
+        String sql ="SELECT * FROM Pedidos WHERE idPedidos = ? ";
         try{
             PreparedStatement pstm= conn.prepareStatement(sql);
             pstm.setInt(1, id);
@@ -138,39 +135,9 @@ public class PedidoRepositorio implements IPedidoRepositorio
                 pedido.setIdPedido(rset.getInt("idPedido"));
                 pedido.setDtVenda(rset.getDate("Dtvenda"));
                 pedido.getVendedor().setIdVendedor(rset.getInt("idvendedor"));
-                pedido.getVendedor().setNome(rset.getString("nomevendedor"));
                 pedido.getCliente().setIdCliente(rset.getInt("idcliente"));
-                pedido.getCliente().setNome(rset.getString("nomeCliente"));
                 pedido.setSituacao(rset.getString("situacao"));
-                
-                ArrayList<Pagamento> lista;
-                String sql1 ="SELECT * FROM pagamentos WHERER idPedido = ?";
-                    try{
-                        PreparedStatement pstm1= conn.prepareStatement(sql);
-                        pstm1.setInt(1, id);
-                        ResultSet rset1 = pstm.executeQuery();
-                       
-                        lista = new ArrayList<Pagamento>();
-            
-                        
-                        while (rset1.next()) {
-                            
-                        Pagamento pagamento = new Pagamento();
-                        pagamento.setIdPagamento(rset1.getInt("idpagamento"));
-                        pagamento.getPedido().setIdPedido(rset1.getInt("idpedido"));
-                        pagamento.setFormaPagamento(rset1.getString("formapagamento"));
-                        pagamento.setDtVencimento(rset1.getDate("dtvencimento"));
-                        pagamento.setValor(rset1.getDouble("valor"));
-                        pagamento.setDtPagamento(rset1.getDate("dtpagamento"));
-                        pagamento.setValorPago(rset1.getDouble("valorpago"));
-                        pagamento.setSituacao(rset1.getString("situacao"));
-                        lista.add(pagamento);
-                        }
-                        
-                        pedido.setListaPagamento(lista);
-                    }catch(SQLException e){
-                    throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_PEDIDO);
-                    }
+ 
             }
         }catch(SQLException e){
             throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_PEDIDO);

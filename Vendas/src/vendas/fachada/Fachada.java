@@ -173,7 +173,8 @@ public class Fachada {
         Integer id  = FabricanteRegra.ultimo();
         return id;
     }
-      /*#########################################################################
+    
+    /*#########################################################################
      * Pedido
      *########################################################################*/
     public Pedido consultarPedido(Integer id)throws ExcecaoRegras{
@@ -182,4 +183,33 @@ public class Fachada {
         return pedido;
     }    
 
+    /*#########################################################################
+     * PedidoCadastro
+     *########################################################################*/
+    
+    public void incluirPedido(Pedido pedido) throws ExcecaoRegras{
+        pedidoRegra.validar(pedido);
+        pedidoRegra.incluir(pedido);
+    }
+    
+    public void excluirPedido(Pedido pedido) throws ExcecaoRegras{
+        pedidoRegra.verificarExistencia(pedido.getIdPedido());
+        pedidoRegra.excluir(pedido);
+    }
+    
+    public void alterarPedido(Pedido pedido) throws ExcecaoRegras{
+        pedidoRegra.verificarExistencia(pedido.getIdPedido());
+        pedidoRegra.validar(pedido);
+        pedidoRegra.alterar(pedido);
+    }
+       
+    
+    public Integer ultimoPedido() throws ExcecaoRegras{
+        return pedidoRegra.ultimo();
+    }
+    
+        // public ArrayList<Pedido> listar(String descricao) throws ExcecaoRegras{
+        //   return pedidoRegra.listar(descricao);
+       
+    
 }
