@@ -14,9 +14,8 @@ import javax.swing.JInternalFrame;
  */
 public class TelaPrincipal extends javax.swing.JFrame {
 
-    private ClienteCadastro cadastroCliente = null;
-    private ClienteCadastro cadastroPedido = null;
-    private VendedorCadastro cadastroVendedor= null;
+    public TelaCadastro cadastroCliente = null;
+    public VendedorCadastro cadastroVendedor= null;
     /**
      * Creates new form Teste
      */
@@ -146,27 +145,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tela.setVisible(true);
         tela.setResizable(false);
         tela.setLocation(140, 20);  
-        //tela.setState(ICONIFIED);
-        
-        //jDesktopPane1.setSelectedFrame(tela);
-        
     }
     
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
-        if (cadastroCliente == null) {
-            cadastroCliente = new ClienteCadastro();
-            jDesktopPane1.add(cadastroCliente);
-        }
-        abrirTela(cadastroCliente, 800, 420);
+        cadastroCliente = ClienteCadastro.abrir(jDesktopPane1);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (cadastroPedido == null) {
-            cadastroPedido = new ClienteCadastro();
-            jDesktopPane1.add(cadastroPedido);
-        }
-        abrirTela(cadastroCliente, 800, 600);      
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

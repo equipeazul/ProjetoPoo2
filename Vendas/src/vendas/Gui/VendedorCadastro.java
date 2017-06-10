@@ -24,26 +24,40 @@ import vendas.fachada.Fachada;
  */
 public class VendedorCadastro extends javax.swing.JInternalFrame {
 
+    protected final String CONSULTA = "C";
+    protected final String INCLUSAO = "I";
+    protected final String ALTERACAO = "A";
+    protected final String EXCLUSAO = "E";
+    protected final String VAZIO = "";
+
+    private final String DESEJA_EXCLUIR = "Deseja excluir o vendedor ?";
+    private final String ATENCAO = "Atenção";
+    
+    private final String FOI_EXCLUSO = "Vendedor foi excluso";
+    private final String FOI_CADASTRADO = "Vendedor foi cadastrado";
+    private final String FOI_ALTERADO = "Vendedor foi alterado";
+    private final String DIGITE_ID = "Digite o ID do vendedor";
+    private final String VALOR_ID_INVALIDO = "ID do vendedor é invalido";
+    
     /**
      * Creates new form IFrameClientes
      */
     public VendedorCadastro(){
         initComponents();
-        configurar("C");
+        configurar(CONSULTA);
     }
 
     public void configurar(String ac) {
         
-        if(ac.equals("C")){
+        if(ac.equals(CONSULTA)){
             try
             {
                 
                 Integer id = 0;
                 
-                //Criar DAO
                 Fachada fachada = Fachada.getInstancia();
 
-                if (txtID.getText().equals("")) {
+                if (txtID.getText().equals(VAZIO)) {
                     id = fachada.ultimoVendedor();
                 }
                 else
@@ -69,26 +83,26 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
            
         }
         
-        if (ac.equals("I")){
+        if (ac.equals(INCLUSAO)){
            // Limpando os campos
-            txtID.setText("");
+            txtID.setText(VAZIO);
         }
         
-        if (txtID.getText().equals("")){
-            txtNome.setText("");
-            txtComissao.setText("");
+        if (txtID.getText().equals(VAZIO)){
+            txtNome.setText(VAZIO);
+            txtComissao.setText(VAZIO);
         }
         
-        btnIncluir.setEnabled(ac.equals("C"));
-        btnEditar.setEnabled(ac.equals("C") && !txtID.getText().equals(""));
-        btnExcluir.setEnabled(ac.equals("C") && !txtID.getText().equals(""));
-        btnSalvar.setEnabled(!ac.equals("C"));
-        btnCancelar.setEnabled(!ac.equals("C"));
-        btnIrPara.setEnabled(ac.equals("C"));
-        btnPesquisar.setEnabled(ac.equals("C"));
+        btnIncluir.setEnabled(ac.equals(CONSULTA));
+        btnEditar.setEnabled(ac.equals(CONSULTA) && !txtID.getText().equals(VAZIO));
+        btnExcluir.setEnabled(ac.equals(CONSULTA) && !txtID.getText().equals(VAZIO));
+        btnSalvar.setEnabled(!ac.equals(CONSULTA));
+        btnCancelar.setEnabled(!ac.equals(CONSULTA));
+        btnIrPara.setEnabled(ac.equals(CONSULTA));
+        btnPesquisar.setEnabled(ac.equals(CONSULTA));
         
-        txtNome.setEnabled(!ac.equals("C"));
-        txtComissao.setEnabled(!ac.equals("C"));
+        txtNome.setEnabled(!ac.equals(CONSULTA));
+        txtComissao.setEnabled(!ac.equals(CONSULTA));
         
     }
     
@@ -171,6 +185,11 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
         });
 
         btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -319,12 +338,12 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNomeActionPerformed
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
-        configurar("I");
+        configurar(INCLUSAO);
     }//GEN-LAST:event_btnIncluirActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         Integer dialogButton = JOptionPane.YES_NO_OPTION;
-        JOptionPane.showConfirmDialog(null, "Deseja excluir o registro?","Atenção",dialogButton);
+        JOptionPane.showConfirmDialog(null, DESEJA_EXCLUIR,ATENCAO,dialogButton);
        
         Vendedor vendedor = new Vendedor();
         vendedor.setIdVendedor(Integer.parseInt(txtID.getText()));
@@ -336,9 +355,9 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
           try{  
                fachada.excluirVendedor(vendedor);
            
-            txtID.setText("");
-            configurar("C");            
-            JOptionPane.showMessageDialog(null, "Vendedor foi excluso");
+            txtID.setText(VAZIO);
+            configurar(CONSULTA);            
+            JOptionPane.showMessageDialog(null, FOI_EXCLUSO);
           }catch(ExcecaoRegras ex){
                JOptionPane.showMessageDialog(null,ex.getMessage());
           }
@@ -346,7 +365,7 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
     
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        configurar("A");
+        configurar(ALTERACAO);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -362,26 +381,26 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
         Fachada fachada = Fachada.getInstancia();
               
         try{
-            if (txtID.getText().equals("")){
+            if (txtID.getText().equals(VAZIO)){
                 fachada.incluirVendedor(vendedor);
-               JOptionPane.showMessageDialog(null, "Vendedor foi cadastrado");
+               JOptionPane.showMessageDialog(null, FOI_CADASTRADO);
 
             
             }else{
                 vendedor.setIdVendedor(Integer.parseInt(txtID.getText()));
                 fachada.alterarVendedor(vendedor);
-                JOptionPane.showMessageDialog(null, "Vendedor foi alterado");
+                JOptionPane.showMessageDialog(null, FOI_ALTERADO);
             }
         }catch(ExcecaoRegras ex){
                 JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         
-        configurar("C");
+        configurar(CONSULTA);
          
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        configurar("C");
+        configurar(CONSULTA);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnIrParaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrParaActionPerformed
@@ -389,15 +408,15 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
         Fachada fachada = Fachada.getInstancia();
         
         try{
-            Integer id = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o ID do vendedor"));
+            Integer id = Integer.parseInt(JOptionPane.showInputDialog(null, DIGITE_ID));
             
                fachada.consultarVendedor(id);
                txtID.setText(id.toString());
-               configurar("C");          
+               configurar(CONSULTA);          
         } catch (ExcecaoRegras ex) {
            JOptionPane.showMessageDialog(null, ex.getMessage());
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Valor invalido");
+            JOptionPane.showMessageDialog(null, VALOR_ID_INVALIDO);
         }
         
     }//GEN-LAST:event_btnIrParaActionPerformed
@@ -405,6 +424,10 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
     private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIDActionPerformed
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPesquisarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;

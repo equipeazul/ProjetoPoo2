@@ -22,19 +22,41 @@ import vendas.fachada.Fachada;
  *
  * @author Felipe
  */
-public class ClienteCadastro extends javax.swing.JInternalFrame {
+public class ClienteCadastro extends TelaCadastro {
 
+    private static TelaCadastro instancia;
+    
+    
+    private final String DESEJA_EXCLUIR = "Deseja excluir o cliente ?";
+    private final String ATENCAO = "Atenção";
+    
+    private final String FOI_EXCLUSO = "Cliente foi excluso";
+    private final String FOI_CADASTRADO = "Cliente foi cadastrado";
+    private final String FOI_ALTERADO = "Cliente foi alterado";
+    private final String DIGITE_ID = "Digite o ID do cliente";
+    private final String VALOR_ID_INVALIDO = "ID do cliente é invalido";
+    
+    
     /**
      * Creates new form IFrameClientes
      */
-    public ClienteCadastro(){
+    private ClienteCadastro(){
         initComponents();
-        configurar("C");
+        //configurar(CONSULTA);
     }
 
+    public static TelaCadastro abrir(javax.swing.JDesktopPane principal) {
+        if (componente == null) {
+            instancia = new ClienteCadastro();
+            componente = principal.add(instancia);
+        }
+        instancia.show(800, 450);
+        return instancia;
+    }
+    
     public void configurar(String ac) {
         
-        if(ac.equals("C")){
+        if(ac.equals(CONSULTA)){
             try
             {
                 
@@ -43,7 +65,7 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
                 //Criar DAO
                 Fachada fachada = Fachada.getInstancia();
 
-                if (txtID.getText().equals("")) {
+                if (txtID.getText().equals(VAZIO)) {
                     id = fachada.ultimoCliente();
                 }
                 else
@@ -70,26 +92,26 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
            
         }
         
-        if (ac.equals("I")){
+        if (ac.equals(INCLUSAO)){
            // Limpando os campos
-            txtID.setText("");
+            txtID.setText(VAZIO);
         }
         
-        if (txtID.getText().equals("")){
-            txtNome.setText("");
-            txtCpf.setText("");
+        if (txtID.getText().equals(VAZIO)){
+            txtNome.setText(VAZIO);
+            txtCpf.setText(VAZIO);
         }
         
-        btnIncluir.setEnabled(ac.equals("C"));
-        btnEditar.setEnabled(ac.equals("C") && !txtID.getText().equals(""));
-        btnExcluir.setEnabled(ac.equals("C") && !txtID.getText().equals(""));
-        btnSalvar.setEnabled(!ac.equals("C"));
-        btnCancelar.setEnabled(!ac.equals("C"));
-        btnIrPara.setEnabled(ac.equals("C"));
-        btnPesquisar.setEnabled(ac.equals("C"));
+        btnIncluir.setEnabled(ac.equals(CONSULTA));
+        btnEditar.setEnabled(ac.equals(CONSULTA) && !txtID.getText().equals(VAZIO));
+        btnExcluir.setEnabled(ac.equals(CONSULTA) && !txtID.getText().equals(VAZIO));
+        btnSalvar.setEnabled(!ac.equals(CONSULTA));
+        btnCancelar.setEnabled(!ac.equals(CONSULTA));
+        btnIrPara.setEnabled(ac.equals(CONSULTA));
+        btnPesquisar.setEnabled(ac.equals(CONSULTA));
         
-        txtNome.setEnabled(!ac.equals("C"));
-        txtCpf.setEnabled(!ac.equals("C"));
+        txtNome.setEnabled(!ac.equals(CONSULTA));
+        txtCpf.setEnabled(!ac.equals(CONSULTA));
         
     }
     
@@ -106,7 +128,6 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
         btnIncluir = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnIrPara = new javax.swing.JButton();
@@ -141,13 +162,6 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton4.setText("Relatorio dos Clientes");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
         btnSalvar.setText("Salvar");
         btnSalvar.setEnabled(false);
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -172,6 +186,11 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
         });
 
         btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -232,7 +251,6 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
         jDesktopPane1.setLayer(btnIncluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(btnEditar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(btnExcluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(btnSalvar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(btnCancelar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(btnIrPara, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -247,35 +265,32 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnIncluir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnIrPara, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(118, 118, 118))
-            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnIncluir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnIrPara, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(118, 118, 118))
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(77, Short.MAX_VALUE))))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -289,18 +304,17 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
                     .addComponent(btnPesquisar))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(282, 282, 282)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59))
+                .addGap(374, 374, 374))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jDesktopPane1))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,12 +329,12 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNomeActionPerformed
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
-        configurar("I");
+        configurar(INCLUSAO);
     }//GEN-LAST:event_btnIncluirActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         Integer dialogButton = JOptionPane.YES_NO_OPTION;
-        JOptionPane.showConfirmDialog(null, "Deseja excluir o registro?","Atenção",dialogButton);
+        JOptionPane.showConfirmDialog(null, DESEJA_EXCLUIR,ATENCAO,dialogButton);
        
          Cliente cliente = new Cliente();
         cliente.setIdCliente(Integer.parseInt(txtID.getText()));
@@ -332,9 +346,9 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
           try{  
                fachada.excluirCliente(cliente);
            
-            txtID.setText("");
-            configurar("C");            
-            JOptionPane.showMessageDialog(null, "Cliente foi excluso");
+            txtID.setText(VAZIO);
+            configurar(CONSULTA);            
+            JOptionPane.showMessageDialog(null, FOI_EXCLUSO);
           }catch(ExcecaoRegras ex){
                JOptionPane.showMessageDialog(null,ex.getMessage());
           }
@@ -342,12 +356,8 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
     
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        configurar("A");
+        configurar(ALTERACAO);
     }//GEN-LAST:event_btnEditarActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-
-    }//GEN-LAST:event_jButton4ActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
     
@@ -358,26 +368,26 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
         Fachada fachada = Fachada.getInstancia();
               
         try{
-            if (txtID.getText().equals("")){
+            if (txtID.getText().equals(VAZIO)){
                 fachada.incluirCliente(cliente);
-               JOptionPane.showMessageDialog(null, "Cliente foi cadastrado");
+               JOptionPane.showMessageDialog(null, FOI_CADASTRADO);
 
             
             }else{
                 cliente.setIdCliente(Integer.parseInt(txtID.getText()));
                 fachada.alterarCliente(cliente);
-                JOptionPane.showMessageDialog(null, "Cliente foi alterado");
+                JOptionPane.showMessageDialog(null, FOI_ALTERADO);
             }
         }catch(ExcecaoRegras ex){
                 JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         
-        configurar("C");
+        configurar(CONSULTA);
          
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        configurar("C");
+        configurar(CONSULTA);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnIrParaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrParaActionPerformed
@@ -386,18 +396,22 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
         
         try
         {
-            Integer id = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o ID do cliente"));
+            Integer id = Integer.parseInt(JOptionPane.showInputDialog(null, DIGITE_ID));
             
             fachada.consultarCliente(id);
             txtID.setText(id.toString());
-            configurar("C");
+            configurar(CONSULTA);
         } catch (ExcecaoRegras ex) {
            JOptionPane.showMessageDialog(null, ex.getMessage());
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Valor invalido");
+            JOptionPane.showMessageDialog(null, VALOR_ID_INVALIDO);
         }
         
     }//GEN-LAST:event_btnIrParaActionPerformed
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+       this.fechar();
+    }//GEN-LAST:event_btnPesquisarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
@@ -407,7 +421,6 @@ public class ClienteCadastro extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnIrPara;
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JButton jButton4;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
