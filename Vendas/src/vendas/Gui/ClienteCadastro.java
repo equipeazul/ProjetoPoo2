@@ -31,7 +31,7 @@ public class ClienteCadastro extends TelaCadastro {
     private final String DESEJA_EXCLUIR = "Deseja excluir o cliente ?";
     private final String ATENCAO = "Atenção";
     
-    private final String FOI_EXCLUSO = "Cliente foi excluso";
+    private final String FOI_EXCLUSO = "Cliente foi  excluso";
     private final String FOI_CADASTRADO = "Cliente foi cadastrado";
     private final String FOI_ALTERADO = "Cliente foi alterado";
     private final String DIGITE_ID = "Digite o ID do cliente";
