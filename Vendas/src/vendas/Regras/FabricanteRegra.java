@@ -5,6 +5,8 @@
  */
 package vendas.Regras;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRegras;
 import vendas.Excecoes.ExcecaoRepositorio;
@@ -27,18 +29,21 @@ public class FabricanteRegra {
         }
     } 
     public static void verificarDuplicidade(Fabricante f) throws ExcecaoRegras{
-        /*
-        try{
-            Fabricante x = dao.consultar(f.getRazaoSocial());
-            if(x!=null){
-                throw new ExcecaoRegras("Fabricante já existe");
-            }
-            } catch(ExcecaoConexao e){
-                throw new ExcecaoRegras("Erro na conexão");
-            } catch(ExcecaoRepositorio e){
-                throw new ExcecaoRegras("Erro na DAO");
-            }
-*/
+        
+        Fabricante x;
+   
+         try {
+             x = dao.consultar(f.getIdFabricante());
+        }catch(ExcecaoConexao e){
+            throw new ExcecaoRegras("Erro na conexão");
+        }catch(ExcecaoRepositorio e){
+            throw new ExcecaoRegras("Erro na DAO");
+        }       
+
+        if(x!=null){
+            throw new ExcecaoRegras("Fabricante já existe");
+        }
+
     }  
     public static void incluir(Fabricante f)throws ExcecaoRegras{
         try{
@@ -104,5 +109,38 @@ public class FabricanteRegra {
         } catch(ExcecaoRepositorio e){
             throw new ExcecaoRegras("Erro na DAO");
         }             
-    } 
+    }
+    public  void verificarExistencia(Integer id) throws ExcecaoRegras{
+        try {
+            if(!dao.existe(id)){
+               throw new ExcecaoRegras(ExcecaoRegras.ERRO_IDCLIENTE_NAO_EXISTE);
+            }   
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+          throw new ExcecaoRegras(ex.getMessage()); 
+        }
+    }
+    
+    public static Fabricante consultar(Integer id)throws ExcecaoRegras{
+        Fabricante fabricante = new Fabricante();
+         try {
+             fabricante = dao.consultar(id);
+        } catch(ExcecaoConexao e){
+            throw new ExcecaoRegras("Erro na conexão");
+        } catch(ExcecaoRepositorio e){
+            throw new ExcecaoRegras("Erro na DAO");
+        }  
+         return fabricante;
+    }
+    
+    public static Integer ultimo() throws ExcecaoRegras{
+        try {
+            return dao.ultimo();
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+            throw new ExcecaoRegras(ex.getMessage()); 
+        }
+    }
+    
+   
+        
+    
 }
