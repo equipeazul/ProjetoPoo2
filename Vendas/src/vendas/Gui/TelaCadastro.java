@@ -35,17 +35,17 @@ public abstract class TelaCadastro extends javax.swing.JInternalFrame{
         this.setResizable(true);
         this.setClosable(true);   
         this.setSize(largura,altura);
+        this.setLocation(140, 20);
         this.setVisible(true);
         this.setResizable(false);
-        this.setLocation(140, 20);  
         this.setFocusable(true);
         try {
             this.setSelected(true);            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Janela foi fechada.");
-        }
-        
+        }        
     }
     
     public abstract void fechar();
+    
 }

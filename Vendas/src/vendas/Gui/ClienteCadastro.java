@@ -339,7 +339,7 @@ public class ClienteCadastro extends TelaCadastro {
         Integer dialogButton = JOptionPane.YES_NO_OPTION;
         JOptionPane.showConfirmDialog(null, DESEJA_EXCLUIR,ATENCAO,dialogButton);
        
-         Cliente cliente = new Cliente();
+        Cliente cliente = new Cliente();
         cliente.setIdCliente(Integer.parseInt(txtID.getText()));
         cliente.setNome(txtNome.getText());
         cliente.setCpf(txtCpf.getText()); 
