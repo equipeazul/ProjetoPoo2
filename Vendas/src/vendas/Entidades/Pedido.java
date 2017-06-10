@@ -77,7 +77,7 @@ public class Pedido {
         this.listaPedidoProduto = listaPedidoProduto;
     }
     
-    public ArrayList getListaPagamento() {
+    public ArrayList<Pagamento> getListaPagamento() {
         return this.listaPagamento;
     }
 

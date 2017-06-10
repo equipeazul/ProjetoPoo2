@@ -32,12 +32,12 @@ public class PagamentoRepositorio implements IPagamentoRepositorio{
         
         try{
             PreparedStatement pstm = conn.prepareStatement(sql);
-            pstm.setInt(1, pagamento.getIdPedido());
+            pstm.setInt(1, pagamento.getPedido().getIdPedido());
             pstm.setString(2, pagamento.getFormaPagamento()); 
             pstm.setDate(3, (Date) pagamento.getDtVencimento());
             pstm.setDouble(4, pagamento.getValor());
             pstm.setDate(5, (Date) pagamento.getDtPagamento()); 
-            pstm.setDouble(6, pagamento.getValorpago());      
+            pstm.setDouble(6, pagamento.getValorPago());      
             pstm.setString(7, pagamento.getSituacao());    
             
             pstm.executeUpdate();
@@ -75,7 +75,7 @@ public class PagamentoRepositorio implements IPagamentoRepositorio{
             pstm.setDate(2, (Date) pagamento.getDtVencimento()); 
             pstm.setDouble(3, pagamento.getValor());
             pstm.setDate(4, (Date) pagamento.getDtPagamento());
-            pstm.setDouble(5, pagamento.getValorpago()); 
+            pstm.setDouble(5, pagamento.getValorPago()); 
             pstm.setString(6, pagamento.getSituacao()); 
             pstm.setInt(7, pagamento.getIdPagamento()); 
             pstm.executeUpdate();
@@ -110,13 +110,13 @@ public class PagamentoRepositorio implements IPagamentoRepositorio{
             while (rset.next()) {
                 Pagamento pagamento = new Pagamento();
                 pagamento.setIdPagamento(rset.getInt("idPagamento"));
-                pagamento.setIdPedido(rset.getInt("idPedido"));
+                pagamento.getPedido().setIdPedido(rset.getInt("idPedido"));
                 pagamento.setFormaPagamento(rset.getString("formapagamento"));
-                pagamento.setDtvencimento(rset.getDate("dtvencimento"));
+                pagamento.setDtVencimento(rset.getDate("dtvencimento"));
                 pagamento.setValor(rset.getDouble("valor"));
                 pagamento.setDtPagamento(rset.getDate("dtpagamento"));
-                pagamento.setValorpago(rset.getDouble("valorpago"));
-                pagamento.setSituação(rset.getString("situacao"));
+                pagamento.setValorPago(rset.getDouble("valorpago"));
+                pagamento.setSituacao(rset.getString("situacao"));
                 
                 lista.add(pagamento);
             }
@@ -142,13 +142,13 @@ public class PagamentoRepositorio implements IPagamentoRepositorio{
             
             if (rset.next()) {
                 pagamento.setIdPagamento(rset.getInt("idPagamento"));
-                pagamento.setIdPedido(rset.getInt("idPedido"));
+                pagamento.getPedido().setIdPedido(rset.getInt("idPedido"));
                 pagamento.setFormaPagamento(rset.getString("formapagamento"));
-                pagamento.setDtvencimento(rset.getDate("dtvencimento"));
+                pagamento.setDtVencimento(rset.getDate("dtvencimento"));
                 pagamento.setValor(rset.getDouble("valor"));
                 pagamento.setDtPagamento(rset.getDate("dtpagamento"));
-                pagamento.setValorpago(rset.getDouble("valorpago"));
-                pagamento.setSituação(rset.getString("situacao"));
+                pagamento.setValorPago(rset.getDouble("valorpago"));
+                pagamento.setSituacao(rset.getString("situacao"));
  
             }
         }catch(SQLException e){

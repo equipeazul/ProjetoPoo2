@@ -14,13 +14,17 @@ import java.util.Date;
 public class Pagamento {
     
     private Integer idPagamento;
-    private Integer idPedido;
+    private Pedido pedido;
     private String formaPagamento;
     private Date dtVencimento;
     private Double valor;
     private Date dtPagamento;
     private Double valorPago;
     private String situacao;
+    
+    public Pagamento(){
+        Pedido pedido = new Pedido();
+    }
     
     public Integer getIdPagamento() {
         return this.idPagamento;
@@ -30,12 +34,12 @@ public class Pagamento {
         this.idPagamento = idPagamento;
     }
 
-    public Integer getIdPedido() {
-        return this.idPedido;
+    public Pedido getPedido() {
+        return this.pedido;
     }
 
-    public void setIdPedido(Integer idPedido) {
-        this.idPedido = idPedido;
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
 
     public String getFormaPagamento() {
@@ -50,7 +54,7 @@ public class Pagamento {
         return dtVencimento;
     }
 
-    public void setDtvencimento(Date dtVencimento) {
+    public void setDtVencimento(Date dtVencimento) {
         this.dtVencimento = dtVencimento;
     }
 
@@ -70,11 +74,11 @@ public class Pagamento {
         this.dtPagamento = dtPagamento;
     }
 
-    public double getValorpago() {
+    public double getValorPago() {
         return this.valorPago;
     }
 
-    public void setValorpago(double valorPago) {
+    public void setValorPago(double valorPago) {
         this.valorPago = valorPago;
     }
 
@@ -82,7 +86,7 @@ public class Pagamento {
         return this.situacao;
     }
 
-    public void setSituação(String situacao) {
+    public void setSituacao(String situacao) {
         this.situacao = situacao;
     }
 

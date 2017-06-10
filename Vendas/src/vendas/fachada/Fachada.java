@@ -6,10 +6,12 @@ import vendas.Excecoes.ExcecaoRegras;
 import vendas.Excecoes.ExcecaoRepositorio;
 import vendas.Regras.ClienteRegra;
 import vendas.Regras.FabricanteRegra;
+import vendas.Regras.PedidoRegra;
 import vendas.Regras.ProdutoRegra;
 import vendas.Regras.VendedorRegra;
 import vendas.entidades.Cliente;
 import vendas.entidades.Fabricante;
+import vendas.entidades.Pedido;
 import vendas.entidades.Produto;
 import vendas.entidades.Vendedor;
 
@@ -23,12 +25,14 @@ public class Fachada {
     private final VendedorRegra vendedorRegra;
     private final ProdutoRegra produtoRegra;
     private final FabricanteRegra fabricanteRegra;
+    private final PedidoRegra pedidoRegra;
     
     private Fachada(){
         clienteRegra = new ClienteRegra();
         vendedorRegra = new VendedorRegra();
         produtoRegra = new ProdutoRegra();
         fabricanteRegra = new FabricanteRegra();
+        pedidoRegra = new PedidoRegra();
     }
     
     public static Fachada getInstancia(){
@@ -167,5 +171,13 @@ public class Fachada {
         Integer id  = FabricanteRegra.ultimo();
         return id;
     }
+      /*#########################################################################
+     * Pedido
+     *########################################################################*/
+    public Pedido consultarPedido(Integer id)throws ExcecaoRegras{
+        Pedido pedido = new Pedido();
+        pedido = pedidoRegra.consultar(id);
+        return pedido;
+    }    
 
 }

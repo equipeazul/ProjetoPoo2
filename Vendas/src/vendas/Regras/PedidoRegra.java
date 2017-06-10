@@ -97,7 +97,16 @@ public class PedidoRegra {
         } catch(ExcecaoRepositorio e){
             throw new ExcecaoRegras("Erro na DAO");
         }             
-    }    
+    }
+    public Pedido consultar(Integer id)throws ExcecaoRegras{
+        try{
+            return dao.consultar(id);
+        } catch(ExcecaoConexao e){
+            throw new ExcecaoRegras("Erro na conexão");
+        } catch(ExcecaoRepositorio e){
+            throw new ExcecaoRegras("Erro na DAO");
+        } 
+    }
 
     
 }
