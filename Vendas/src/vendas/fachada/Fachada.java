@@ -121,7 +121,7 @@ public class Fachada {
     }
     
     public Integer ultimoFabricante() throws ExcecaoRegras{
-        Integer id = FabricanteRegra.ultimo();
+        Integer id  = FabricanteRegra.ultimo();
         return id;
     }
 }
