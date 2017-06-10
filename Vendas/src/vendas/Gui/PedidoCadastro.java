@@ -86,7 +86,7 @@ public class PedidoCadastro extends TelaCadastro {
                 //Criar Objeto Basico
                 Pedido pedido = new Pedido();
                 
-                if (id != 0) {
+                /*if (id != 0) {
                     pedido = fachada.consultarPedido(id);
                     if(pedido != null)
                     {
@@ -96,7 +96,7 @@ public class PedidoCadastro extends TelaCadastro {
                        txtData.setText(pedido.getDtVenda().toString());
                      
                     }
-                }
+                }*/
                   
             }catch(ExcecaoRegras ex){
                     JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -374,7 +374,7 @@ public class PedidoCadastro extends TelaCadastro {
     }//GEN-LAST:event_btnIncluirActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        Integer dialogButton = JOptionPane.YES_NO_OPTION;
+        /*Integer dialogButton = JOptionPane.YES_NO_OPTION;
         JOptionPane.showConfirmDialog(null, DESEJA_EXCLUIR,ATENCAO,dialogButton);
        
         Pedido pedido = new Pedido();
@@ -393,7 +393,7 @@ public class PedidoCadastro extends TelaCadastro {
           }catch(ExcecaoRegras ex){
                JOptionPane.showMessageDialog(null,ex.getMessage());
           }
-        }
+        }*/
     }//GEN-LAST:event_btnExcluirActionPerformed
     
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -404,7 +404,7 @@ public class PedidoCadastro extends TelaCadastro {
     
         Cliente cliente = new Cliente();
         cliente.setNome(txtIDVendedor.getText());
-        cliente.setCpf(txtCpf.getText()); 
+       // cliente.setCpf(txtCpf.getText()); 
         
         Fachada fachada = Fachada.getInstancia();
               
@@ -434,7 +434,7 @@ public class PedidoCadastro extends TelaCadastro {
     private void btnIrParaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrParaActionPerformed
         
         Fachada fachada = Fachada.getInstancia();
-        
+        /*
         try
         {
             Integer id = Integer.parseInt(JOptionPane.showInputDialog(null, DIGITE_ID));
@@ -447,7 +447,7 @@ public class PedidoCadastro extends TelaCadastro {
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, VALOR_ID_INVALIDO);
         }
-        
+        */
     }//GEN-LAST:event_btnIrParaActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
