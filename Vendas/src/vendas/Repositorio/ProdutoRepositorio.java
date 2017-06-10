@@ -28,8 +28,6 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
         Connection conn = sqlConn.conectar();
         String sql ="INSERT INTO Produtos (descricao, unidade, precovenda, idfabricante) values (?,?,?,?);";
         
-
-        
         try{
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setString(1, produto.getDescricao());
@@ -42,7 +40,6 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
         }finally{
             sqlConn.desconectar(conn);
         }
-        
         
     }
     
@@ -61,7 +58,6 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
            }finally{
                sqlConn.desconectar(conn);
            }    
-    
     }
     
     @Override

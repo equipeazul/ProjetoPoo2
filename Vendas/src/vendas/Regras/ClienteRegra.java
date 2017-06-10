@@ -18,7 +18,7 @@ public class ClienteRegra {
     
     private final static IClienteRepositorio dao = new ClienteRepositorio();
     
-    public  void verificarExistencia(Integer id) throws ExcecaoRegras{
+    public static void verificarExistencia(Integer id) throws ExcecaoRegras{
         try {
             if(!dao.existe(id)){
                throw new ExcecaoRegras(ExcecaoRegras.ERRO_IDCLIENTE_NAO_EXISTE);
@@ -28,7 +28,7 @@ public class ClienteRegra {
         }
     }
     
-    public  void verificarExistenciaNoPedido(Integer id) throws ExcecaoRegras{
+    public static void verificarExistenciaNoPedido(Integer id) throws ExcecaoRegras{
         try {
             
             if(dao.existeNoPedido(id)){
@@ -39,13 +39,13 @@ public class ClienteRegra {
         }
     }      
     
-    public  void validar(Cliente cliente) throws ExcecaoRegras{
+    public static void validar(Cliente cliente) throws ExcecaoRegras{
         if(cliente.getNome().trim().equals("")){
             throw new ExcecaoRegras(ExcecaoRegras.ERRO_NOME_CLIENTE_INVALIDO);
         }
     }
     
-    public  void verificarDuplicidadeCpf(String cpf) throws ExcecaoRegras{
+    public static void verificarDuplicidadeCpf(String cpf) throws ExcecaoRegras{
         try {
             Cliente cliente = dao.consultarCpf(cpf);
             if(cliente != null){
@@ -55,7 +55,7 @@ public class ClienteRegra {
           throw new ExcecaoRegras(ex.getMessage()); 
         }
     }  
-    public  void incluir(Cliente cliente) throws ExcecaoRegras{
+    public static void incluir(Cliente cliente) throws ExcecaoRegras{
         try {
             dao.incluir(cliente);
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
@@ -63,7 +63,7 @@ public class ClienteRegra {
         }
     }
     
-    public  void excluir(Cliente cliente) throws ExcecaoRegras{
+    public static void excluir(Cliente cliente) throws ExcecaoRegras{
         try {
             dao.excluir(cliente.getIdCliente());
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
@@ -71,14 +71,15 @@ public class ClienteRegra {
         }
     }
     
-    public void alterar(Cliente cliente) throws ExcecaoRegras{
+    public static void alterar(Cliente cliente) throws ExcecaoRegras{
         try {
             dao.alterar(cliente);
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
             throw new ExcecaoRegras(ex.getMessage()); 
         }
     }
-    public ArrayList<Cliente> listar(String nome) throws ExcecaoRegras{
+    
+    public static ArrayList<Cliente> listar(String nome) throws ExcecaoRegras{
         try {
             return dao.listar(nome);
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
@@ -86,7 +87,7 @@ public class ClienteRegra {
         }
     } 
     
-    public Cliente consultar(Integer id) throws ExcecaoRegras{
+    public static Cliente consultar(Integer id) throws ExcecaoRegras{
         try {
             return dao.consultar(id);
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
@@ -94,7 +95,7 @@ public class ClienteRegra {
         }
     }
 
-    public Integer ultimo() throws ExcecaoRegras{
+    public static Integer ultimo() throws ExcecaoRegras{
         try {
             return dao.ultimo();
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
@@ -102,7 +103,7 @@ public class ClienteRegra {
         }
     }    
     
-    public Boolean existe(Integer id) throws ExcecaoRegras{
+    public static Boolean existe(Integer id) throws ExcecaoRegras{
         try {
             return dao.existe(id);
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {

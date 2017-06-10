@@ -20,20 +20,8 @@ import vendas.entidades.Vendedor;
  * @author aluno
  */
 public class Fachada {
-    private static Fachada instancia;
-    private final ClienteRegra clienteRegra;
-    private final VendedorRegra vendedorRegra;
-    private final ProdutoRegra produtoRegra;
-    private final FabricanteRegra fabricanteRegra;
-    private final PedidoRegra pedidoRegra;
     
-    private Fachada(){
-        clienteRegra = new ClienteRegra();
-        vendedorRegra = new VendedorRegra();
-        produtoRegra = new ProdutoRegra();
-        fabricanteRegra = new FabricanteRegra();
-        pedidoRegra = new PedidoRegra();
-    }
+    private static Fachada instancia;
     
     public static Fachada getInstancia(){
         if(instancia == null)
@@ -42,128 +30,130 @@ public class Fachada {
     }
     
     /*#########################################################################
-     * Cliente
-     *########################################################################*/
+    * Cliente
+    *########################################################################*/
     
     public void incluirCliente(Cliente cliente) throws ExcecaoRegras{
-        clienteRegra.verificarDuplicidadeCpf(cliente.getCpf());
-        clienteRegra.validar(cliente);
-        clienteRegra.incluir(cliente);
+        ClienteRegra.verificarDuplicidadeCpf(cliente.getCpf());
+        ClienteRegra.validar(cliente);
+        ClienteRegra.incluir(cliente);
     }
     
     public void excluirCliente(Cliente cliente) throws ExcecaoRegras{
-        clienteRegra.verificarExistencia(cliente.getIdCliente());
-        clienteRegra.verificarExistenciaNoPedido(cliente.getIdCliente());
-        clienteRegra.excluir(cliente);
+        ClienteRegra.verificarExistencia(cliente.getIdCliente());
+        ClienteRegra.verificarExistenciaNoPedido(cliente.getIdCliente());
+        ClienteRegra.excluir(cliente);
     }
     
     public void alterarCliente(Cliente cliente) throws ExcecaoRegras{
-        clienteRegra.verificarExistencia(cliente.getIdCliente());
-        clienteRegra.validar(cliente);
-        clienteRegra.alterar(cliente);
+        ClienteRegra.verificarExistencia(cliente.getIdCliente());
+        ClienteRegra.validar(cliente);
+        ClienteRegra.alterar(cliente);
     }
        
     public Cliente consultarCliente(Integer id) throws ExcecaoRegras{
-        clienteRegra.verificarExistencia(id);
-        return clienteRegra.consultar(id);
+        ClienteRegra.verificarExistencia(id);
+        return ClienteRegra.consultar(id);
     }
     
     public Integer ultimoCliente() throws ExcecaoRegras{
-        return clienteRegra.ultimo();
+        return ClienteRegra.ultimo();
     }
     
     public ArrayList<Cliente> listarClientes(String nome) throws ExcecaoRegras{
-        return clienteRegra.listar(nome);
+        return ClienteRegra.listar(nome);
     }
    
     /*#########################################################################
-     * Vendedor
-     *########################################################################*/
+    * Vendedor
+    *########################################################################*/
     
     public void incluirVendedor(Vendedor vendedor)throws ExcecaoRegras{
-        vendedorRegra.validar(vendedor);
-        vendedorRegra.incluir(vendedor);
+        VendedorRegra.validar(vendedor);
+        VendedorRegra.incluir(vendedor);
     }
     
     public void excluirVendedor(Vendedor vendedor)throws ExcecaoRegras{
-        vendedorRegra.verificarExistencia(vendedor.getIdVendedor());
-        vendedorRegra.excluir(vendedor);
+        VendedorRegra.verificarExistencia(vendedor.getIdVendedor());
+        VendedorRegra.excluir(vendedor);
     }
     
     public void alterarVendedor(Vendedor vendedor)throws ExcecaoRegras{
-        vendedorRegra.verificarExistencia(vendedor.getIdVendedor());
-        vendedorRegra.validar(vendedor);
-        vendedorRegra.alterar(vendedor);
+        VendedorRegra.verificarExistencia(vendedor.getIdVendedor());
+        VendedorRegra.validar(vendedor);
+        VendedorRegra.alterar(vendedor);
     }
        
     public Vendedor consultarVendedor(Integer id)throws ExcecaoRegras{
-        vendedorRegra.verificarExistencia(id);
-        return vendedorRegra.consultar(id);
+        VendedorRegra.verificarExistencia(id);
+        return VendedorRegra.consultar(id);
     }
     
     public Integer ultimoVendedor()throws ExcecaoRegras{
-        return vendedorRegra.ultimo();
+        return VendedorRegra.ultimo();
     }
     
     public ArrayList<Vendedor> listarVendedores(String nome)throws ExcecaoRegras{
-        return vendedorRegra.listar(nome);
+        return VendedorRegra.listar(nome);
     }
    
     /*#########################################################################
-     * Produto
-     *########################################################################*/
+    * Produto
+    *########################################################################*/
     
     public void incluirProduto(Produto produto) throws ExcecaoRegras{
-        produtoRegra.validar(produto);
-        produtoRegra.incluir(produto);
+        ProdutoRegra.validar(produto);
+        ProdutoRegra.incluir(produto);
     }
     
     public void excluirProduto(Produto produto) throws ExcecaoRegras{
-        produtoRegra.verificarExistencia(produto.getIdproduto());
-        produtoRegra.verificarExistenciaNoPedido(produto.getIdproduto());
-        produtoRegra.excluir(produto);
+        ProdutoRegra.verificarExistencia(produto.getIdproduto());
+        ProdutoRegra.verificarExistenciaNoPedido(produto.getIdproduto());
+        ProdutoRegra.excluir(produto);
     }
     
     public void alterarProduto(Produto produto) throws ExcecaoRegras{
-        produtoRegra.verificarExistencia(produto.getIdproduto());
-        produtoRegra.validar(produto);
-        produtoRegra.alterar(produto);
+        ProdutoRegra.verificarExistencia(produto.getIdproduto());
+        ProdutoRegra.validar(produto);
+        ProdutoRegra.alterar(produto);
     }
        
     public Produto consultarProduto(Integer id) throws ExcecaoRegras{
-        produtoRegra.verificarExistencia(id);
-        return produtoRegra.consultar(id);
+        ProdutoRegra.verificarExistencia(id);
+        return ProdutoRegra.consultar(id);
     }
     
     public Integer ultimoProduto() throws ExcecaoRegras{
-        return produtoRegra.ultimo();
+        return ProdutoRegra.ultimo();
     }
     
     public ArrayList<Produto> listarProdutos(String descricao) throws ExcecaoRegras{
-        return produtoRegra.listar(descricao);
+        return ProdutoRegra.listar(descricao);
     }
        
-      /*#########################################################################
-     * Fabricante
-     *########################################################################*/
+    /*#########################################################################
+    * Fabricante
+    *########################################################################*/
     
     
     public void excluirFabricante(Fabricante fabricante) throws ExcecaoRegras{
-        fabricanteRegra.verificarExistencia(fabricante.getIdFabricante());
-        fabricanteRegra.verificarExistenciaNoProduto(fabricante.getIdFabricante());
+        FabricanteRegra.verificarExistencia(fabricante.getIdFabricante());
+        FabricanteRegra.verificarExistenciaNoProduto(fabricante.getIdFabricante());
         FabricanteRegra.excluir(fabricante);        
     }
     
     public void incluirFabricante(Fabricante fabricante) throws ExcecaoRegras{
-     //   FabricanteRegra.verificarDuplicidade(fabricante);
+        FabricanteRegra.validar(fabricante);
         FabricanteRegra.incluir(fabricante);
     }
     
     public void alterarFabricante(Fabricante fabricante)throws ExcecaoRegras{
+        FabricanteRegra.validar(fabricante);
         FabricanteRegra.alterar(fabricante);
     }
     
     public Fabricante consultarFabricante(Integer id)throws ExcecaoRegras{
+        FabricanteRegra.verificarExistencia(id);
         Fabricante fabricante = new Fabricante();
         fabricante = FabricanteRegra.consultar(id);
         return fabricante;
@@ -175,41 +165,37 @@ public class Fachada {
     }
     
     /*#########################################################################
-     * Pedido
-     *########################################################################*/
+    * Pedido
+    *########################################################################*/
     public Pedido consultarPedido(Integer id)throws ExcecaoRegras{
         Pedido pedido = new Pedido();
-        pedido = pedidoRegra.consultar(id);
+        pedido = PedidoRegra.consultar(id);
         return pedido;
     }    
 
-    /*#########################################################################
-     * PedidoCadastro
-     *########################################################################*/
-    
     public void incluirPedido(Pedido pedido) throws ExcecaoRegras{
-        pedidoRegra.validar(pedido);
-        pedidoRegra.incluir(pedido);
+        PedidoRegra.validar(pedido);
+        PedidoRegra.incluir(pedido);
     }
     
     public void excluirPedido(Pedido pedido) throws ExcecaoRegras{
-        pedidoRegra.verificarExistencia(pedido.getIdPedido());
-        pedidoRegra.excluir(pedido);
+        PedidoRegra.verificarExistencia(pedido.getIdPedido());
+        PedidoRegra.excluir(pedido);
     }
     
     public void alterarPedido(Pedido pedido) throws ExcecaoRegras{
-        pedidoRegra.verificarExistencia(pedido.getIdPedido());
-        pedidoRegra.validar(pedido);
-        pedidoRegra.alterar(pedido);
+        PedidoRegra.verificarExistencia(pedido.getIdPedido());
+        PedidoRegra.validar(pedido);
+        PedidoRegra.alterar(pedido);
     }
        
     
     public Integer ultimoPedido() throws ExcecaoRegras{
-        return pedidoRegra.ultimo();
+        return PedidoRegra.ultimo();
     }
     
-        // public ArrayList<Pedido> listar(String descricao) throws ExcecaoRegras{
-        //   return pedidoRegra.listar(descricao);
-       
+    public ArrayList<Pedido> listar(String nomeCliente) throws ExcecaoRegras{
+        return PedidoRegra.listar(nomeCliente);
+    }
     
 }

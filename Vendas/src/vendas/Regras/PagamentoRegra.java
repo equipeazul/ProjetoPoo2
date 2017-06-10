@@ -1,6 +1,7 @@
 package vendas.Regras;
 
 
+import java.util.ArrayList;
 import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRegras;
 import vendas.Excecoes.ExcecaoRepositorio;
@@ -13,80 +14,52 @@ import vendas.entidades.Pagamento;
  * @author heitor santos
  */
 public class PagamentoRegra {
+    
     private final static IPagamentoRepositorio dao = new PagamentoRepositorio();
-    public static void validar(Pagamento p) throws ExcecaoRegras{
-        if(p.getIdPagamento()==null){
-            throw new ExcecaoRegras("Descrição inválida");
-        }
-    }    
         
-    public static void incluir(Pagamento p)throws ExcecaoRegras{
-        try{
-            dao.incluir(p);
-        }catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        }catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        }              
+    public static void validar(Pagamento pagamento) throws ExcecaoRegras{
+        
+        
+    }    
+    
+    public static void verificarExistencia(Integer id) throws ExcecaoRegras{
+        try {
+            if(!dao.existe(id)){
+               throw new ExcecaoRegras(ExcecaoRegras.ERRO_IDCLIENTE_NAO_EXISTE);
+            }   
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+          throw new ExcecaoRegras(ex.getMessage()); 
+        }
     }
-    public static void excluir(Pagamento p)throws ExcecaoRegras{
-        /*
-        if(p.getIdPagamento()==null){
-            throw new ExcecaoRegras("ID inválido");
-        }
+            
+    public static void incluir(Pagamento pagamento)throws ExcecaoRegras{
         try{
-            Pagamento x = dao.consultar(p.getIdPagamento());
-            if(x==null){
-                throw new ExcecaoRegras("Pagamento não existe");
-            }
-        }catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        }catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
+            dao.incluir(pagamento);
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+          throw new ExcecaoRegras(ex.getMessage()); 
+        }             
+    }
+    
+    public static void excluir(Pagamento pagamento)throws ExcecaoRegras{
+        try {
+            dao.excluir(pagamento.getIdPagamento());
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+          throw new ExcecaoRegras(ex.getMessage()); 
         }
-        try{
-            dao.excluir(p);
-        } catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        } catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        } 
-*/
     } 
-    public static void alterar(Pagamento p)throws ExcecaoRegras{
-        if(p.getIdPagamento()==null){
-            throw new ExcecaoRegras("ID inválido");
-        }
+    public static void alterar(Pagamento pagamento)throws ExcecaoRegras{
         try{
-            Pagamento x = dao.consultar(p.getIdPagamento());
-            if(x==null){
-                throw new ExcecaoRegras("Cliente não existe");
-            }
-        }catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        }catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        }
-        try{
-            dao.alterar(p);
-        } catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        } catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
+            dao.alterar(pagamento);
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+          throw new ExcecaoRegras(ex.getMessage()); 
         } 
     }
-    public static void listar(Pagamento p)throws ExcecaoRegras{
-        /*
-        if(p.getPedido().getIdPedido()==null){
-            throw new ExcecaoRegras("ID inválido");
+    
+    public static ArrayList<Pagamento> listar(Integer idPedido) throws ExcecaoRegras{
+        try {
+            return dao.listar(idPedido);
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+            throw new ExcecaoRegras(ex.getMessage()); 
         }
-        try{
-            dao.listar(p.getPedido().getIdPedido());
-        } catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        } catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        } 
-*/
-    }  
+    }   
 }

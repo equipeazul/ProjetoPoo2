@@ -161,27 +161,22 @@ public class PagamentoRepositorio implements IPagamentoRepositorio{
     }
     
     @Override
-    public Integer ultimo() throws ExcecaoRepositorio, ExcecaoConexao {
-        Integer id = 0;
-        
+    public Boolean existe(Integer id) throws ExcecaoRepositorio, ExcecaoConexao {
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="SELECT MAX(idpagamento) as id FROM Pagamentos;";
+        String sql ="SELECT idCliente FROM Clientes WHERE idCliente = ? ";
         try{
             PreparedStatement pstm = conn.prepareStatement(sql);
-         
+            pstm.setInt(1, id);
             ResultSet rset = pstm.executeQuery();
             
-            if (rset.next()) {
-                id = rset.getInt("id");
-                return id;
-            }
+            return (rset.next());
+            
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_PAGAMENTO);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_CLIENTE);
         }finally{
             sqlConn.desconectar(conn);
         }
-        return id;
         
     }
     

@@ -17,7 +17,7 @@ public class ProdutoRegra {
     
     private final static IProdutoRepositorio dao = new ProdutoRepositorio();
     
-    public  void verificarExistencia(Integer id) throws ExcecaoRegras{
+    public static void verificarExistencia(Integer id) throws ExcecaoRegras{
         try {
             
             if(!dao.existe(id)){
@@ -28,7 +28,7 @@ public class ProdutoRegra {
         }
     }
     
-    public  void verificarExistenciaNoPedido(Integer id) throws ExcecaoRegras{
+    public static void verificarExistenciaNoPedido(Integer id) throws ExcecaoRegras{
         try {
             
             if(dao.existeNoPedido(id)){
@@ -39,13 +39,13 @@ public class ProdutoRegra {
         }
     }    
     
-    public  void validar(Produto produto) throws ExcecaoRegras{
+    public static void validar(Produto produto) throws ExcecaoRegras{
         if(produto.getDescricao().trim().equals("")){
             throw new ExcecaoRegras(ExcecaoRegras.ERRO_DESCRICAO_PRODUTO_INVALIDO);
         }
     }
     
-    public  void incluir(Produto produto) throws ExcecaoRegras{
+    public static void incluir(Produto produto) throws ExcecaoRegras{
         try {
             dao.incluir(produto);
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
@@ -53,7 +53,7 @@ public class ProdutoRegra {
         }
     }
     
-    public  void excluir(Produto produto) throws ExcecaoRegras{
+    public static void excluir(Produto produto) throws ExcecaoRegras{
         try {
             dao.excluir(produto.getIdproduto());
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
@@ -61,14 +61,14 @@ public class ProdutoRegra {
         }
     }
     
-    public void alterar(Produto produto) throws ExcecaoRegras{
+    public static void alterar(Produto produto) throws ExcecaoRegras{
         try {
             dao.alterar(produto);
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
             throw new ExcecaoRegras(ex.getMessage()); 
         }
     }
-    public ArrayList<Produto> listar(String descricao) throws ExcecaoRegras{
+    public static ArrayList<Produto> listar(String descricao) throws ExcecaoRegras{
         try {
             return dao.listar(descricao);
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
@@ -76,7 +76,7 @@ public class ProdutoRegra {
         }
     } 
     
-    public Produto consultar(Integer id) throws ExcecaoRegras{
+    public static Produto consultar(Integer id) throws ExcecaoRegras{
         try {
             return dao.consultar(id);
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
@@ -84,7 +84,7 @@ public class ProdutoRegra {
         }
     }
 
-    public Integer ultimo() throws ExcecaoRegras{
+    public static Integer ultimo() throws ExcecaoRegras{
         try {
             return dao.ultimo();
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {

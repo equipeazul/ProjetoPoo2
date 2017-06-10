@@ -5,6 +5,7 @@
  */
 package vendas.Regras;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import vendas.Excecoes.ExcecaoConexao;
@@ -19,136 +20,89 @@ import vendas.entidades.Fabricante;
  * @author heitor santos
  */
 public class FabricanteRegra {
-     private final static IFabricanteRepositorio dao = new FabricanteRepositorio();
-    public static void validar(Fabricante f) throws ExcecaoRegras{
-        if(f.getRazaoSocial()==null){
-            throw new ExcecaoRegras("Descrição inválida");
-        }
-        if(f.getRazaoSocial().trim().equals("")){
-            throw new ExcecaoRegras("Descrição inválida");
-        }
-    } 
-    public static void verificarDuplicidade(Fabricante f) throws ExcecaoRegras{
-        
-        Fabricante x;
-   
-         try {
-             x = dao.consultar(f.getIdFabricante());
-        }catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        }catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        }       
-
-        if(x!=null){
-            throw new ExcecaoRegras("Fabricante já existe");
-        }
-
-    }  
-    public static void incluir(Fabricante f)throws ExcecaoRegras{
-        try{
-            dao.incluir(f);
-        }catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        }catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        }              
-    }
-    public static void excluir(Fabricante f)throws ExcecaoRegras{
-        if(f.getIdFabricante()==null){
-            throw new ExcecaoRegras("ID inválido");
-        }
-        try{
-            Fabricante x = dao.consultar(f.getIdFabricante());
-            if(x==null){
-                throw new ExcecaoRegras("Fabricante não existe");
-            }
-        }catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        }catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        }
-        try{
-            dao.excluir(f.getIdFabricante());
-        } catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        } catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        }       
-    }
-    public static void alterar(Fabricante f)throws ExcecaoRegras{
-        if(f.getIdFabricante()==null){
-            throw new ExcecaoRegras("ID inválido");
-        }
-        try{
-            Fabricante x = dao.consultar(f.getIdFabricante());
-            if(x==null){
-                throw new ExcecaoRegras("Cliente não existe");
-            }
-        }catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        }catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        }
-        try{
-            dao.alterar(f);
-        } catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        } catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        } 
-    }
-    public static void listar(Fabricante f)throws ExcecaoRegras{
-        if(f.getRazaoSocial()==null){
-            throw new ExcecaoRegras("Razao Social inválido");
-        }
-        try{
-            dao.listar(f.getRazaoSocial());
-        } catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        } catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        }             
-    }
-    public  void verificarExistencia(Integer id) throws ExcecaoRegras{
-        try {
+    
+    private final static IFabricanteRepositorio dao = new FabricanteRepositorio();
+       
+    public static void verificarExistencia(Integer id) throws ExcecaoRegras{
+        try 
+        {
             if(!dao.existe(id)){
-               throw new ExcecaoRegras(ExcecaoRegras.ERRO_IDCLIENTE_NAO_EXISTE);
+               throw new ExcecaoRegras(ExcecaoRegras.ERRO_IDFABRICANTE_NAO_EXISTE);
             }   
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
           throw new ExcecaoRegras(ex.getMessage()); 
         }
     }
     
+    public static void validar(Fabricante fabricante) throws ExcecaoRegras{
+        if(fabricante.getRazaoSocial().trim().equals("")){
+            throw new ExcecaoRegras(ExcecaoRegras.ERRO_RAZAO_SOCIAL_FABRICANTE_INVALIDA);
+        }
+        
+        if(fabricante.getTelefone().trim().equals("")){
+            throw new ExcecaoRegras(ExcecaoRegras.ERRO_TELEFONE_FABRICANTE_INVALIDA);
+        }
+    } 
+        
+    public static void incluir(Fabricante fabricante)throws ExcecaoRegras{
+        try
+        {
+            dao.incluir(fabricante);
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+            throw new ExcecaoRegras(ex.getMessage()); 
+        }             
+    }
+    public static void excluir(Fabricante fabricante)throws ExcecaoRegras{
+        try
+        {
+            dao.excluir(fabricante.getIdFabricante());
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+            throw new ExcecaoRegras(ex.getMessage()); 
+        }       
+    }
+    public static void alterar(Fabricante fabricante)throws ExcecaoRegras{
+        try{
+            dao.alterar(fabricante);
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+            throw new ExcecaoRegras(ex.getMessage()); 
+        }
+    }
+    public static ArrayList<Fabricante> listar(String razaoSocial)throws ExcecaoRegras{
+        try{
+            return dao.listar(razaoSocial);
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+            throw new ExcecaoRegras(ex.getMessage()); 
+        }             
+    }
+    
     public static Fabricante consultar(Integer id)throws ExcecaoRegras{
         Fabricante fabricante = new Fabricante();
-         try {
+        try 
+        {
              fabricante = dao.consultar(id);
-        } catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        } catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        }  
-         return fabricante;
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+             throw new ExcecaoRegras(ex.getMessage()); 
+        }
+        return fabricante;
     }
     
     public static Integer ultimo() throws ExcecaoRegras{
-        try {
+        try 
+        {
             return dao.ultimo();
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
             throw new ExcecaoRegras(ex.getMessage()); 
         }
     }
-    
-    
-    public  void verificarExistenciaNoProduto(Integer id) throws ExcecaoRegras{
-        try {
-            
+        
+    public static void verificarExistenciaNoProduto(Integer id) throws ExcecaoRegras{
+        try 
+        {            
             if(dao.existeNoProduto(id)){
                throw new ExcecaoRegras(ExcecaoRegras.ERRO_IDFABRICANTE_EXISTE_PRODUTO);
             }   
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
-          throw new ExcecaoRegras(ex.getMessage()); 
+            throw new ExcecaoRegras(ex.getMessage()); 
         }
     }
     

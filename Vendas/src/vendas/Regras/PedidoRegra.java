@@ -1,6 +1,7 @@
 
 package vendas.Regras;
 
+import java.util.ArrayList;
 import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRegras;
 import vendas.Excecoes.ExcecaoRepositorio;
@@ -13,26 +14,15 @@ import vendas.entidades.Pedido;
  * @author heitor santos
  */
 public class PedidoRegra {
-    private final static IPedidoRepositorio dao = new PedidoRepositorio();
-    public static void validar(Pedido p) throws ExcecaoRegras{
-        if(p.getIdPedido()==null){
-            throw new ExcecaoRegras("Descrição inválida");
-        }
-    }
-    public static void verificarDuplicidade(Pedido p) throws ExcecaoRegras{
-        try{
-            Pedido x= dao.consultar(p.getIdPedido());
-            if(x!=null){
-                throw new ExcecaoRegras("Pedido já existe");
-            }
-            }catch(ExcecaoConexao e){
-                throw new ExcecaoRegras("Erro na conexão");
-            }catch(ExcecaoRepositorio e){
-                throw new ExcecaoRegras("Erro na DAO");
-            }              
-    } 
     
-   public  void verificarExistencia(Integer id) throws ExcecaoRegras{
+    private final static IPedidoRepositorio dao = new PedidoRepositorio();
+    
+    public static void validar(Pedido p) throws ExcecaoRegras{
+        
+        
+    }    
+    
+    public static void verificarExistencia(Integer id) throws ExcecaoRegras{
         try {
             if(!dao.existe(id)){
                throw new ExcecaoRegras(ExcecaoRegras.ERRO_ID_PEDIDO_NAO_EXISTE);
@@ -40,10 +30,9 @@ public class PedidoRegra {
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
           throw new ExcecaoRegras(ex.getMessage()); 
         }
-   }
-        
-        
-   public Pedido consultar(Integer id) throws ExcecaoRegras{
+    }
+               
+    public static Pedido consultar(Integer id) throws ExcecaoRegras{
         try {
             return dao.consultar(id);
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
@@ -51,27 +40,22 @@ public class PedidoRegra {
         }
     }
 
-    public Integer ultimo() throws ExcecaoRegras{
+    public static Integer ultimo() throws ExcecaoRegras{
         try {
             return dao.ultimo();
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
             throw new ExcecaoRegras(ex.getMessage()); 
         }
-    }    
-        
-        
-        
+    }   
         
     public static void incluir(Pedido p)throws ExcecaoRegras{
         try{
             dao.incluir(p);
-        }catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        }catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+          throw new ExcecaoRegras(ex.getMessage()); 
         }              
     }
-    public  void excluir(Pedido pedido) throws ExcecaoRegras{
+    public static void excluir(Pedido pedido) throws ExcecaoRegras{
         try {
             dao.excluir(pedido.getIdPedido());
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
@@ -80,37 +64,19 @@ public class PedidoRegra {
     }
     
     public static void alterar(Pedido p)throws ExcecaoRegras{
-        if(p.getIdPedido()==null){
-            throw new ExcecaoRegras("ID inválido");
-        }
-        try{
-            Pedido x = dao.consultar(p.getIdPedido());
-            if(x==null){
-                throw new ExcecaoRegras("Cliente não existe");
-            }
-        }catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        }catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
-        }
         try{
             dao.alterar(p);
-        } catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        } catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+            throw new ExcecaoRegras(ex.getMessage()); 
         } 
     }
-    public static void listar(Pedido p)throws ExcecaoRegras{
-        if(p.getCliente().getNome()==null){
-            throw new ExcecaoRegras("ID inválido");
-        }
+    
+    public static ArrayList<Pedido> listar(String nomeCliente)throws ExcecaoRegras{
+        
         try{
-            dao.listar(p.getCliente().getNome());
-        } catch(ExcecaoConexao e){
-            throw new ExcecaoRegras("Erro na conexão");
-        } catch(ExcecaoRepositorio e){
-            throw new ExcecaoRegras("Erro na DAO");
+            return dao.listar(nomeCliente);
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+            throw new ExcecaoRegras(ex.getMessage()); 
         }             
     }    
 

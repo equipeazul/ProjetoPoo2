@@ -16,7 +16,7 @@ import vendas.entidades.Vendedor;
 public class VendedorRegra {
     private final static IVendedorRepositorio dao = new  VendedorRepositorio();
     
-    public  void verificarExistencia(Integer id) throws ExcecaoRegras{
+    public static void verificarExistencia(Integer id) throws ExcecaoRegras{
         try {
             if(!dao.existe(id)){
                throw new ExcecaoRegras(ExcecaoRegras.ERRO_IDVENDEDOR_NAO_EXISTE);
@@ -30,42 +30,42 @@ public class VendedorRegra {
             throw new ExcecaoRegras(ExcecaoRegras.ERRO_NOME_VENDEDOR_INVALIDO);
         }
     }    
-    public void incluir(Vendedor vendedor)throws ExcecaoRegras{
+    public static void incluir(Vendedor vendedor)throws ExcecaoRegras{
         try{
             dao.incluir(vendedor);
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
           throw new ExcecaoRegras(ex.getMessage()); 
         }              
     } 
-    public void excluir(Vendedor vendedor)throws ExcecaoRegras{
+    public static void excluir(Vendedor vendedor)throws ExcecaoRegras{
         try{
             dao.excluir(vendedor.getIdVendedor());
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
           throw new ExcecaoRegras(ex.getMessage()); 
         }    
     }
-    public void alterar(Vendedor vendedor)throws ExcecaoRegras{
+    public static void alterar(Vendedor vendedor)throws ExcecaoRegras{
         try{
             dao.alterar(vendedor);
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
           throw new ExcecaoRegras(ex.getMessage()); 
         } 
     }
-    public ArrayList<Vendedor> listar(String nome)throws ExcecaoRegras{
+    public static ArrayList<Vendedor> listar(String nome)throws ExcecaoRegras{
         try{
             return dao.listar(nome);
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
           throw new ExcecaoRegras(ex.getMessage()); 
         }         
     }   
-    public Vendedor consultar(Integer id) throws ExcecaoRegras{
+    public static Vendedor consultar(Integer id) throws ExcecaoRegras{
         try {
             return dao.consultar(id);
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
             throw new ExcecaoRegras(ex.getMessage()); 
         }
     }
-    public Integer ultimo() throws ExcecaoRegras{
+    public static Integer ultimo() throws ExcecaoRegras{
         try {
             return dao.ultimo();
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
