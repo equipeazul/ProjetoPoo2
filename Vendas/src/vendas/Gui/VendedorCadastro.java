@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRegras;
 import vendas.Excecoes.ExcecaoRepositorio;
+import static vendas.Gui.TelaCadastro.componente;
 import vendas.Repositorio.VendedorRepositorio;
 import vendas.Repositorio.IVendedorRepositorio;
 import vendas.entidades.Vendedor;
@@ -22,8 +23,10 @@ import vendas.fachada.Fachada;
  *
  * @author Felipe
  */
-public class VendedorCadastro extends javax.swing.JInternalFrame {
+public class VendedorCadastro extends TelaCadastro {
 
+    private static TelaCadastro instancia;
+    
     protected final String CONSULTA = "C";
     protected final String INCLUSAO = "I";
     protected final String ALTERACAO = "A";
@@ -44,10 +47,19 @@ public class VendedorCadastro extends javax.swing.JInternalFrame {
      */
     public VendedorCadastro(){
         initComponents();
-        configurar(CONSULTA);
+        //configurar(CONSULTA);
+    }
+    
+    public static TelaCadastro abrir(javax.swing.JDesktopPane principal) {
+        if (componente == null) {
+            instancia = new VendedorCadastro();
+            componente = principal.add(instancia);
+        }
+        instancia.show(800, 450);
+        return instancia;
     }
 
-    public void configurar(String ac) {
+    private void configurar(String ac) {
         
         if(ac.equals(CONSULTA)){
             try

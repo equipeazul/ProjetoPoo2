@@ -6,6 +6,8 @@
 package vendas.Gui;
 
 import javax.swing.JInternalFrame;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 
 /**
  *
@@ -21,6 +23,16 @@ public abstract class TelaCadastro extends javax.swing.JInternalFrame{
     protected final String EXCLUSAO = "E";
     protected final String VAZIO = "";
     
+    public TelaCadastro() {
+        addInternalFrameListener(new InternalFrameAdapter(){
+            public void internalFrameClosing(InternalFrameEvent e) {
+                componente = null;
+                dispose();
+            }
+        });
+    }
+    
+    
     public void show(int largura, int altura) {
         this.setResizable(true);
         this.setIconifiable(true);
@@ -32,8 +44,9 @@ public abstract class TelaCadastro extends javax.swing.JInternalFrame{
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
     
+    /*
     public void fechar() {
         componente = null;
         this.dispose();
-    }
+    }*/
 }

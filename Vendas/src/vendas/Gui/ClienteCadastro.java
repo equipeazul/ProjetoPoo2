@@ -54,7 +54,7 @@ public class ClienteCadastro extends TelaCadastro {
         return instancia;
     }
     
-    public void configurar(String ac) {
+    private void configurar(String ac) {
         
         if(ac.equals(CONSULTA)){
             try
@@ -410,7 +410,7 @@ public class ClienteCadastro extends TelaCadastro {
     }//GEN-LAST:event_btnIrParaActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-       this.fechar();
+       //
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -15,7 +15,7 @@ import javax.swing.JInternalFrame;
 public class TelaPrincipal extends javax.swing.JFrame {
 
     public TelaCadastro cadastroCliente = null;
-    public VendedorCadastro cadastroVendedor= null;
+    public TelaCadastro cadastroVendedor= null;
     /**
      * Creates new form Teste
      */
@@ -136,16 +136,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void abrirTela(JInternalFrame tela, int largura, int altura) {
-        tela.setResizable(true);
-        tela.setIconifiable(true);
-        tela.setClosable(true);   
-        tela.setSize(largura,altura);
-        tela.setVisible(true);
-        tela.setResizable(false);
-        tela.setLocation(140, 20);  
-    }
+   
     
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         cadastroCliente = ClienteCadastro.abrir(jDesktopPane1);
@@ -160,12 +151,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        
-        if (cadastroVendedor == null) {
-            cadastroVendedor = new VendedorCadastro();
-            jDesktopPane1.add(cadastroVendedor);
-        }
-        abrirTela(cadastroVendedor, 800, 420);        // TODO add your handling code here:
+        cadastroVendedor = VendedorCadastro.abrir(jDesktopPane1);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
