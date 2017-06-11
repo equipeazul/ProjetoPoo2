@@ -5,10 +5,12 @@
  */
 package vendas.Gui;
 
+import java.awt.Component;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRegras;
@@ -25,8 +27,6 @@ import vendas.fachada.Fachada;
 public class ClienteCadastro extends TelaCadastro {
 
     private static TelaCadastro instancia;
-    protected static java.awt.Component componente;
-    
     
     private final String DESEJA_EXCLUIR = "Deseja excluir o cliente ?";
     private final String ATENCAO = "Atenção";
@@ -51,12 +51,13 @@ public class ClienteCadastro extends TelaCadastro {
         this.dispose();
     }
 
-    public static TelaCadastro abrir(javax.swing.JDesktopPane principal) {
+    public static TelaCadastro abrir(javax.swing.JDesktopPane principal, Boolean modal) {
+        proprietario = principal;
         if (componente == null) {
             instancia = new ClienteCadastro();
             componente = principal.add(instancia);
         }
-        instancia.show(800, 450);
+        instancia.show(800, 450, modal);
         return instancia;
     }
     
@@ -400,9 +401,9 @@ public class ClienteCadastro extends TelaCadastro {
         try{
             Integer id = Integer.parseInt(JOptionPane.showInputDialog(null, DIGITE_ID));
             
-                fachada.consultarCliente(id);
-                txtID.setText(id.toString());
-                configurar(CONSULTA);
+            fachada.consultarCliente(id);
+            txtID.setText(id.toString());
+            configurar(CONSULTA);
         } catch (ExcecaoRegras ex) {
            JOptionPane.showMessageDialog(null, ex.getMessage());
         }catch(Exception e){
@@ -412,7 +413,7 @@ public class ClienteCadastro extends TelaCadastro {
     }//GEN-LAST:event_btnIrParaActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-       //
+        ClientePesquisa.abrir(proprietario, false); 
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

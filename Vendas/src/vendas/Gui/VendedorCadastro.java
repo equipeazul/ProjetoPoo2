@@ -26,14 +26,7 @@ import vendas.fachada.Fachada;
 public class VendedorCadastro extends TelaCadastro {
 
     private static TelaCadastro instancia;
-    protected static java.awt.Component componente;
     
-    protected final String CONSULTA = "C";
-    protected final String INCLUSAO = "I";
-    protected final String ALTERACAO = "A";
-    protected final String EXCLUSAO = "E";
-    protected final String VAZIO = "";
-
     private final String DESEJA_EXCLUIR = "Deseja excluir o vendedor ?";
     private final String ATENCAO = "Atenção";
     
@@ -58,12 +51,13 @@ public class VendedorCadastro extends TelaCadastro {
     }
 
     
-    public static TelaCadastro abrir(javax.swing.JDesktopPane principal) {
+    public static TelaCadastro abrir(javax.swing.JDesktopPane principal, Boolean modal) {
+        proprietario = principal;
         if (componente == null) {
             instancia = new VendedorCadastro();
             componente = principal.add(instancia);
         }
-        instancia.show(800, 450);
+        instancia.show(800, 450, modal);
         return instancia;
     }
 

@@ -20,8 +20,6 @@ import vendas.util.Funcoes;
 public class PedidoCadastro extends TelaCadastro {
 
     private static TelaCadastro instancia;
-    protected static java.awt.Component componente;
-    
     
     private final String DESEJA_EXCLUIR = "Deseja excluir o Pedido ?";
     private final String ATENCAO = "Atenção";
@@ -45,12 +43,13 @@ public class PedidoCadastro extends TelaCadastro {
         this.dispose();
     }
 
-    public static TelaCadastro abrir(javax.swing.JDesktopPane principal) {
+    public static TelaCadastro abrir(javax.swing.JDesktopPane principal, Boolean modal) {
+        proprietario = principal;
         if (componente == null) {
             instancia = new PedidoCadastro();
             componente = principal.add(instancia);
         }
-        instancia.show(800, 450);
+        instancia.show(800, 450, modal);
         return instancia;
     }
     
