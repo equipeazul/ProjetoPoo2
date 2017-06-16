@@ -47,18 +47,19 @@ public class PagamentoCadastro extends TelaCadastro {
         configurar(CONSULTA);
     }
     
+    @Override
     public void fechar() {
-        componente = null;
-        this.dispose();
+        super.fechar();
+        instancia = null;
     }
 
     public static TelaCadastro abrir(javax.swing.JDesktopPane principal, Boolean modal) {
         proprietario = principal;
-        if (componente == null) {
+        if (instancia == null) {
             instancia = new PagamentoCadastro();
             componente = principal.add(instancia);
         }
-        instancia.show(800, 450, modal);
+        instancia.show(800, 450, 140, 20, modal);
         return instancia;
     }
     

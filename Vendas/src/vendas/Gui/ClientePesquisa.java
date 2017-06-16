@@ -5,19 +5,24 @@
  */
 package vendas.Gui;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import vendas.Excecoes.ExcecaoRegras;
 import vendas.entidades.Cliente;
 import vendas.fachada.Fachada;
+import vendas.util.InternalFrameModal;
 
 /**
  *
  * @author aluno
  */
-public class ClientePesquisa extends TelaPesquisa {
+public class ClientePesquisa extends InternalFrameModal {
     
+    private static Integer IdCliente = 0;
+    private static String NomeCliente;
+            
     private static ClientePesquisa instancia;
         
     private ArrayList<Cliente> listaCliente;
@@ -28,21 +33,30 @@ public class ClientePesquisa extends TelaPesquisa {
      */
     public ClientePesquisa() {
         initComponents();
-        //txtID = new javax.swing.JTextField();
     }
 
+    public static Integer getIdCliente() {
+        return IdCliente;
+    }
+    
+    public static String getNomeCliente() {
+        return NomeCliente;
+    }
+
+    @Override
     public void fechar() {
-        componente = null;
-        this.dispose();
+        super.fechar();
+        instancia = null;
     }
-
-    public static ClientePesquisa abrir(javax.swing.JDesktopPane principal, Boolean modal) {
+    
+    public static ClientePesquisa abrir(javax.swing.JDesktopPane principal, Boolean modal) // , Method retornoPesquisa
+    {
         proprietario = principal;
-        if (componente == null) {
+        if (instancia == null) {
             instancia = new ClientePesquisa();
             componente = principal.add(instancia);
         }
-        instancia.show(590, 650, modal);
+        instancia.show(590, 650, 280, 50, modal);
         return instancia;
     }
     
@@ -174,18 +188,18 @@ public class ClientePesquisa extends TelaPesquisa {
         Fachada fachada = Fachada.getInstancia();
         
         listaCliente = new ArrayList<Cliente>();
-          try{  
-               listaCliente = fachada.listarClientes(txtConteudo.getText());
-               
-               for (Cliente cliente : listaCliente) {
-                    modelo.addRow(new Object[]{cliente.getIdCliente(), cliente.getNome()});
-                }
+        try{  
+            listaCliente = fachada.listarClientes(txtConteudo.getText());
+            
+            for (Cliente cliente : listaCliente) {
+                modelo.addRow(new Object[]{cliente.getIdCliente(), cliente.getNome()});
+            }
 
-                jTable1.setModel(modelo);
-                
-          }catch(ExcecaoRegras ex){
-               JOptionPane.showMessageDialog(null,ex.getMessage());
-          }
+            jTable1.setModel(modelo);
+
+        }catch(ExcecaoRegras ex){
+            JOptionPane.showMessageDialog(null,ex.getMessage());
+        }
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     public void setId(javax.swing.JTextField id){
@@ -193,12 +207,12 @@ public class ClientePesquisa extends TelaPesquisa {
     }
     
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-          
-       //int i = jTable1.getSelectedRow();
-       //JOptionPane.showMessageDialog(null, this.getParent().getParent().getName());
-       
-        
-                
+        int i = jTable1.getSelectedRow();
+        if (i >= 0 && listaCliente != null && listaCliente.get(i) != null) {
+            IdCliente = listaCliente.get(i).getIdCliente();
+            NomeCliente = listaCliente.get(i).getNome();
+        } 
+        this.fechar();
     }//GEN-LAST:event_jTable1MouseClicked
 
 

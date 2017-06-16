@@ -15,7 +15,7 @@ import javax.swing.event.InternalFrameEvent;
  *
  * @author Daniel
  */
-public abstract class TelaPesquisa extends javax.swing.JInternalFrame{
+public abstract class TelaPesquisa extends JInternalFrame{
         
     protected static java.awt.Component componente;
     protected static javax.swing.JDesktopPane proprietario;
@@ -28,10 +28,7 @@ public abstract class TelaPesquisa extends javax.swing.JInternalFrame{
         });
     }
         
-    public void show(int largura, int altura, Boolean modal) {
-        if (modal) {
-            this.modal();
-        }
+    public void show(int largura, int altura) {
         this.setResizable(true);
         this.setClosable(true);   
         this.setSize(largura,altura);
@@ -45,33 +42,7 @@ public abstract class TelaPesquisa extends javax.swing.JInternalFrame{
             JOptionPane.showMessageDialog(null, "Janela foi fechada.");
         } 
     }
-    
-    private void modal() {
-        proprietario.setEnabled(false);
-        for (Component comp : proprietario.getComponents()) {
-            comp.setEnabled(false);
-            
-        }
-        
-        /*
-        for (Component comp : this.getComponents()) {
-            comp.setEnabled(false);
-            
-        }
-        */
-        //this.componente.setEnabled(false);
-        
-        
-        /*
-        for (JInternalFrame iFram : proprietario.getAllFrames()) {
-            iFram.setEnabled(false);
-            for (Component compIFram : iFram. getComponents()) {
-                JOptionPane.showMessageDialog(null, "compIFram: "+compIFram.getName());
-                compIFram.setEnabled(false);
-            }
-        }
-        */    }
-    
+      
     
     
     public abstract void fechar();

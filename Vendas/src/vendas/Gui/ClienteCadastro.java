@@ -46,18 +46,20 @@ public class ClienteCadastro extends TelaCadastro {
         configurar(CONSULTA);
     }
     
+    @Override
     public void fechar() {
-        componente = null;
-        this.dispose();
+        super.fechar();
+        instancia = null;
     }
-
+    
+    
     public static TelaCadastro abrir(javax.swing.JDesktopPane principal, Boolean modal) {
         proprietario = principal;
-        if (componente == null) {
+        if (instancia == null) {
             instancia = new ClienteCadastro();
             componente = principal.add(instancia);
         }
-        instancia.show(800, 450, modal);
+        instancia.show(800, 450, 140, 20, modal);
         return instancia;
     }
     
@@ -398,12 +400,17 @@ public class ClienteCadastro extends TelaCadastro {
         
         Fachada fachada = Fachada.getInstancia();
         
+        String strId = JOptionPane.showInputDialog(null, DIGITE_ID);
+        
         try{
-            Integer id = Integer.parseInt(JOptionPane.showInputDialog(null, DIGITE_ID));
             
-            fachada.consultarCliente(id);
-            txtID.setText(id.toString());
-            configurar(CONSULTA);
+            if (strId != null) {
+                Integer id = Integer.parseInt(strId);
+
+                fachada.consultarCliente(id);
+                txtID.setText(id.toString());
+                configurar(CONSULTA);
+            }
         } catch (ExcecaoRegras ex) {
            JOptionPane.showMessageDialog(null, ex.getMessage());
         }catch(Exception e){
@@ -411,9 +418,14 @@ public class ClienteCadastro extends TelaCadastro {
         }
         
     }//GEN-LAST:event_btnIrParaActionPerformed
-
+    
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        ClientePesquisa.abrir(proprietario, false); 
+          ClientePesquisa.abrir(proprietario, true); 
+          Integer id = ClientePesquisa.getIdCliente();
+          if (id > 0) {
+             txtID.setText(id.toString());
+             configurar(CONSULTA);
+          }
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -26,7 +26,7 @@ public class PedidoCadastro extends TelaCadastro {
     private final String FOI_EXCLUSO = "Pedido foi  excluso";
     private final String FOI_CADASTRADO = "Pedido foi cadastrado";
     private final String FOI_ALTERADO = "Pedido foi alterado";
-    private final String DIGITE_ID_PEDIDO = "Digite o ID do pedido";
+    private final String DIGITE_ID = "Digite o ID do pedido";
     private final String VALOR_ID_PEDIDO_INVALIDO = "Valor do ID do pedido é invalido";
     
         
@@ -38,18 +38,19 @@ public class PedidoCadastro extends TelaCadastro {
         configurar(CONSULTA);
     }
     
+    @Override
     public void fechar() {
-        componente = null;
-        this.dispose();
+        super.fechar();
+        instancia = null;
     }
 
     public static TelaCadastro abrir(javax.swing.JDesktopPane principal, Boolean modal) {
         proprietario = principal;
-        if (componente == null) {
+        if (instancia == null) {
             instancia = new PedidoCadastro();
             componente = principal.add(instancia);
         }
-        instancia.show(800, 450, modal);
+        instancia.show(800, 450, 140, 20, modal);
         return instancia;
     }
     
@@ -440,13 +441,17 @@ public class PedidoCadastro extends TelaCadastro {
         
         Fachada fachada = Fachada.getInstancia();
         
+        String strId = JOptionPane.showInputDialog(null, DIGITE_ID);
+        
         try
         {
-            Integer id = Integer.parseInt(JOptionPane.showInputDialog(null, DIGITE_ID_PEDIDO));
-            
-            fachada.consultarPedido(id);
-            txtID.setText(id.toString());
-            configurar(CONSULTA);
+            if (strId != null) {
+                Integer id = Integer.parseInt(strId);
+
+                fachada.consultarPedido(id);
+                txtID.setText(id.toString());
+                configurar(CONSULTA);
+            }
         } catch (ExcecaoRegras ex) {
            JOptionPane.showMessageDialog(null, ex.getMessage());
         }catch(Exception e){

@@ -9,46 +9,19 @@ import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
+import vendas.util.InternalFrameModal;
 
 /**
  *
  * @author Daniel
  */
-public abstract class TelaCadastro extends javax.swing.JInternalFrame{
+public abstract class TelaCadastro extends InternalFrameModal{
 
-    protected static java.awt.Component componente;
-    protected static javax.swing.JDesktopPane proprietario;
-    
     protected final String CONSULTA = "C";
     protected final String INCLUSAO = "I";
     protected final String ALTERACAO = "A";
     protected final String EXCLUSAO = "E";
     protected final String VAZIO = "";
-    
-    public TelaCadastro() {
-        addInternalFrameListener(new InternalFrameAdapter(){
-            public void internalFrameClosing(InternalFrameEvent e) {
-               fechar();                
-            }
-        });
-    }
-    
-    
-    public void show(int largura, int altura, Boolean modal) {
-        this.setResizable(true);
-        this.setClosable(true);   
-        this.setSize(largura,altura);
-        this.setLocation(140, 20);
-        this.setVisible(true);
-        this.setResizable(false);
-        this.setFocusable(true);
-        try {
-            this.setSelected(true);            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Janela foi fechada.");
-        }        
-    }
-    
-    public abstract void fechar();
+        
     
 }
