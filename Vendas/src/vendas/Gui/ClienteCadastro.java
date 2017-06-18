@@ -420,12 +420,12 @@ public class ClienteCadastro extends TelaCadastro {
     }//GEN-LAST:event_btnIrParaActionPerformed
     
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-          ClientePesquisa.abrir(proprietario, true); 
-          Integer id = ClientePesquisa.getIdCliente();
-          if (id > 0) {
-             txtID.setText(id.toString());
-             configurar(CONSULTA);
-          }
+        ClientePesquisa.abrir(proprietario, true); 
+        Integer id = ClientePesquisa.getId();
+        if (id > 0) {
+           txtID.setText(id.toString());
+           configurar(CONSULTA);
+        }
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

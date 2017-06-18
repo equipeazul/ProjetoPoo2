@@ -5,16 +5,41 @@
  */
 package vendas.entidades;
 
+import vendas.util.IEntityModel;
+
 /**
  *
  * @author aluno
  */
-public class Vendedor {
+public class Vendedor implements IEntityModel{
     
     private Integer idVendedor;
     private String nome;
-    private double comissao;
+    private Double comissao;
 
+    public Object get(String name) {
+        switch (name.toUpperCase()) {
+            case "IDVENDEDOR": return getIdVendedor();
+            case "NOME": return getNome();
+            case "COMISSAO": return getComissao();
+        }
+        return null; 
+    }
+
+    public void set(String name, Object value) {
+        switch (name.toUpperCase()) {
+            case "IDVENDEDOR": 
+                setIdVendedor((Integer) value);
+                break;
+            case "NOME":
+                setNome((String) value);
+                break;
+            case "COMISSAO":
+                setComissao((Double) value);
+                break;
+        }
+    }
+    
     public Integer getIdVendedor() {
         return this.idVendedor;
     }

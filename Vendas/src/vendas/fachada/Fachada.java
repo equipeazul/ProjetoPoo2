@@ -101,6 +101,10 @@ public class Fachada {
     public ArrayList<Vendedor> listarVendedores(String nome)throws ExcecaoRegras{
         return VendedorRegra.listar(nome);
     }
+    
+    public ArrayList<IEntityModel> listarVendedoresEntity(String descricao) throws ExcecaoRegras{
+        return VendedorRegra.listarEntity(descricao);
+    }
    
     /*#########################################################################
     * Produto

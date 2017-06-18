@@ -23,19 +23,19 @@ import vendas.util.IEntityModel;
  *
  * @author aluno
  */
-public class ClientePesquisa extends InternalFrameModal {
+public class VendedorPesquisa extends InternalFrameModal {
     
     private static Integer id = 0;
     private static String nome;
             
-    private static ClientePesquisa instancia;
+    private static VendedorPesquisa instancia;
         
-    private ArrayList<IEntityModel> listaCliente;
+    private ArrayList<IEntityModel> lista;
     
     /**
-     * Creates new form ClientePesquisa
+     * Creates new form Pesquisa
      */
-    public ClientePesquisa() {
+    public VendedorPesquisa() {
         initComponents();
     }
 
@@ -53,11 +53,11 @@ public class ClientePesquisa extends InternalFrameModal {
         instancia = null;
     }
     
-    public static ClientePesquisa abrir(javax.swing.JDesktopPane principal, Boolean modal) // , Method retornoPesquisa
+    public static VendedorPesquisa abrir(javax.swing.JDesktopPane principal, Boolean modal) // , Method retornoPesquisa
     {
         proprietario = principal;
         if (instancia == null) {
-            instancia = new ClientePesquisa();
+            instancia = new VendedorPesquisa();
             componente = principal.add(instancia);
         }
         instancia.show(590, 650, 280, 50, modal);
@@ -176,11 +176,11 @@ public class ClientePesquisa extends InternalFrameModal {
         
         Fachada fachada = Fachada.getInstancia();
         
-        listaCliente = new ArrayList<IEntityModel>();
+        lista = new ArrayList<IEntityModel>();
         try{  
-            listaCliente = fachada.listarClientesEntity(txtConteudo.getText());
-            CustomTableModel model = new CustomTableModel(listaCliente);
-            model.addColumn("Id", "IdCliente", Integer.class);
+            lista = fachada.listarVendedoresEntity(txtConteudo.getText());
+            CustomTableModel model = new CustomTableModel(lista);
+            model.addColumn("Id", "IdVendedor", Integer.class);
             model.addColumn("Nome", "Nome", String.class);
             jTable2.setModel(model);
             
@@ -193,8 +193,8 @@ public class ClientePesquisa extends InternalFrameModal {
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
-        this.id = (Integer) listaCliente.get(jTable2.getSelectedRow()).get("IdCliente");
-        this.nome = (String) listaCliente.get(jTable2.getSelectedRow()).get("Nome");
+        this.id = (Integer) lista.get(jTable2.getSelectedRow()).get("IdVendedor");
+        this.nome = (String) lista.get(jTable2.getSelectedRow()).get("Nome");
         this.fechar();
     }//GEN-LAST:event_jTable2MouseClicked
 

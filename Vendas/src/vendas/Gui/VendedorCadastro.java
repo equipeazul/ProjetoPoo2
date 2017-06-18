@@ -454,7 +454,12 @@ public class VendedorCadastro extends TelaCadastro {
     }//GEN-LAST:event_txtIDActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        // TODO add your handling code here:
+          VendedorPesquisa.abrir(proprietario, true); 
+          Integer id = VendedorPesquisa.getId();
+          if (id > 0) {
+             txtID.setText(id.toString());
+             configurar(CONSULTA);
+          }
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
