@@ -211,8 +211,12 @@ public class Fachada {
         return PedidoRegra.ultimo();
     }
     
-    public ArrayList<Pedido> listar(String nomeCliente, String nomeVendedor) throws ExcecaoRegras{
+    public ArrayList<Pedido> listarPedidos(String nomeCliente, String nomeVendedor) throws ExcecaoRegras{
         return PedidoRegra.listar(nomeCliente, nomeVendedor);
+    }
+    
+    public ArrayList<IEntityModel> listarPedidosEntity(String nomeCliente, String nomeVendedor) throws ExcecaoRegras{
+        return PedidoRegra.listarEntity(nomeCliente, nomeVendedor);
     }
     
 }

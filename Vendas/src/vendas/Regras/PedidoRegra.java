@@ -8,6 +8,7 @@ import vendas.Excecoes.ExcecaoRepositorio;
 import vendas.Repositorio.IPedidoRepositorio;
 import vendas.Repositorio.PedidoRepositorio;
 import vendas.entidades.Pedido;
+import vendas.util.IEntityModel;
 
 /**
  *
@@ -71,14 +72,22 @@ public class PedidoRegra {
         } 
     }
     
-    public static ArrayList<Pedido> listar(String nomeCliente, String nomoVendedor)throws ExcecaoRegras{
+    public static ArrayList<Pedido> listar(String nomeCliente, String nomeVendedor)throws ExcecaoRegras{
         
         try{
-            return dao.listar(nomeCliente, nomoVendedor);
+            return dao.listar(nomeCliente, nomeVendedor);
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
             throw new ExcecaoRegras(ex.getMessage()); 
         }             
     }    
 
-    
+    public static ArrayList<IEntityModel> listarEntity(String nomeCliente, String nomeVendedor) throws ExcecaoRegras{
+        ArrayList<Pedido> lista = listar(nomeCliente, nomeVendedor);
+        ArrayList<IEntityModel> listaEntity = new ArrayList<>();
+        for (Pedido item : lista) {
+            listaEntity.add((IEntityModel) (item));
+        }
+        return listaEntity;
+    }
+
 }

@@ -91,13 +91,21 @@ public class PedidoRepositorio implements IPedidoRepositorio
                 " LEFT JOIN Clientes ON Pedidos.idcliente = Clientes.idcliente " +
                 " LEFT JOIN Vendedores ON Pedidos.idvendedor = Vendedores.idvendedor ";
         
+        String where = "";
         if (!nomeCliente.equals("")) {
-            sql = sql + " WHERE Clientes.Nome LIKE '%" + nomeCliente + "%'";
+            where = where + " Clientes.Nome LIKE '%" + nomeCliente + "%'";
         }
              
         if (!nomeVendedor.equals("")) {
-            sql = sql + " WHERE Vendedores.Nome LIKE '%" + nomeVendedor + "%'";
+            if (!where.equals(""))
+                where = where + " and ";
+            where = where + " Vendedores.Nome LIKE '%" + nomeVendedor + "%'";
         }
+        
+        if (!where.equals("")) 
+            sql = sql + " WHERE " + where;
+        
+        sql = sql + " ORDER BY clientes.nome ";
              
         try{
             PreparedStatement pstm = conn.prepareStatement(sql);

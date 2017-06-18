@@ -55,7 +55,7 @@ public class PedidoCadastro extends TelaCadastro {
             instancia = new PedidoCadastro();
             componente = principal.add(instancia);
         }
-        instancia.show(800, 450, 140, 20, modal);
+        instancia.show(1100, 450, 140, 20, modal);
         return instancia;
     }
     
@@ -535,7 +535,12 @@ public class PedidoCadastro extends TelaCadastro {
     }//GEN-LAST:event_btnIrParaActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-       //
+        PedidoPesquisa.abrir(proprietario, true); 
+        Integer id = PedidoPesquisa.getId();
+        if (id > 0) {
+            txtID.setText(id.toString());
+            configurar(CONSULTA);
+        }
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void txtIdClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdClienteActionPerformed

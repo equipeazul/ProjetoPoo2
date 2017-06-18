@@ -7,12 +7,13 @@ package vendas.entidades;
 
 import java.util.ArrayList;
 import java.util.Date;
+import vendas.util.IEntityModel;
 
 /**
  *
  * @author aluno
  */
-public class Pedido {
+public class Pedido implements IEntityModel{
     
     private Integer idPedido;
     private Date dtVenda;
@@ -29,6 +30,39 @@ public class Pedido {
       this.listaPagamento = new ArrayList();
     }
 
+    @Override
+    public Object get(String name) {
+        switch (name.toUpperCase()) {
+            case "IDPEDIDO": return getIdPedido();
+            case "DTVENDA": return getDtVenda();
+            case "NOMECLIENTE": return getCliente().getNome();
+            case "NOMEVENDEDOR": return getVendedor().getNome();
+            case "SITUACAO": return getSituacao();
+        }
+        return null; 
+    }
+
+    @Override
+    public void set(String name, Object value) {
+        switch (name.toUpperCase()) {
+            case "IDPEDIDO": 
+                setIdPedido((Integer) value);
+                break;
+            case "DTVENDA":
+                setDtVenda((Date) value);
+                break;
+            case "NOMECLIENTE":
+                getCliente().setNome((String) value);
+                break;
+            case "NOMEVENDEDOR":
+                getVendedor().setNome((String) value);
+                break;
+            case "SITUACAO":
+                setSituacao((String) value);
+                break;
+        }
+    }
+    
     public Integer getIdPedido() {
         return this.idPedido;
     }
