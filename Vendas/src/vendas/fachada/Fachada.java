@@ -14,6 +14,7 @@ import vendas.entidades.Fabricante;
 import vendas.entidades.Pedido;
 import vendas.entidades.Produto;
 import vendas.entidades.Vendedor;
+import vendas.util.IEntityModel;
 
 /**
  *
@@ -62,6 +63,10 @@ public class Fachada {
     
     public ArrayList<Cliente> listarClientes(String nome) throws ExcecaoRegras{
         return ClienteRegra.listar(nome);
+    }
+   
+    public ArrayList<IEntityModel> listarClientesEntity(String nome) throws ExcecaoRegras{
+        return ClienteRegra.listarEntity(nome);
     }
    
     /*#########################################################################

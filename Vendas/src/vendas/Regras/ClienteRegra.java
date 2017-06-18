@@ -9,6 +9,7 @@ import vendas.Excecoes.ExcecaoRepositorio;
 import vendas.Repositorio.ClienteRepositorio;
 import vendas.Repositorio.IClienteRepositorio;
 import vendas.entidades.Cliente;
+import vendas.util.IEntityModel;
 
 /**
  *
@@ -77,6 +78,16 @@ public class ClienteRegra {
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
             throw new ExcecaoRegras(ex.getMessage()); 
         }
+    }
+    
+    
+    public static ArrayList<IEntityModel> listarEntity(String nome) throws ExcecaoRegras{
+        ArrayList<Cliente> lista = listar(nome);
+        ArrayList<IEntityModel> listaEntity = new ArrayList<>();
+        for (Cliente item : lista) {
+            listaEntity.add((IEntityModel) (item));
+        }
+        return listaEntity;
     }
     
     public static ArrayList<Cliente> listar(String nome) throws ExcecaoRegras{

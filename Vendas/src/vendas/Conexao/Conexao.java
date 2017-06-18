@@ -18,11 +18,17 @@ import vendas.Excecoes.ExcecaoConexao;
 public class Conexao implements IConexao {
     
     private static Conexao conexao;
+    private String driver;
     private String usuario;
     private String senha;
     private String url;
     
     private Conexao() { 
+//        driver = "com.mysql.jdbc.Driver";
+//        url = "jdbc:mysql://localhost:3306/projeto";
+//        usuario = "root";
+//        senha = "1234";
+        
         url = "jdbc:sqlserver://localhost:1433;databaseName=PROJETO";
         senha = "aluno";
         usuario = "aluno";
@@ -43,8 +49,9 @@ public class Conexao implements IConexao {
     public Connection conectar() throws ExcecaoConexao  {
         Connection conn;
         try {
+            Class.forName(driver);
             conn = DriverManager.getConnection(url, usuario, senha);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             throw new ExcecaoConexao(ExcecaoConexao.ERRO_AO_CONECTAR);
         }
         return conn;
