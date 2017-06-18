@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import vendas.Excecoes.ExcecaoRegras;
 import vendas.entidades.Cliente;
@@ -31,7 +32,6 @@ public class ClientePesquisa extends InternalFrameModal {
         
     private ArrayList<IEntityModel> listaCliente;
     
-    private javax.swing.JTextField txtID;
     /**
      * Creates new form ClientePesquisa
      */
@@ -98,15 +98,20 @@ public class ClientePesquisa extends InternalFrameModal {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
 
         jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -121,16 +126,19 @@ public class ClientePesquisa extends InternalFrameModal {
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtConteudo, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
-                        .addGap(34, 34, 34)
-                        .addComponent(btnPesquisar))
-                    .addComponent(jScrollPane2))
-                .addContainerGap(14, Short.MAX_VALUE))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtConteudo, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1))
+                                .addGap(34, 34, 34)
+                                .addComponent(btnPesquisar)))
+                        .addGap(0, 4, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,15 +183,21 @@ public class ClientePesquisa extends InternalFrameModal {
             model.addColumn("Id", "IdCliente", Integer.class);
             model.addColumn("Nome", "Nome", String.class);
             jTable2.setModel(model);
+            
+            TableColumnModel columnModel = jTable2.getColumnModel();
+            columnModel.getColumn(0).setMaxWidth(100);
+            
         }catch(ExcecaoRegras ex){
             JOptionPane.showMessageDialog(null,ex.getMessage());
         }
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
-    public void setId(javax.swing.JTextField id){
-        this.txtID = id;
-    }
-    
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        this.IdCliente = (Integer) listaCliente.get(jTable2.getSelectedRow()).get("IdCliente");
+        this.NomeCliente = (String) listaCliente.get(jTable2.getSelectedRow()).get("Nome");
+        this.fechar();
+    }//GEN-LAST:event_jTable2MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPesquisar;
