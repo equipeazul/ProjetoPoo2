@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
  *
  * @author edson
  */
-public class Funcoes {
+public class Funcao {
     
     public static Date StringToDate(String str) {
         

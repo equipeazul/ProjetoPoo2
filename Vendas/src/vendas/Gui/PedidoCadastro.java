@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 import vendas.Excecoes.ExcecaoRegras;
 import vendas.entidades.Pedido;
 import vendas.fachada.Fachada;
-import vendas.util.Funcoes;
+import vendas.util.Funcao;
 
 
 /**
@@ -381,7 +381,7 @@ public class PedidoCadastro extends TelaCadastro {
        
         Pedido pedido = new Pedido();
         pedido.setIdPedido(Integer.parseInt(txtID.getText()));
-        pedido.setDtVenda(Funcoes.StringToDate(txtData.getText()));
+        pedido.setDtVenda(Funcao.StringToDate(txtData.getText()));
         pedido.getCliente().setIdCliente(Integer.parseInt(txtIDCliente.getText())); 
         pedido.getVendedor().setIdVendedor(Integer.parseInt(txtIDVendedor.getText())); 
         pedido.setSituacao(txtSituacao.getText());
@@ -408,7 +408,7 @@ public class PedidoCadastro extends TelaCadastro {
     
         Pedido pedido = new Pedido();
         pedido.setIdPedido(Integer.parseInt(txtID.getText()));
-        pedido.setDtVenda(Funcoes.StringToDate(txtData.getText()));
+        pedido.setDtVenda(Funcao.StringToDate(txtData.getText()));
         pedido.getCliente().setIdCliente(Integer.parseInt(txtIDCliente.getText())); 
         pedido.getVendedor().setIdVendedor(Integer.parseInt(txtIDVendedor.getText())); 
         pedido.setSituacao(txtSituacao.getText());
