@@ -19,7 +19,7 @@ public interface IPedidoRepositorio {
     public void incluir(Pedido pedido)throws ExcecaoRepositorio,ExcecaoConexao ;
     public void excluir(Integer id)throws ExcecaoRepositorio,ExcecaoConexao ;
     public void alterar(Pedido pedido)throws ExcecaoRepositorio,ExcecaoConexao ;
-    public ArrayList listar(String nome)throws ExcecaoRepositorio,ExcecaoConexao ;
+    public ArrayList listar(String nomeCliente, String nomeVendedor)throws ExcecaoRepositorio,ExcecaoConexao ;
     public Pedido consultar(Integer id)throws ExcecaoRepositorio,ExcecaoConexao ;
     public Integer ultimo() throws ExcecaoRepositorio, ExcecaoConexao;
     public Boolean existe(Integer Id) throws ExcecaoRepositorio, ExcecaoConexao;

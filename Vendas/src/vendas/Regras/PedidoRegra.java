@@ -17,7 +17,7 @@ public class PedidoRegra {
     
     private final static IPedidoRepositorio dao = new PedidoRepositorio();
     
-    public static void validar(Pedido p) throws ExcecaoRegras{
+    public static void validar(Pedido pedido) throws ExcecaoRegras{
         
         
     }    
@@ -48,9 +48,9 @@ public class PedidoRegra {
         }
     }   
         
-    public static void incluir(Pedido p)throws ExcecaoRegras{
+    public static void incluir(Pedido pedido)throws ExcecaoRegras{
         try{
-            dao.incluir(p);
+            dao.incluir(pedido);
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
           throw new ExcecaoRegras(ex.getMessage()); 
         }              
@@ -63,18 +63,18 @@ public class PedidoRegra {
         }
     }
     
-    public static void alterar(Pedido p)throws ExcecaoRegras{
+    public static void alterar(Pedido pedido)throws ExcecaoRegras{
         try{
-            dao.alterar(p);
+            dao.alterar(pedido);
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
             throw new ExcecaoRegras(ex.getMessage()); 
         } 
     }
     
-    public static ArrayList<Pedido> listar(String nomeCliente)throws ExcecaoRegras{
+    public static ArrayList<Pedido> listar(String nomeCliente, String nomoVendedor)throws ExcecaoRegras{
         
         try{
-            return dao.listar(nomeCliente);
+            return dao.listar(nomeCliente, nomoVendedor);
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
             throw new ExcecaoRegras(ex.getMessage()); 
         }             

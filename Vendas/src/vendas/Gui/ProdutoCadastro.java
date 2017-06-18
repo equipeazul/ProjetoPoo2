@@ -520,6 +520,8 @@ public class ProdutoCadastro extends TelaCadastro {
            JOptionPane.showMessageDialog(null, ex.getMessage());
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, VALOR_ID_FABRICANTE_INVALIDO);
+        } finally {
+            txtIdFabricante.setText(VAZIO);
         }
     }//GEN-LAST:event_txtIdFabricanteFocusLost
 

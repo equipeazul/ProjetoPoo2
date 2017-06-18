@@ -211,8 +211,8 @@ public class Fachada {
         return PedidoRegra.ultimo();
     }
     
-    public ArrayList<Pedido> listar(String nomeCliente) throws ExcecaoRegras{
-        return PedidoRegra.listar(nomeCliente);
+    public ArrayList<Pedido> listar(String nomeCliente, String nomeVendedor) throws ExcecaoRegras{
+        return PedidoRegra.listar(nomeCliente, nomeVendedor);
     }
     
 }

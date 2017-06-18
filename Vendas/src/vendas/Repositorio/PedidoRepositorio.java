@@ -64,13 +64,15 @@ public class PedidoRepositorio implements IPedidoRepositorio
     public void alterar(Pedido pedido) throws ExcecaoRepositorio, ExcecaoConexao {
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="UPDATE produto SET idVendedor = ? , SITUACAO = ?  WHERE idPedido = ? ";
+        String sql ="UPDATE pedidos SET DTVENDA = ? ,idCliente = ? ,idVendedor = ? , SITUACAO = ?  WHERE idPedido = ? ";
         try{
             PreparedStatement pstm = conn.prepareStatement(sql);
                        
-            pstm.setInt(1, pedido.getVendedor().getIdVendedor());
-            pstm.setString(2, pedido.getSituacao()); 
-            pstm.setInt(3, pedido.getIdPedido()); 
+            pstm.setDate(1, (Date)pedido.getDtVenda());
+            pstm.setInt(2, pedido.getCliente().getIdCliente());
+            pstm.setInt(3, pedido.getVendedor().getIdVendedor());
+            pstm.setString(4, pedido.getSituacao()); 
+            pstm.setInt(5, pedido.getIdPedido()); 
             pstm.executeUpdate();
         }catch(SQLException e){
             throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_ALTERAR_PEDIDO);
@@ -80,7 +82,7 @@ public class PedidoRepositorio implements IPedidoRepositorio
    }
 
     @Override
-    public ArrayList listar(String nome) throws ExcecaoRepositorio, ExcecaoConexao {
+    public ArrayList listar(String nomeCliente, String nomeVendedor) throws ExcecaoRepositorio, ExcecaoConexao {
         ArrayList<Pedido> lista;
         
         IConexao sqlConn = Conexao.getInstancia();
@@ -89,8 +91,12 @@ public class PedidoRepositorio implements IPedidoRepositorio
                 " LEFT JOIN Clientes ON Pedidos.idcliente = Clientes.idcliente " +
                 " LEFT JOIN Vendedores ON Pedidos.idvendedor = Vendedores.idvendedor ";
         
-        if (!nome.equals("")) {
-            sql = sql + " WHERE Clientes.Nome LIKE '%" + nome + "%'";
+        if (!nomeCliente.equals("")) {
+            sql = sql + " WHERE Clientes.Nome LIKE '%" + nomeCliente + "%'";
+        }
+             
+        if (!nomeVendedor.equals("")) {
+            sql = sql + " WHERE Vendedores.Nome LIKE '%" + nomeVendedor + "%'";
         }
              
         try{
@@ -125,7 +131,10 @@ public class PedidoRepositorio implements IPedidoRepositorio
         
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="SELECT * FROM Pedidos WHERE idPedidos = ? ";
+        String sql ="SELECT Pedidos.*, Clientes.Nome as nomeCliente, Vendedores.Nome as nomeVendedor FROM Pedidos " +
+                " LEFT JOIN Clientes ON Pedidos.idcliente = Clientes.idcliente " +
+                " LEFT JOIN Vendedores ON Pedidos.idvendedor = Vendedores.idvendedor " +
+                " WHERE idPedido = ? ";
         try{
             PreparedStatement pstm= conn.prepareStatement(sql);
             pstm.setInt(1, id);
@@ -135,9 +144,10 @@ public class PedidoRepositorio implements IPedidoRepositorio
                 pedido.setIdPedido(rset.getInt("idPedido"));
                 pedido.setDtVenda(rset.getDate("Dtvenda"));
                 pedido.getVendedor().setIdVendedor(rset.getInt("idvendedor"));
+                pedido.getVendedor().setNome(rset.getString("nomevendedor"));
                 pedido.getCliente().setIdCliente(rset.getInt("idcliente"));
+                pedido.getCliente().setNome(rset.getString("nomeCliente"));
                 pedido.setSituacao(rset.getString("situacao"));
- 
             }
         }catch(SQLException e){
             throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_PEDIDO);
