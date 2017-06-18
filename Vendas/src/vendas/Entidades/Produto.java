@@ -5,11 +5,13 @@
  */
 package vendas.entidades;
 
+import vendas.util.IEntityModel;
+
 /**
  *
  * @author aluno
  */
-public class Produto {
+public class Produto  implements IEntityModel{
     
     private Integer idProduto;
     private String descricao;
@@ -21,6 +23,35 @@ public class Produto {
         this.fabricante = new Fabricante();
     }
 
+@Override
+    public Object get(String name) {
+        switch (name.toUpperCase()) {
+            case "IDPRODUTO": return getIdproduto();
+            case "DESCRICAO": return getDescricao();
+            case "UNIDADE": return getUnidade();
+            case "PRECOVENDA": return getPrecoVenda();
+        }
+        return null; 
+    }
+
+    @Override
+    public void set(String name, Object value) {
+        switch (name.toUpperCase()) {
+            case "IDPRODUTO": 
+                setIdProduto((Integer) value);
+                break;
+            case "DESCRICAO":
+                setDescricao((String) value);
+                break;
+            case "UNIDADE":
+                setUnidade((String) value);
+                break;
+            case "PRECOVENDA":
+                setPrecoVenda((Double) value);
+                break;
+        }
+    }
+        
     public Integer getIdproduto() {
         return this.idProduto;
     }

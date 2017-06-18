@@ -464,7 +464,12 @@ public class ProdutoCadastro extends TelaCadastro {
     }//GEN-LAST:event_btnIrParaActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-       //
+        ProdutoPesquisa.abrir(proprietario, true); 
+        Integer id = ProdutoPesquisa.getId();
+        if (id > 0) {
+            txtID.setText(id.toString());
+            configurar(CONSULTA);
+        }
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

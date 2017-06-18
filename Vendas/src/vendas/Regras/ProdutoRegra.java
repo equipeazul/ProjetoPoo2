@@ -8,6 +8,7 @@ import vendas.Excecoes.ExcecaoRepositorio;
 import vendas.Repositorio.IProdutoRepositorio;
 import vendas.Repositorio.ProdutoRepositorio;
 import vendas.entidades.Produto;
+import vendas.util.IEntityModel;
 
 /**
  *
@@ -68,6 +69,16 @@ public class ProdutoRegra {
             throw new ExcecaoRegras(ex.getMessage()); 
         }
     }
+
+    public static ArrayList<IEntityModel> listarEntity(String descricao) throws ExcecaoRegras{
+        ArrayList<Produto> lista = listar(descricao);
+        ArrayList<IEntityModel> listaEntity = new ArrayList<>();
+        for (Produto item : lista) {
+            listaEntity.add((IEntityModel) (item));
+        }
+        return listaEntity;
+    }
+    
     public static ArrayList<Produto> listar(String descricao) throws ExcecaoRegras{
         try {
             return dao.listar(descricao);

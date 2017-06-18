@@ -135,6 +135,10 @@ public class Fachada {
     public ArrayList<Produto> listarProdutos(String descricao) throws ExcecaoRegras{
         return ProdutoRegra.listar(descricao);
     }
+    
+    public ArrayList<IEntityModel> listarProdutosEntity(String descricao) throws ExcecaoRegras{
+        return ProdutoRegra.listarEntity(descricao);
+    }
        
     /*#########################################################################
     * Fabricante

@@ -88,11 +88,13 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
         
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="SELECT idProduto, descricao, unidade, precovenda, idfabricante FROM produto ";
+        String sql ="SELECT idProduto, descricao, unidade, precovenda, idfabricante FROM produtos ";
         
         if (!descricao.equals("")) {
             sql = sql + " WHERE descricao LIKE '%" + descricao + "%'";
         }
+        
+        sql = sql + " ORDER BY descricao ";
              
         try{
             PreparedStatement pstm= conn.prepareStatement(sql);
@@ -111,7 +113,7 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
                 lista.add(produto);
             }
         }catch(SQLException e){
-            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_ALTERAR_PRODUTO);
+            throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_CONSULTAR_PRODUTO);
         }finally{
             sqlConn.desconectar(conn);
         }
