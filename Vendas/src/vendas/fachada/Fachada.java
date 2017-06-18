@@ -164,6 +164,10 @@ public class Fachada {
         return fabricante;
     }
     
+    public ArrayList<IEntityModel> listarFabricantesEntity(String razaosocial) throws ExcecaoRegras{
+        return FabricanteRegra.listarEntity(razaosocial);
+    }
+    
     public Integer ultimoFabricante() throws ExcecaoRegras{
         Integer id  = FabricanteRegra.ultimo();
         return id;

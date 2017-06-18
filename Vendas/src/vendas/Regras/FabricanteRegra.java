@@ -14,6 +14,7 @@ import vendas.Excecoes.ExcecaoRepositorio;
 import vendas.Repositorio.FabricanteRepositorio;
 import vendas.Repositorio.IFabricanteRepositorio;
 import vendas.entidades.Fabricante;
+import vendas.util.IEntityModel;
 
 /**
  *
@@ -73,6 +74,15 @@ public class FabricanteRegra {
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
             throw new ExcecaoRegras(ex.getMessage()); 
         }             
+    }
+    
+    public static ArrayList<IEntityModel> listarEntity(String razaosocial) throws ExcecaoRegras{
+        ArrayList<Fabricante> lista = listar(razaosocial);
+        ArrayList<IEntityModel> listaEntity = new ArrayList<>();
+        for (Fabricante item : lista) {
+            listaEntity.add((IEntityModel) (item));
+        }
+        return listaEntity;
     }
     
     public static Fabricante consultar(Integer id)throws ExcecaoRegras{

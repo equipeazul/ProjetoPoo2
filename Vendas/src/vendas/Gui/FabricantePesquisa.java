@@ -23,28 +23,28 @@ import vendas.util.IEntityModel;
  *
  * @author aluno
  */
-public class ClientePesquisa extends InternalFrameModal {
+public class FabricantePesquisa extends InternalFrameModal {
     
     private static Integer id = 0;
-    private static String nome;
+    private static String razaoSocial;
             
-    private static ClientePesquisa instancia;
+    private static FabricantePesquisa instancia;
         
-    private ArrayList<IEntityModel> listaCliente;
+    private ArrayList<IEntityModel> lista;
     
     /**
      * Creates new form ClientePesquisa
      */
-    public ClientePesquisa() {
+    public FabricantePesquisa() {
         initComponents();
     }
 
-    public static Integer getIdCliente() {
+    public static Integer getId() {
         return id;
     }
     
-    public static String getNome() {
-        return nome;
+    public static String getRazaoSocial() {
+        return razaoSocial;
     }
 
     @Override
@@ -53,11 +53,11 @@ public class ClientePesquisa extends InternalFrameModal {
         instancia = null;
     }
     
-    public static ClientePesquisa abrir(javax.swing.JDesktopPane principal, Boolean modal) // , Method retornoPesquisa
+    public static FabricantePesquisa abrir(javax.swing.JDesktopPane principal, Boolean modal) // , Method retornoPesquisa
     {
         proprietario = principal;
         if (instancia == null) {
-            instancia = new ClientePesquisa();
+            instancia = new FabricantePesquisa();
             componente = principal.add(instancia);
         }
         instancia.show(590, 650, 280, 50, modal);
@@ -83,7 +83,7 @@ public class ClientePesquisa extends InternalFrameModal {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Nome");
+        jLabel1.setText("Razão social");
 
         btnPesquisar.setText("Pesquisar");
         btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
@@ -94,7 +94,7 @@ public class ClientePesquisa extends InternalFrameModal {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Pesquisa de clientes");
+        jLabel5.setText("Pesquisa de fabricantes");
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -176,12 +176,12 @@ public class ClientePesquisa extends InternalFrameModal {
         
         Fachada fachada = Fachada.getInstancia();
         
-        listaCliente = new ArrayList<IEntityModel>();
+        lista = new ArrayList<IEntityModel>();
         try{  
-            listaCliente = fachada.listarClientesEntity(txtConteudo.getText());
-            CustomTableModel model = new CustomTableModel(listaCliente);
-            model.addColumn("Id", "IdCliente", Integer.class);
-            model.addColumn("Nome", "Nome", String.class);
+            lista = fachada.listarFabricantesEntity(txtConteudo.getText());
+            CustomTableModel model = new CustomTableModel(lista);
+            model.addColumn("Id", "IdFabricante", Integer.class);
+            model.addColumn("Razão Social", "RazaoSocial", String.class);
             jTable2.setModel(model);
             
             TableColumnModel columnModel = jTable2.getColumnModel();
@@ -193,8 +193,8 @@ public class ClientePesquisa extends InternalFrameModal {
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
-        this.id = (Integer) listaCliente.get(jTable2.getSelectedRow()).get("IdCliente");
-        this.nome = (String) listaCliente.get(jTable2.getSelectedRow()).get("Nome");
+        this.id = (Integer) lista.get(jTable2.getSelectedRow()).get("IdFabricante");
+        this.razaoSocial = (String) lista.get(jTable2.getSelectedRow()).get("RazaoSocial");
         this.fechar();
     }//GEN-LAST:event_jTable2MouseClicked
 

@@ -93,6 +93,8 @@ public class ClienteRepositorio implements IClienteRepositorio {
         if (!nome.equals("")) {
             sql = sql + " WHERE nome LIKE '%" + nome + "%'";
         }
+        
+        sql = sql + " Order by nome ";
              
         try{
             PreparedStatement pstm = conn.prepareStatement(sql);

@@ -80,7 +80,6 @@ public class ClienteRegra {
         }
     }
     
-    
     public static ArrayList<IEntityModel> listarEntity(String nome) throws ExcecaoRegras{
         ArrayList<Cliente> lista = listar(nome);
         ArrayList<IEntityModel> listaEntity = new ArrayList<>();

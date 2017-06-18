@@ -83,16 +83,18 @@ public class FabricanteRepositorio implements IFabricanteRepositorio {
     //Irá listar pela columa (razaosocial) do database
     
     @Override
-    public ArrayList<Fabricante> listar(String nome) throws ExcecaoRepositorio, ExcecaoConexao {
+    public ArrayList<Fabricante> listar(String razaosocial) throws ExcecaoRepositorio, ExcecaoConexao {
            ArrayList<Fabricante> lista;
         
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
         String sql ="SELECT * FROM Fabricantes ";
         
-        if (!nome.equals("")) {
-            sql = sql + " WHERE razaosocial LIKE '%" + nome + "%'";
+        if (!razaosocial.equals("")) {
+            sql = sql + " WHERE razaosocial LIKE '%" + razaosocial + "%'";
         }
+        
+        sql = sql + " ORDER BY razaosocial ";
              
         try{
             PreparedStatement pstm = conn.prepareStatement(sql);

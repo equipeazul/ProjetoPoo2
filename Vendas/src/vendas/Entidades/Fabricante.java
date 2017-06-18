@@ -5,16 +5,43 @@
  */
 package vendas.entidades;
 
+import vendas.util.IEntityModel;
+
 /**
  *
  * @author aluno
  */
-public class Fabricante {
+public class Fabricante implements IEntityModel{
     
     private Integer idFabricante;
     private String razaoSocial;
     private String telefone;
 
+    @Override
+    public Object get(String name) {
+        switch (name.toUpperCase()) {
+            case "IDFABRICANTE": return getIdFabricante();
+            case "RAZAOSOCIAL": return getRazaoSocial();
+            case "TELEFONE": return getTelefone();
+        }
+        return null; 
+    }
+
+    @Override
+    public void set(String name, Object value) {
+        switch (name.toUpperCase()) {
+            case "IDFABRICANTE": 
+                setIdFabricante((Integer) value);
+                break;
+            case "RAZAOSOCIAL":
+                setRazaoSocial((String) value);
+                break;
+            case "TELEFONE":
+                setTelefone((String) value);
+                break;
+        }
+    }
+    
     public Integer getIdFabricante() {
         return this.idFabricante;
     }
