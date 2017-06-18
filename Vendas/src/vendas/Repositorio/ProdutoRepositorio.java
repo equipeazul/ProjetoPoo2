@@ -130,7 +130,7 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
         
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="SELECT * FROM Produtos WHERE idProduto = ? ";
+        String sql ="SELECT Produtos.*, Fabricantes.RazaoSocial FROM Produtos LEFT JOIN Fabricantes ON Fabricantes.IdFabricante = Produtos.IdFabricante WHERE idProduto = ? ";
         try{
             PreparedStatement pstm= conn.prepareStatement(sql);
             pstm.setInt(1, id);
@@ -143,6 +143,7 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
                 produto.setUnidade(rset.getString("unidade"));
                 produto.setPrecoVenda(rset.getDouble("precovenda"));
                 produto.getFabricante().setIdFabricante(rset.getInt("idfabricante"));
+                produto.getFabricante().setRazaoSocial(rset.getString("RazaoSocial"));
             }
         }catch(SQLException e){
             throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_ALTERAR_PRODUTO);
