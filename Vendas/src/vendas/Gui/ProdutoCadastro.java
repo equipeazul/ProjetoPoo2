@@ -16,6 +16,7 @@ import vendas.Excecoes.ExcecaoRepositorio;
 import vendas.Repositorio.ClienteRepositorio;
 import vendas.Repositorio.IClienteRepositorio;
 import vendas.entidades.Cliente;
+import vendas.entidades.Fabricante;
 import vendas.entidades.Produto;
 import vendas.fachada.Fachada;
 
@@ -35,6 +36,7 @@ public class ProdutoCadastro extends TelaCadastro {
     private final String FOI_ALTERADO = "Produto foi alterado";
     private final String DIGITE_ID = "Digite o ID do Produto";
     private final String VALOR_ID_INVALIDO = "ID do Produto é invalido";
+    private final String VALOR_ID_FABRICANTE_INVALIDO = "ID do Fabricante é invalido";
     
     
     /**
@@ -57,7 +59,7 @@ public class ProdutoCadastro extends TelaCadastro {
             instancia = new ProdutoCadastro();
             componente = principal.add(instancia);
         }
-        instancia.show(800, 450, 140, 20, modal);
+        instancia.show(800, 585, 140, 20, modal);
         return instancia;
     }
     
@@ -228,7 +230,7 @@ public class ProdutoCadastro extends TelaCadastro {
         txtID.setEnabled(false);
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabel2.setText("Descricição");
+        jLabel2.setText("Descrição");
 
         txtDescricao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -238,6 +240,12 @@ public class ProdutoCadastro extends TelaCadastro {
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel3.setText("Unidade");
+
+        txtIdFabricante.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtIdFabricanteFocusLost(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel6.setText("Fabricante");
@@ -291,11 +299,11 @@ public class ProdutoCadastro extends TelaCadastro {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(23, 23, 23)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,7 +311,7 @@ public class ProdutoCadastro extends TelaCadastro {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtIdFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnPesqFabricante)))
-                .addGap(9, 9, 9)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel7)
@@ -313,7 +321,7 @@ public class ProdutoCadastro extends TelaCadastro {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtUnidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(252, Short.MAX_VALUE))
+                .addContainerGap(106, Short.MAX_VALUE))
         );
 
         jDesktopPane1.setLayer(btnIncluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -369,7 +377,7 @@ public class ProdutoCadastro extends TelaCadastro {
                     .addComponent(btnPesquisar))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(374, 374, 374))
+                .addGap(146, 146, 146))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -496,6 +504,24 @@ public class ProdutoCadastro extends TelaCadastro {
             txtRazaoSocialFabricante.setText(FabricantePesquisa.getRazaoSocial());
         }
     }//GEN-LAST:event_btnPesqFabricanteActionPerformed
+
+    private void txtIdFabricanteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdFabricanteFocusLost
+        Fachada fachada = Fachada.getInstancia();
+        
+        try
+        {
+            if (!txtIdFabricante.getText().equals(VAZIO)) {
+                Integer id = Integer.parseInt(txtIdFabricante.getText());
+
+                Fabricante fabricante = fachada.consultarFabricante(id);
+                txtRazaoSocialFabricante.setText(fabricante.getRazaoSocial());
+            }
+        } catch (ExcecaoRegras ex) {
+           JOptionPane.showMessageDialog(null, ex.getMessage());
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, VALOR_ID_FABRICANTE_INVALIDO);
+        }
+    }//GEN-LAST:event_txtIdFabricanteFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
