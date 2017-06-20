@@ -6,7 +6,6 @@
 package vendas.Gui;
 
 import java.awt.Toolkit;
-import javax.swing.JInternalFrame;
 
 /**
  *

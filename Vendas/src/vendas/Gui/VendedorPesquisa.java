@@ -5,19 +5,15 @@
  */
 package vendas.Gui;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
+import vendas.Entidades.VendedorModel;
 import vendas.Excecoes.ExcecaoRegras;
-import vendas.entidades.Cliente;
+import vendas.Entidades.Vendedor;
 import vendas.fachada.Fachada;
-import vendas.util.CustomTableModel;
+import vendas.util.ListModel;
 import vendas.util.InternalFrameModal;
-import vendas.util.IEntityModel;
 
 /**
  *
@@ -30,7 +26,7 @@ public class VendedorPesquisa extends InternalFrameModal {
             
     private static VendedorPesquisa instancia;
         
-    private ArrayList<IEntityModel> lista;
+    private ArrayList<Vendedor> lista;
     
     /**
      * Creates new form Pesquisa
@@ -176,12 +172,12 @@ public class VendedorPesquisa extends InternalFrameModal {
         
         Fachada fachada = Fachada.getInstancia();
         
-        lista = new ArrayList<IEntityModel>();
+        lista = new ArrayList<Vendedor>();
         try{  
-            lista = fachada.listarVendedoresEntity(txtConteudo.getText());
-            CustomTableModel model = new CustomTableModel(lista);
-            model.addColumn("Id", "IdVendedor", Integer.class);
-            model.addColumn("Nome", "Nome", String.class);
+            lista = fachada.listarVendedores(txtConteudo.getText());
+            ListModel model = new ListModel(VendedorModel.adapterList(lista));
+            model.addColumn(VendedorModel.IDVENDEDOR, "Id", Integer.class);
+            model.addColumn(VendedorModel.NOME, "Nome", String.class);
             jTable2.setModel(model);
             
             TableColumnModel columnModel = jTable2.getColumnModel();
@@ -193,8 +189,8 @@ public class VendedorPesquisa extends InternalFrameModal {
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
-        this.id = (Integer) lista.get(jTable2.getSelectedRow()).get("IdVendedor");
-        this.nome = (String) lista.get(jTable2.getSelectedRow()).get("Nome");
+        this.id = lista.get(jTable2.getSelectedRow()).getIdVendedor();
+        this.nome = lista.get(jTable2.getSelectedRow()).getNome();
         this.fechar();
     }//GEN-LAST:event_jTable2MouseClicked
 

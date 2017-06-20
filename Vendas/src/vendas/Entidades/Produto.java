@@ -3,15 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vendas.entidades;
-
-import vendas.util.IEntityModel;
+package vendas.Entidades;
 
 /**
  *
  * @author aluno
  */
-public class Produto  implements IEntityModel{
+public class Produto {
     
     private Integer idProduto;
     private String descricao;
@@ -23,36 +21,7 @@ public class Produto  implements IEntityModel{
         this.fabricante = new Fabricante();
     }
 
-@Override
-    public Object get(String name) {
-        switch (name.toUpperCase()) {
-            case "IDPRODUTO": return getIdproduto();
-            case "DESCRICAO": return getDescricao();
-            case "UNIDADE": return getUnidade();
-            case "PRECOVENDA": return getPrecoVenda();
-        }
-        return null; 
-    }
-
-    @Override
-    public void set(String name, Object value) {
-        switch (name.toUpperCase()) {
-            case "IDPRODUTO": 
-                setIdProduto((Integer) value);
-                break;
-            case "DESCRICAO":
-                setDescricao((String) value);
-                break;
-            case "UNIDADE":
-                setUnidade((String) value);
-                break;
-            case "PRECOVENDA":
-                setPrecoVenda((Double) value);
-                break;
-        }
-    }
-        
-    public Integer getIdproduto() {
+    public Integer getIdProduto() {
         return this.idProduto;
     }
 

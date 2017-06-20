@@ -3,21 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vendas.entidades;
-
-import vendas.util.IEntityModel;
+package vendas.Entidades;
 
 /**
  *
  * @author aluno
  */
-public class Fabricante implements IEntityModel{
+public class Fabricante {
     
     private Integer idFabricante;
     private String razaoSocial;
     private String telefone;
 
-    @Override
     public Object get(String name) {
         switch (name.toUpperCase()) {
             case "IDFABRICANTE": return getIdFabricante();
@@ -27,7 +24,6 @@ public class Fabricante implements IEntityModel{
         return null; 
     }
 
-    @Override
     public void set(String name, Object value) {
         switch (name.toUpperCase()) {
             case "IDFABRICANTE": 

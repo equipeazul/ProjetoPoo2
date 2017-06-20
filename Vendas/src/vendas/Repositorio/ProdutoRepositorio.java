@@ -10,11 +10,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import vendas.Conexao.*;
 import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRepositorio;
-import vendas.entidades.Produto;
+import vendas.Entidades.Produto;
 /**
  *
  * @author Felipe
@@ -72,7 +71,7 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
             pstm.setString(2, produto.getUnidade()); 
             pstm.setDouble(3, produto.getPrecoVenda()); 
             pstm.setInt(4, produto.getFabricante().getIdFabricante()); 
-            pstm.setInt(5, produto.getIdproduto()); 
+            pstm.setInt(5, produto.getIdProduto()); 
             pstm.executeUpdate();
         }catch(SQLException e){
             throw new ExcecaoRepositorio(ExcecaoRepositorio.ERRO_AO_ALTERAR_PEDIDO);
@@ -82,19 +81,30 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
     }
     
     @Override
-    public ArrayList<Produto> listar(String descricao)throws ExcecaoRepositorio,ExcecaoConexao
+    public ArrayList<Produto> listar(String descricao, String razaoSocial)throws ExcecaoRepositorio,ExcecaoConexao
     {
         ArrayList<Produto> lista;
         
         IConexao sqlConn = Conexao.getInstancia();
         Connection conn = sqlConn.conectar();
-        String sql ="SELECT idProduto, descricao, unidade, precovenda, idfabricante FROM produtos ";
+        String sql ="SELECT produtos.idProduto, produtos.descricao, produtos.unidade, produtos.precovenda, produtos.idfabricante, fabricantes.razaosocial " +
+                    "FROM produtos LEFT JOIN Fabricantes ON Fabricantes.idFabricante = Produtos.idFabricante ";
         
+        String where = "";
         if (!descricao.equals("")) {
-            sql = sql + " WHERE descricao LIKE '%" + descricao + "%'";
+            where = where + " Produtos.descricao LIKE '%" + descricao + "%'";
         }
         
-        sql = sql + " ORDER BY descricao ";
+        if (!razaoSocial.equals("")) {
+            if (!where.equals(""))
+                where = where + " AND ";
+            where = where + " Fabricantes.razaosocial LIKE '%" + razaoSocial + "%'";
+        }
+        
+        if (!where.equals(""))
+           sql = sql + " WHERE " + where; 
+        
+        sql = sql + " ORDER BY Produtos.descricao ";
              
         try{
             PreparedStatement pstm= conn.prepareStatement(sql);
@@ -109,6 +119,7 @@ public class ProdutoRepositorio implements IProdutoRepositorio {
                 produto.setUnidade(rset.getString("unidade"));
                 produto.setPrecoVenda(rset.getDouble("precovenda"));
                 produto.getFabricante().setIdFabricante(rset.getInt("idfabricante"));
+                produto.getFabricante().setRazaoSocial(rset.getString("razaosocial"));
                 
                 lista.add(produto);
             }

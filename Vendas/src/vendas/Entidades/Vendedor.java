@@ -3,15 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vendas.entidades;
-
-import vendas.util.IEntityModel;
+package vendas.Entidades;
 
 /**
  *
  * @author aluno
  */
-public class Vendedor implements IEntityModel{
+public class Vendedor {
     
     private Integer idVendedor;
     private String nome;

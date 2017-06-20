@@ -12,7 +12,6 @@ import java.awt.EventQueue;
 import java.awt.MenuComponent;
 import java.awt.event.MouseEvent;
 import javax.swing.JInternalFrame;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;

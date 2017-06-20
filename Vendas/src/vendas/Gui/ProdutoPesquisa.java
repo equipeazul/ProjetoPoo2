@@ -5,19 +5,15 @@
  */
 package vendas.Gui;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
+import vendas.Entidades.ProdutoModel;
 import vendas.Excecoes.ExcecaoRegras;
-import vendas.entidades.Cliente;
+import vendas.Entidades.Produto;
 import vendas.fachada.Fachada;
-import vendas.util.CustomTableModel;
 import vendas.util.InternalFrameModal;
-import vendas.util.IEntityModel;
+import vendas.util.ListModel;
 
 /**
  *
@@ -27,10 +23,12 @@ public class ProdutoPesquisa extends InternalFrameModal {
     
     private static Integer id = 0;
     private static String descricao;
+    private static String unidade;
+    private static Double precoVenda;
             
     private static ProdutoPesquisa instancia;
         
-    private ArrayList<IEntityModel> lista;
+    private ArrayList<Produto> lista;
     
     /**
      * Creates new form ClientePesquisa
@@ -47,20 +45,28 @@ public class ProdutoPesquisa extends InternalFrameModal {
         return descricao;
     }
 
+    public static String getUnidade() {
+        return unidade;
+    }
+
+    public static Double getPrecoVenda() {
+        return precoVenda;
+    }
+
     @Override
     public void fechar() {
         super.fechar();
         instancia = null;
     }
     
-    public static ProdutoPesquisa abrir(javax.swing.JDesktopPane principal, Boolean modal) // , Method retornoPesquisa
+    public static ProdutoPesquisa abrir(javax.swing.JDesktopPane principal, Boolean modal)
     {
         proprietario = principal;
         if (instancia == null) {
             instancia = new ProdutoPesquisa();
             componente = principal.add(instancia);
         }
-        instancia.show(590, 650, 280, 50, modal);
+        instancia.show(900, 650, 280, 50, modal);
         return instancia;
     }
     
@@ -76,14 +82,16 @@ public class ProdutoPesquisa extends InternalFrameModal {
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jLabel1 = new javax.swing.JLabel();
         btnPesquisar = new javax.swing.JButton();
-        txtConteudo = new javax.swing.JTextField();
+        txtDescricao = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        txtRazaoSocial = new javax.swing.JTextField();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Descrição");
+        jLabel1.setText("Descrição do produto");
 
         btnPesquisar.setText("Pesquisar");
         btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
@@ -114,11 +122,17 @@ public class ProdutoPesquisa extends InternalFrameModal {
         });
         jScrollPane2.setViewportView(jTable2);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Razão social do fabricante");
+
         jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(btnPesquisar, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(txtConteudo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(txtDescricao, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(txtRazaoSocial, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -129,15 +143,19 @@ public class ProdutoPesquisa extends InternalFrameModal {
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtRazaoSocial)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnPesquisar))
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtConteudo, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1))
-                                .addGap(34, 34, 34)
-                                .addComponent(btnPesquisar)))
-                        .addGap(0, 4, Short.MAX_VALUE)))
+                                .addComponent(jLabel1)
+                                .addGap(280, 280, 280)
+                                .addComponent(jLabel2)))
+                        .addGap(0, 324, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jDesktopPane1Layout.setVerticalGroup(
@@ -146,12 +164,15 @@ public class ProdutoPesquisa extends InternalFrameModal {
                 .addContainerGap()
                 .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPesquisar)
-                    .addComponent(txtConteudo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(txtRazaoSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(96, 96, 96))
         );
@@ -176,16 +197,22 @@ public class ProdutoPesquisa extends InternalFrameModal {
         
         Fachada fachada = Fachada.getInstancia();
         
-        lista = new ArrayList<IEntityModel>();
+        lista = new ArrayList<Produto>();
         try{  
-            lista = fachada.listarProdutosEntity(txtConteudo.getText());
-            CustomTableModel model = new CustomTableModel(lista);
-            model.addColumn("Id", "IdProduto", Integer.class);
-            model.addColumn("Descrição", "Descricao", String.class);
+            lista = fachada.listarProdutos(txtDescricao.getText(), txtRazaoSocial.getText());
+            ListModel model = new ListModel(ProdutoModel.adapterList(lista));
+            model.addColumn(ProdutoModel.IDPRODUTO, "Id", Integer.class);
+            model.addColumn(ProdutoModel.DESCRICAO, "Descrição", String.class);
+            model.addColumn(ProdutoModel.RAZAOSOCIALFABRICANTE, "Razão social do fabricante", String.class);
+            model.addColumn(ProdutoModel.UNIDADE, "Unidade", String.class);
+            model.addColumn(ProdutoModel.PRECOVENDA, "Preço de venda", String.class);
             jTable2.setModel(model);
             
             TableColumnModel columnModel = jTable2.getColumnModel();
             columnModel.getColumn(0).setMaxWidth(100);
+            columnModel.getColumn(3).setMaxWidth(150);
+            columnModel.getColumn(4).setMaxWidth(150);
+            columnModel.getColumn(4).setMinWidth(150);
             
         }catch(ExcecaoRegras ex){
             JOptionPane.showMessageDialog(null,ex.getMessage());
@@ -193,8 +220,10 @@ public class ProdutoPesquisa extends InternalFrameModal {
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
-        this.id = (Integer) lista.get(jTable2.getSelectedRow()).get("IdProduto");
-        this.descricao = (String) lista.get(jTable2.getSelectedRow()).get("Descricao");
+        this.id = lista.get(jTable2.getSelectedRow()).getIdProduto();
+        this.descricao = lista.get(jTable2.getSelectedRow()).getDescricao();
+        this.unidade = lista.get(jTable2.getSelectedRow()).getUnidade();
+        this.precoVenda = lista.get(jTable2.getSelectedRow()).getPrecoVenda();
         this.fechar();
     }//GEN-LAST:event_jTable2MouseClicked
 
@@ -203,9 +232,11 @@ public class ProdutoPesquisa extends InternalFrameModal {
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField txtConteudo;
+    private javax.swing.JTextField txtDescricao;
+    private javax.swing.JTextField txtRazaoSocial;
     // End of variables declaration//GEN-END:variables
 }

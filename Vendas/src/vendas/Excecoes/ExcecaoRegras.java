@@ -31,7 +31,11 @@ public class ExcecaoRegras extends Exception {
     public static final String ERRO_TELEFONE_FABRICANTE_INVALIDA = "Telefone do fabricante inválido";
     
     
+    
+    
     public static final String ERRO_ID_PEDIDO_NAO_EXISTE = "Id do pedido não existe";
+    public static final String ERRO_PRODURO_NAO_EXISTE_NO_PEDIDO = "Produto não existe no pedido";
+    public static final String ERRO_PRODUTO_JA_CADASTRADO_NO_PEDIDO = "Produto já cadastrado no pedido";
 
     public ExcecaoRegras() {
         

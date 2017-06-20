@@ -1,20 +1,18 @@
 package vendas.fachada;
 
 import java.util.ArrayList;
-import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRegras;
-import vendas.Excecoes.ExcecaoRepositorio;
 import vendas.Regras.ClienteRegra;
 import vendas.Regras.FabricanteRegra;
 import vendas.Regras.PedidoRegra;
 import vendas.Regras.ProdutoRegra;
 import vendas.Regras.VendedorRegra;
-import vendas.entidades.Cliente;
-import vendas.entidades.Fabricante;
-import vendas.entidades.Pedido;
-import vendas.entidades.Produto;
-import vendas.entidades.Vendedor;
-import vendas.util.IEntityModel;
+import vendas.Entidades.Cliente;
+import vendas.Entidades.Fabricante;
+import vendas.Entidades.Pedido;
+import vendas.Entidades.PedidoProduto;
+import vendas.Entidades.Produto;
+import vendas.Entidades.Vendedor;
 
 /**
  *
@@ -65,10 +63,6 @@ public class Fachada {
         return ClienteRegra.listar(nome);
     }
    
-    public ArrayList<IEntityModel> listarClientesEntity(String nome) throws ExcecaoRegras{
-        return ClienteRegra.listarEntity(nome);
-    }
-   
     /*#########################################################################
     * Vendedor
     *########################################################################*/
@@ -102,10 +96,6 @@ public class Fachada {
         return VendedorRegra.listar(nome);
     }
     
-    public ArrayList<IEntityModel> listarVendedoresEntity(String descricao) throws ExcecaoRegras{
-        return VendedorRegra.listarEntity(descricao);
-    }
-   
     /*#########################################################################
     * Produto
     *########################################################################*/
@@ -116,13 +106,13 @@ public class Fachada {
     }
     
     public void excluirProduto(Produto produto) throws ExcecaoRegras{
-        ProdutoRegra.verificarExistencia(produto.getIdproduto());
-        ProdutoRegra.verificarExistenciaNoPedido(produto.getIdproduto());
+        ProdutoRegra.verificarExistencia(produto.getIdProduto());
+        ProdutoRegra.verificarExistenciaNoPedido(produto.getIdProduto());
         ProdutoRegra.excluir(produto);
     }
     
     public void alterarProduto(Produto produto) throws ExcecaoRegras{
-        ProdutoRegra.verificarExistencia(produto.getIdproduto());
+        ProdutoRegra.verificarExistencia(produto.getIdProduto());
         ProdutoRegra.validar(produto);
         ProdutoRegra.alterar(produto);
     }
@@ -136,14 +126,10 @@ public class Fachada {
         return ProdutoRegra.ultimo();
     }
     
-    public ArrayList<Produto> listarProdutos(String descricao) throws ExcecaoRegras{
-        return ProdutoRegra.listar(descricao);
+    public ArrayList<Produto> listarProdutos(String descricao, String razaoSocial) throws ExcecaoRegras{
+        return ProdutoRegra.listar(descricao, razaoSocial);
     }
     
-    public ArrayList<IEntityModel> listarProdutosEntity(String descricao) throws ExcecaoRegras{
-        return ProdutoRegra.listarEntity(descricao);
-    }
-       
     /*#########################################################################
     * Fabricante
     *########################################################################*/
@@ -172,8 +158,8 @@ public class Fachada {
         return fabricante;
     }
     
-    public ArrayList<IEntityModel> listarFabricantesEntity(String razaosocial) throws ExcecaoRegras{
-        return FabricanteRegra.listarEntity(razaosocial);
+    public ArrayList<Fabricante> listarFabricantes(String razaoSocial) throws ExcecaoRegras{
+        return FabricanteRegra.listar(razaoSocial);
     }
     
     public Integer ultimoFabricante() throws ExcecaoRegras{
@@ -184,9 +170,9 @@ public class Fachada {
     /*#########################################################################
     * Pedido
     *########################################################################*/
-    public Pedido consultarPedido(Integer id)throws ExcecaoRegras{
+    public Pedido consultarPedido(Integer id, Boolean comProdutos)throws ExcecaoRegras{
         Pedido pedido = new Pedido();
-        pedido = PedidoRegra.consultar(id);
+        pedido = PedidoRegra.consultar(id, comProdutos);
         return pedido;
     }    
 
@@ -214,9 +200,24 @@ public class Fachada {
     public ArrayList<Pedido> listarPedidos(String nomeCliente, String nomeVendedor) throws ExcecaoRegras{
         return PedidoRegra.listar(nomeCliente, nomeVendedor);
     }
-    
-    public ArrayList<IEntityModel> listarPedidosEntity(String nomeCliente, String nomeVendedor) throws ExcecaoRegras{
-        return PedidoRegra.listarEntity(nomeCliente, nomeVendedor);
+
+    /*#########################################################################
+    * PedidoProduto
+    *########################################################################*/
+    public void incluirPedidoProduto(Integer idPedido, PedidoProduto pedidoProduto) throws ExcecaoRegras{
+        PedidoRegra.jaCadastradoProduto(idPedido, pedidoProduto.getProduto().getIdProduto());
+        PedidoRegra.validarProduto(pedidoProduto);
+        PedidoRegra.incluirProduto(idPedido, pedidoProduto);
     }
     
+    public void excluirPedidoProduto(Integer idPedido, PedidoProduto pedidoProduto) throws ExcecaoRegras{
+        PedidoRegra.verificarExistenciaProduto(idPedido, pedidoProduto.getProduto().getIdProduto());
+        PedidoRegra.excluirProduto(idPedido, pedidoProduto);
+    }
+    
+    public void alterarPedidoProduto(Integer idPedido, PedidoProduto pedidoProduto) throws ExcecaoRegras{
+        PedidoRegra.verificarExistenciaProduto(idPedido, pedidoProduto.getProduto().getIdProduto());
+        PedidoRegra.validarProduto(pedidoProduto);
+        PedidoRegra.alterarProduto(idPedido, pedidoProduto);
+    }
 }

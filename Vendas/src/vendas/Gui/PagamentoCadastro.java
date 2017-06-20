@@ -5,20 +5,12 @@
  */
 package vendas.Gui;
 
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRegras;
-import vendas.Excecoes.ExcecaoRepositorio;
-import vendas.Repositorio.ClienteRepositorio;
-import vendas.Repositorio.IClienteRepositorio;
-import vendas.entidades.Cliente;
-import vendas.entidades.Pagamento;
-import vendas.entidades.Pedido;
+import vendas.Entidades.Cliente;
+import vendas.Entidades.Pagamento;
+import vendas.Entidades.Pedido;
 import vendas.fachada.Fachada;
 
 /**
@@ -449,7 +441,7 @@ public class PagamentoCadastro extends TelaCadastro {
             Integer id = Integer.parseInt(JOptionPane.showInputDialog(null, DIGITE_ID));
             
              Pedido pedido = new Pedido();
-             pedido = fachada.consultarPedido(id);
+             pedido = fachada.consultarPedido(id, false);
             txtID.setText(id.toString());
             
             DefaultTableModel modelo = new DefaultTableModel();

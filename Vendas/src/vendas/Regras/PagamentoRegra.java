@@ -7,7 +7,7 @@ import vendas.Excecoes.ExcecaoRegras;
 import vendas.Excecoes.ExcecaoRepositorio;
 import vendas.Repositorio.IPagamentoRepositorio;
 import vendas.Repositorio.PagamentoRepositorio;
-import vendas.entidades.Pagamento;
+import vendas.Entidades.Pagamento;
 
 /**
  *

@@ -24,11 +24,13 @@ public class Conexao implements IConexao {
     private String url;
     
     private Conexao() { 
+        // MYSQL
 //        driver = "com.mysql.jdbc.Driver";
 //        url = "jdbc:mysql://localhost:3306/projeto";
 //        usuario = "root";
 //        senha = "1234";
-        
+
+        // MS SQL
         url = "jdbc:sqlserver://localhost:1433;databaseName=PROJETO";
         senha = "aluno";
         usuario = "aluno";

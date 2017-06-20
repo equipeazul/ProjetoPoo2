@@ -5,19 +5,10 @@
  */
 package vendas.Gui;
 
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRegras;
-import vendas.Excecoes.ExcecaoRepositorio;
-import vendas.Repositorio.ClienteRepositorio;
-import vendas.Repositorio.IClienteRepositorio;
-import vendas.entidades.Cliente;
-import vendas.entidades.Fabricante;
-import vendas.entidades.Produto;
+import vendas.Entidades.Fabricante;
+import vendas.Entidades.Produto;
 import vendas.fachada.Fachada;
 
 /**
@@ -92,7 +83,7 @@ public class ProdutoCadastro extends TelaCadastro {
                     if(produto != null)
                     {
                        txtDescricao.setText(produto.getDescricao());  
-                       txtID.setText(produto.getIdproduto().toString());
+                       txtID.setText(produto.getIdProduto().toString());
                        txtUnidade.setText(produto.getUnidade()); 
                        txtIdFabricante.setText(produto.getFabricante().getIdFabricante().toString());
                        txtRazaoSocialFabricante.setText(produto.getFabricante().getRazaoSocial());
@@ -518,9 +509,9 @@ public class ProdutoCadastro extends TelaCadastro {
             }
         } catch (ExcecaoRegras ex) {
            JOptionPane.showMessageDialog(null, ex.getMessage());
+            txtIdFabricante.setText(VAZIO);
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, VALOR_ID_FABRICANTE_INVALIDO);
-        } finally {
             txtIdFabricante.setText(VAZIO);
         }
     }//GEN-LAST:event_txtIdFabricanteFocusLost

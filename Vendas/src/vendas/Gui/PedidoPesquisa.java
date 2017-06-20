@@ -5,20 +5,16 @@
  */
 package vendas.Gui;
 
-import java.lang.reflect.Method;
 import java.sql.Date;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
+import vendas.Entidades.PedidoModel;
 import vendas.Excecoes.ExcecaoRegras;
-import vendas.entidades.Cliente;
+import vendas.Entidades.Pedido;
 import vendas.fachada.Fachada;
-import vendas.util.CustomTableModel;
 import vendas.util.InternalFrameModal;
-import vendas.util.IEntityModel;
+import vendas.util.ListModel;
 
 /**
  *
@@ -32,7 +28,7 @@ public class PedidoPesquisa extends InternalFrameModal {
             
     private static PedidoPesquisa instancia;
         
-    private ArrayList<IEntityModel> lista;
+    private ArrayList<Pedido> lista;
     
     /**
      * Creates new form ClientePesquisa
@@ -202,15 +198,15 @@ public class PedidoPesquisa extends InternalFrameModal {
         
         Fachada fachada = Fachada.getInstancia();
         
-        lista = new ArrayList<IEntityModel>();
+        lista = new ArrayList<Pedido>();
         try{  
-            lista = fachada.listarPedidosEntity(txtNomeCliente.getText(), txtNomeVendedor.getText());
-            CustomTableModel model = new CustomTableModel(lista);
-            model.addColumn("Id", "IdPedido", Integer.class);
-            model.addColumn("Data Venda", "DtVenda", Date.class);
-            model.addColumn("Nome Cliente", "NomeCliente", String.class);
-            model.addColumn("Nome Vendedor", "NomeVendedor", String.class);
-            model.addColumn("Situação", "Situacao", String.class);
+            lista = fachada.listarPedidos(txtNomeCliente.getText(), txtNomeVendedor.getText());
+            ListModel model = new ListModel(PedidoModel.adapterList(lista));
+            model.addColumn(PedidoModel.IDPEDIDO, "Id", Integer.class);
+            model.addColumn(PedidoModel.DTVENDA, "Data Venda", Date.class);
+            model.addColumn(PedidoModel.NOMECLIENTE, "Nome Cliente", String.class);
+            model.addColumn(PedidoModel.NOMEVENDEDOR, "Nome Vendedor", String.class);
+            model.addColumn(PedidoModel.SITUACAO, "Situação", String.class);
             jTable2.setModel(model);
             
             TableColumnModel columnModel = jTable2.getColumnModel();
@@ -224,9 +220,9 @@ public class PedidoPesquisa extends InternalFrameModal {
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
-        this.id = (Integer) lista.get(jTable2.getSelectedRow()).get("IdPedido");
-        this.nomeCliente = (String) lista.get(jTable2.getSelectedRow()).get("NomeCliente");
-        this.nomeVendedor = (String) lista.get(jTable2.getSelectedRow()).get("NomeVendedor");
+        this.id = lista.get(jTable2.getSelectedRow()).getIdPedido();
+        this.nomeCliente = lista.get(jTable2.getSelectedRow()).getCliente().getNome();
+        this.nomeVendedor = (String) lista.get(jTable2.getSelectedRow()).getVendedor().getNome();
         this.fechar();
     }//GEN-LAST:event_jTable2MouseClicked
 

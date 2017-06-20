@@ -7,8 +7,7 @@ import vendas.Excecoes.ExcecaoRegras;
 import vendas.Excecoes.ExcecaoRepositorio;
 import vendas.Repositorio.IVendedorRepositorio;
 import vendas.Repositorio.VendedorRepositorio;
-import vendas.entidades.Vendedor;
-import vendas.util.IEntityModel;
+import vendas.Entidades.Vendedor;
 
 /**
  *
@@ -51,15 +50,6 @@ public class VendedorRegra {
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
           throw new ExcecaoRegras(ex.getMessage()); 
         } 
-    }
-    
-    public static ArrayList<IEntityModel> listarEntity(String nome) throws ExcecaoRegras{
-        ArrayList<Vendedor> lista = listar(nome);
-        ArrayList<IEntityModel> listaEntity = new ArrayList<>();
-        for (Vendedor item : lista) {
-            listaEntity.add((IEntityModel) (item));
-        }
-        return listaEntity;
     }
     
     public static ArrayList<Vendedor> listar(String nome)throws ExcecaoRegras{

@@ -6,14 +6,12 @@
 package vendas.Regras;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRegras;
 import vendas.Excecoes.ExcecaoRepositorio;
 import vendas.Repositorio.FabricanteRepositorio;
 import vendas.Repositorio.IFabricanteRepositorio;
-import vendas.entidades.Fabricante;
+import vendas.Entidades.Fabricante;
 import vendas.util.IEntityModel;
 
 /**

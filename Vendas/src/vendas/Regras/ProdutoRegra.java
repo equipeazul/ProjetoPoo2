@@ -1,14 +1,12 @@
 package vendas.Regras;
 
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRegras;
 import vendas.Excecoes.ExcecaoRepositorio;
 import vendas.Repositorio.IProdutoRepositorio;
 import vendas.Repositorio.ProdutoRepositorio;
-import vendas.entidades.Produto;
-import vendas.util.IEntityModel;
+import vendas.Entidades.Produto;
 
 /**
  *
@@ -56,7 +54,7 @@ public class ProdutoRegra {
     
     public static void excluir(Produto produto) throws ExcecaoRegras{
         try {
-            dao.excluir(produto.getIdproduto());
+            dao.excluir(produto.getIdProduto());
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
           throw new ExcecaoRegras(ex.getMessage()); 
         }
@@ -70,18 +68,9 @@ public class ProdutoRegra {
         }
     }
 
-    public static ArrayList<IEntityModel> listarEntity(String descricao) throws ExcecaoRegras{
-        ArrayList<Produto> lista = listar(descricao);
-        ArrayList<IEntityModel> listaEntity = new ArrayList<>();
-        for (Produto item : lista) {
-            listaEntity.add((IEntityModel) (item));
-        }
-        return listaEntity;
-    }
-    
-    public static ArrayList<Produto> listar(String descricao) throws ExcecaoRegras{
+    public static ArrayList<Produto> listar(String descricao, String razaoSocial) throws ExcecaoRegras{
         try {
-            return dao.listar(descricao);
+            return dao.listar(descricao, razaoSocial);
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
             throw new ExcecaoRegras(ex.getMessage()); 
         }

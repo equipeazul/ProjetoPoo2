@@ -5,19 +5,15 @@
  */
 package vendas.Gui;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
+import vendas.Entidades.FabricanteModel;
 import vendas.Excecoes.ExcecaoRegras;
-import vendas.entidades.Cliente;
+import vendas.Entidades.Fabricante;
 import vendas.fachada.Fachada;
-import vendas.util.CustomTableModel;
 import vendas.util.InternalFrameModal;
-import vendas.util.IEntityModel;
+import vendas.util.ListModel;
 
 /**
  *
@@ -30,7 +26,7 @@ public class FabricantePesquisa extends InternalFrameModal {
             
     private static FabricantePesquisa instancia;
         
-    private ArrayList<IEntityModel> lista;
+    private ArrayList<Fabricante> lista;
     
     /**
      * Creates new form ClientePesquisa
@@ -176,12 +172,12 @@ public class FabricantePesquisa extends InternalFrameModal {
         
         Fachada fachada = Fachada.getInstancia();
         
-        lista = new ArrayList<IEntityModel>();
+        lista = new ArrayList<Fabricante>();
         try{  
-            lista = fachada.listarFabricantesEntity(txtConteudo.getText());
-            CustomTableModel model = new CustomTableModel(lista);
-            model.addColumn("Id", "IdFabricante", Integer.class);
-            model.addColumn("Razão Social", "RazaoSocial", String.class);
+            lista = fachada.listarFabricantes(txtConteudo.getText());
+            ListModel model = new ListModel(FabricanteModel.adapterList(lista));
+            model.addColumn(FabricanteModel.IDFABRICANTE, "Id", Integer.class);
+            model.addColumn(FabricanteModel.RAZAOSOCIAL, "Razão Social", String.class);
             jTable2.setModel(model);
             
             TableColumnModel columnModel = jTable2.getColumnModel();
@@ -193,8 +189,8 @@ public class FabricantePesquisa extends InternalFrameModal {
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
-        this.id = (Integer) lista.get(jTable2.getSelectedRow()).get("IdFabricante");
-        this.razaoSocial = (String) lista.get(jTable2.getSelectedRow()).get("RazaoSocial");
+        this.id = lista.get(jTable2.getSelectedRow()).getIdFabricante();
+        this.razaoSocial = lista.get(jTable2.getSelectedRow()).getRazaoSocial();
         this.fechar();
     }//GEN-LAST:event_jTable2MouseClicked
 

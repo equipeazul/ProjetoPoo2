@@ -5,7 +5,6 @@
  */
 package vendas.Gui;
 
-import java.awt.Component;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameAdapter;

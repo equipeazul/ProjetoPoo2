@@ -5,18 +5,9 @@
  */
 package vendas.Gui;
 
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRegras;
-import vendas.Excecoes.ExcecaoRepositorio;
-//import static vendas.Gui.TelaCadastro.componente;
-import vendas.Repositorio.VendedorRepositorio;
-import vendas.Repositorio.IVendedorRepositorio;
-import vendas.entidades.Vendedor;
+import vendas.Entidades.Vendedor;
 import vendas.fachada.Fachada;
 
 /**

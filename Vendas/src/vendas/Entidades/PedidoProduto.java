@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vendas.entidades;
+package vendas.Entidades;
 
 /**
  *
@@ -27,7 +27,7 @@ public class PedidoProduto {
         this.produto = produto;
     }
 
-    public double getValor() {
+    public Double getValor() {
         return this.valor;
     }
 

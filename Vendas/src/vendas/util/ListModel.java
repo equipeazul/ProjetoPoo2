@@ -12,17 +12,24 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Daniel
  */
-public class ListModel  extends AbstractTableModel {
+public class ListModel extends AbstractTableModel {
 
-    private ArrayList<ColumnModel> column = new ArrayList<ColumnModel>();
     private ArrayList<IEntityModel> lista;
+    private ArrayList<String> nameColumn;
+    private ArrayList<String> titleColumn;
+    private ArrayList<Class> typeColumn;
     
     public ListModel(ArrayList<IEntityModel> lista) {
         this.lista = lista;
+        nameColumn = new ArrayList<String>();
+        titleColumn = new ArrayList<String>();
+        typeColumn = new ArrayList<Class>();
     }    
     
-    public void addColumn(ColumnModel column) {
-        this.column.add(column);  
+    public void addColumn(String nameColumn, String titleColumn, Class typeColumn) {
+        this.nameColumn.add(nameColumn);  
+        this.titleColumn.add(titleColumn);  
+        this.typeColumn.add(typeColumn);  
     }
     
     //retorna se a célula é editável ou não
@@ -39,25 +46,25 @@ public class ListModel  extends AbstractTableModel {
     //retorna o total de colunas da tabela
     @Override
     public int getColumnCount() {
-        return this.column.size();
+        return this.nameColumn.size();
     }
     //retorna o nome da coluna de acordo com seu indice
     @Override
     public String getColumnName(int indice) {
-        return this.column.get(indice).getTitle();
+        return this.titleColumn.get(indice);
     }
 
     //determina o tipo de dado da coluna conforme seu indice
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        return this.column.get(columnIndex).getType();
+        return this.typeColumn.get(columnIndex);
     }
 
     //preenche cada célula da tabela
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         IEntityModel entity = this.lista.get(rowIndex);
-        return null; //entity.getColumn(columnIndex).getValue();
+        return entity.get(this.nameColumn.get(columnIndex));
 
     }
     //altera o valor do objeto de acordo com a célula editada
@@ -69,7 +76,7 @@ public class ListModel  extends AbstractTableModel {
         IEntityModel entity = this.lista.get(rowIndex);
         //de acordo com a coluna, ele preenche a célula com o valor
         //respectivo do objeto de mesmo indice na lista
-        //entity.getColumn(columnIndex).setValue(aValue));
+        entity.set(this.nameColumn.get(columnIndex), aValue);
         
         //este método é que notifica a tabela que houve alteração de dados
         fireTableDataChanged();

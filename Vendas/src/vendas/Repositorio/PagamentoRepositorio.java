@@ -15,8 +15,7 @@ import vendas.Conexao.Conexao;
 import vendas.Conexao.IConexao;
 import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRepositorio;
-import vendas.entidades.Pagamento;
-import vendas.entidades.Pedido;
+import vendas.Entidades.Pagamento;
 
 /**
  *

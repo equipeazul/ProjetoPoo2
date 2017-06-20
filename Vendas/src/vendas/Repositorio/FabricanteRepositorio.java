@@ -6,7 +6,6 @@
 package vendas.Repositorio;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +14,7 @@ import vendas.Conexao.Conexao;
 import vendas.Conexao.IConexao;
 import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRepositorio;
-import vendas.entidades.Fabricante;
+import vendas.Entidades.Fabricante;
 
 /**
  *

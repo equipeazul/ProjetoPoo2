@@ -8,7 +8,7 @@ package vendas.Repositorio;
 import java.util.ArrayList;
 import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRepositorio;
-import vendas.entidades.*;
+import vendas.Entidades.*;
 
 /**
  *

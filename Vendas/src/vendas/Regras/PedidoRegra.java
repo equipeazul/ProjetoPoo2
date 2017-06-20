@@ -7,8 +7,8 @@ import vendas.Excecoes.ExcecaoRegras;
 import vendas.Excecoes.ExcecaoRepositorio;
 import vendas.Repositorio.IPedidoRepositorio;
 import vendas.Repositorio.PedidoRepositorio;
-import vendas.entidades.Pedido;
-import vendas.util.IEntityModel;
+import vendas.Entidades.Pedido;
+import vendas.Entidades.PedidoProduto;
 
 /**
  *
@@ -33,9 +33,9 @@ public class PedidoRegra {
         }
     }
                
-    public static Pedido consultar(Integer id) throws ExcecaoRegras{
+    public static Pedido consultar(Integer id, Boolean comProdutos) throws ExcecaoRegras{
         try {
-            return dao.consultar(id);
+            return dao.consultar(id, comProdutos);
         } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
             throw new ExcecaoRegras(ex.getMessage()); 
         }
@@ -81,13 +81,53 @@ public class PedidoRegra {
         }             
     }    
 
-    public static ArrayList<IEntityModel> listarEntity(String nomeCliente, String nomeVendedor) throws ExcecaoRegras{
-        ArrayList<Pedido> lista = listar(nomeCliente, nomeVendedor);
-        ArrayList<IEntityModel> listaEntity = new ArrayList<>();
-        for (Pedido item : lista) {
-            listaEntity.add((IEntityModel) (item));
+    public static void validarProduto(PedidoProduto pedidoProduto) throws ExcecaoRegras{
+        
+        
+    }    
+    
+    public static void verificarExistenciaProduto(Integer idPedido, Integer idProduto) throws ExcecaoRegras{
+        try {
+            if(!dao.existeProduto(idPedido, idProduto)){
+               throw new ExcecaoRegras(ExcecaoRegras.ERRO_PRODURO_NAO_EXISTE_NO_PEDIDO);
+            }   
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+          throw new ExcecaoRegras(ex.getMessage()); 
         }
-        return listaEntity;
     }
-
+               
+    public static void jaCadastradoProduto(Integer idPedido, Integer idProduto) throws ExcecaoRegras{
+        try {
+            if(dao.existeProduto(idPedido, idProduto)){
+               throw new ExcecaoRegras(ExcecaoRegras.ERRO_PRODUTO_JA_CADASTRADO_NO_PEDIDO);
+            }   
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+          throw new ExcecaoRegras(ex.getMessage()); 
+        }
+    }
+               
+    public static void incluirProduto(Integer idPedido, PedidoProduto pedidoProduto)throws ExcecaoRegras{
+        try{
+            dao.incluirProduto(idPedido, pedidoProduto);
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+          throw new ExcecaoRegras(ex.getMessage()); 
+        }              
+    }
+    public static void excluirProduto(Integer idPedido, PedidoProduto pedidoProduto) throws ExcecaoRegras{
+        try {
+            dao.excluirProduto(idPedido, pedidoProduto.getProduto().getIdProduto());
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+          throw new ExcecaoRegras(ex.getMessage()); 
+        }
+    }
+    
+    public static void alterarProduto(Integer idPedido, PedidoProduto pedidoProduto)throws ExcecaoRegras{
+        try{
+            dao.alterarProduto(idPedido, pedidoProduto);
+        } catch (ExcecaoRepositorio | ExcecaoConexao ex) {
+            throw new ExcecaoRegras(ex.getMessage()); 
+        } 
+    }
+    
+    
 }

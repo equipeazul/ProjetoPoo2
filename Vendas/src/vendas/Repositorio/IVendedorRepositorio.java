@@ -12,7 +12,7 @@ package vendas.Repositorio;
 import java.util.ArrayList;
 import vendas.Excecoes.ExcecaoRepositorio;
 import vendas.Excecoes.ExcecaoConexao;
-import vendas.entidades.Vendedor;
+import vendas.Entidades.Vendedor;
 
 public interface IVendedorRepositorio {
     

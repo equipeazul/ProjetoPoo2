@@ -8,7 +8,7 @@ package vendas.Repositorio;
 import java.util.ArrayList;
 import vendas.Excecoes.ExcecaoConexao;
 import vendas.Excecoes.ExcecaoRepositorio;
-import vendas.entidades.Produto;
+import vendas.Entidades.Produto;
 
 /**
  *
@@ -18,7 +18,7 @@ public interface IProdutoRepositorio {
     public void incluir(Produto produto)throws ExcecaoRepositorio,ExcecaoConexao ;
     public void excluir(Integer id)throws ExcecaoRepositorio,ExcecaoConexao ;
     public void alterar(Produto produto)throws ExcecaoRepositorio,ExcecaoConexao ;
-    public ArrayList listar(String descricao)throws ExcecaoRepositorio,ExcecaoConexao ;
+    public ArrayList listar(String descricao, String razaoSocial)throws ExcecaoRepositorio,ExcecaoConexao ;
     public Produto consultar(Integer id)throws ExcecaoRepositorio,ExcecaoConexao ;
     public Integer ultimo() throws ExcecaoRepositorio, ExcecaoConexao;
     public Boolean existe(Integer Id) throws ExcecaoRepositorio, ExcecaoConexao;
