@@ -171,6 +171,7 @@ public class Fachada {
     * Pedido
     *########################################################################*/
     public Pedido consultarPedido(Integer id, Boolean comProdutos)throws ExcecaoRegras{
+        PedidoRegra.verificarExistencia(id);
         Pedido pedido = new Pedido();
         pedido = PedidoRegra.consultar(id, comProdutos);
         return pedido;

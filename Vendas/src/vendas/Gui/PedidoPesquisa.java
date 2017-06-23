@@ -25,6 +25,7 @@ public class PedidoPesquisa extends InternalFrameModal {
     private static Integer id = 0;
     private static String nomeCliente;
     private static String nomeVendedor;
+    private static String situacao;
             
     private static PedidoPesquisa instancia;
         
@@ -43,6 +44,10 @@ public class PedidoPesquisa extends InternalFrameModal {
     
     public static String getNomeCliente() {
         return nomeCliente;
+    }
+
+    public static String getSituacao() {
+        return situacao;
     }
 
     public static String getNomeVendedor() {
@@ -222,7 +227,8 @@ public class PedidoPesquisa extends InternalFrameModal {
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
         this.id = lista.get(jTable2.getSelectedRow()).getIdPedido();
         this.nomeCliente = lista.get(jTable2.getSelectedRow()).getCliente().getNome();
-        this.nomeVendedor = (String) lista.get(jTable2.getSelectedRow()).getVendedor().getNome();
+        this.nomeVendedor = lista.get(jTable2.getSelectedRow()).getVendedor().getNome();
+        this.situacao = lista.get(jTable2.getSelectedRow()).getSituacao();
         this.fechar();
     }//GEN-LAST:event_jTable2MouseClicked
 

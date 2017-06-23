@@ -74,7 +74,7 @@ public class Pagamento {
         this.dtPagamento = dtPagamento;
     }
 
-    public double getValorPago() {
+    public Double getValorPago() {
         return this.valorPago;
     }
 

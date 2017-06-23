@@ -163,7 +163,7 @@ public class PedidoCadastro extends TelaCadastro {
             txtDtVenda.setText(VAZIO);
         }
         
-        if ((acItem.equals(INCLUSAO)) || (itemAtual == -1)){
+        if ((acItem.equals(INCLUSAO)) || (itemAtual < 0)){
             txtIdProduto.setText(VAZIO);
         }
         if (txtIdProduto.getText().equals(VAZIO)){
